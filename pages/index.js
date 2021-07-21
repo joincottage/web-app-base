@@ -3,7 +3,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ProTip from '../src/ProTip';
-import Link from '../src/Link';
+import NextLink from 'next/link';
 import Copyright from '../src/Copyright';
 
 export default function Index() {
@@ -13,9 +13,9 @@ export default function Index() {
         <Typography variant="h4" component="h1" gutterBottom>
           Next.js example
         </Typography>
-        <Link href="/about" color="secondary">
+        <NextLink href="/about" color="secondary">
           Go to the about page
-        </Link>
+        </NextLink>
         <ProTip />
         <Copyright />
       </Box>

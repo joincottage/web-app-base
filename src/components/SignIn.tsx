@@ -8,9 +8,9 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
+import NextLink from 'next/link';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import { Copyright } from '@material-ui/icons';
 
 export const SignIn = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -27,20 +27,20 @@ export const SignIn = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
-        sx={{
+        sx={ {
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-        }}
+        } }
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={ { m: 1, bgcolor: 'secondary.main' } }>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Log in to access the Cottage app
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={ handleSubmit } noValidate sx={ { mt: 1 } }>
           <TextField
             margin="normal"
             required
@@ -62,27 +62,30 @@ export const SignIn = () => {
             autoComplete="current-password"
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={ <Checkbox value="remember" color="primary" /> }
             label="Remember me"
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button type="submit" fullWidth variant="contained" sx={ { mt: 3, mb: 2 } }>
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+              <NextLink href="/forgot-password" passHref={true}>
+                <Link variant="body2">
+                  Forgot password?
+                </Link>
+              </NextLink>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <NextLink href="/signup" passHref={true}>
+                <Link variant="body2">
+                  { "Don't have an account? Sign Up" }
+                </Link>
+              </NextLink>
             </Grid>
           </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   </>);
 }

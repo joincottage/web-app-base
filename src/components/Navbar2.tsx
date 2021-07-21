@@ -6,7 +6,18 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Link from 'next/link';
+import NextLink from 'next/link';
+import MuiLink from '@material-ui/core/Link';
+import { styled } from '@material-ui/core/styles';
+
+const Div = styled(MuiLink)(({ theme }) => ({
+  ...theme.typography.h6,
+  // backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(1),
+  flexGrow: 1,
+  color: '#fff',
+  textDecoration: 'none',
+}));
 
 export const Navbar2 = () => {
   return (
@@ -22,10 +33,18 @@ export const Navbar2 = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={ { flexGrow: 1 } }>
-            News
-          </Typography>
-          <Link href="/login" passHref={ true }><Button color="inherit">Login</Button></Link>
+          <NextLink href="/" passHref={true}>
+            {/*<MuiLink component="typography" variant="h6">*/}
+            {/*  <Typography variant="h6" sx={ { flexGrow: 1 } }>*/}
+            <Div>
+              Cottage
+            </Div>
+              {/*</Typography>*/}
+            {/*</MuiLink>*/}
+          </NextLink>
+          <NextLink href="/login" passHref={ true }>
+            <Button color="inherit">Login</Button>
+          </NextLink>
         </Toolbar>
       </AppBar>
     </Box>
