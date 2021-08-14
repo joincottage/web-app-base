@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { Navbar } from '../components/NavbarTW';
 import '../styles/globals.css';
 import { Footer } from '../components/Footer';
+import { UserProvider } from '@auth0/nextjs-auth0';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -17,7 +18,7 @@ export default function MyApp(props) {
   }, []);
 
   return (
-    <React.Fragment>
+    <UserProvider>
       <Head>
         <title>My page</title>
         <meta
@@ -28,7 +29,7 @@ export default function MyApp(props) {
       <Navbar />
       <Component {...pageProps} />
       <Footer />
-    </React.Fragment>
+    </UserProvider>
   );
 }
 
