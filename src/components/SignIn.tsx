@@ -11,44 +11,38 @@ export const SignIn = () => {
     });
   };
 
-  return (<>
-    <form onSubmit={ handleSubmit }>
-      <input
-        required
-        id="email"
-        name="email"
-        autoComplete="email"
-        autoFocus
-      />
-      <input
-        required
-        name="password"
-        type="password"
-        id="password"
-        autoComplete="current-password"
-      />
-      <input
-        type="checkbox"
-      />
-      <div>
-        Sign In
-      </div>
-      <div>
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <input
+          required
+          id="email"
+          name="email"
+          autoComplete="email"
+          autoFocus
+        />
+        <input
+          required
+          name="password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+        />
+        <input type="checkbox" />
+        <div>Sign In</div>
         <div>
-          <NextLink href="/forgot-password" passHref={true}>
-            <a>
-              Forgot password?
-            </a>
-          </NextLink>
+          <div>
+            <NextLink href="/forgot-password" passHref={true}>
+              <a>Forgot password?</a>
+            </NextLink>
+          </div>
+          <div>
+            <NextLink href="/signup" passHref={true}>
+              <div>{"Don't have an account? Sign Up"}</div>
+            </NextLink>
+          </div>
         </div>
-        <div>
-          <NextLink href="/signup" passHref={true}>
-            <div>
-              { "Don't have an account? Sign Up" }
-            </div>
-          </NextLink>
-        </div>
-      </div>
-    </form>
-  </>);
-}
+      </form>
+    </>
+  );
+};

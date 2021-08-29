@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { Navbar } from '../components/NavbarTW';
+import { Navbar } from '../components/Navbar3';
 import '../styles/globals.css';
 import { Footer } from '../components/Footer';
 import { UserProvider } from '@auth0/nextjs-auth0';
