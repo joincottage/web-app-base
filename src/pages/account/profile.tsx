@@ -1,4 +1,32 @@
 import { useUser } from '@auth0/nextjs-auth0';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemButton from '@material-ui/core/ListItemButton';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Title from '../../components/Title';
+
+const skills = [
+  'JavaScript',
+  'TypeScript',
+  'React',
+  'Angular',
+  'Vue',
+  'React Native',
+  'Java',
+  'Kotlin',
+  'Golang',
+  'Rust',
+  'Python',
+  'Ruby',
+  'Rails',
+];
 
 export default function Profile() {
   const { user, error, isLoading } = useUser();
@@ -13,84 +41,135 @@ export default function Profile() {
 
   return (
     user && (
-      <>
-        <div className="shadow sm:rounded-md sm:overflow-hidden">
-          <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-            <div className="md:grid md:grid-cols-3 md:gap-6">
-              <div className="md:col-span-2">
-                <div className="px-4 sm:px-0">
-                  <h3 className="text-lg font-medium leading-6 text-gray-900">
-                    Profile
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-600">
-                    This information will be displayed publicly so be careful
-                    what you share.
-                  </p>
-                </div>
-              </div>
-              <div className="md:col-span-1">
-                <div className="px-4 sm:px-0">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Photo
-                    </label>
-                    <div className="mt-1 flex items-center">
-                      <span className="inline-block h-20 w-20 rounded-full overflow-hidden bg-gray-100">
-                        <img src={user.picture || ''} />
-                      </span>
-                      <button
-                        type="button"
-                        className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      >
-                        Change
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
+      <Container maxWidth="lg" sx={{ mt: 6, mb: 4 }}>
+        <Grid container spacing={3}>
+          {/* Account Details */}
+          <Grid item xs={12} md={8} lg={9}>
+            <Paper
+              sx={{
+                padding: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: 240,
+              }}
+            >
+              <Title>Account Details</Title>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    disabled
+                    label="Name"
+                    variant="standard"
+                    fullWidth
+                    defaultValue={user.name}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    disabled
+                    label="Email"
+                    variant="standard"
+                    fullWidth
+                    defaultValue={user.email}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Bio"
+                    variant="standard"
+                    fullWidth
+                    multiline
+                    defaultValue="Add user bio here"
+                  />
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+          {/* Social */}
+          <Grid item xs={12} md={4} lg={3}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 240,
+              }}
+            >
+              <Title>Social</Title>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Discord"
+                    variant="standard"
+                    defaultValue="@cooljohnny"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label="LinkedIn"
+                    variant="standard"
+                    defaultValue="@cooljohnny"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Twitter"
+                    variant="standard"
+                    defaultValue="@cooljohnny"
+                  />
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+          {/* Skills */}
+          <Grid item xs={12}>
+            <Paper
+              sx={{
+                padding: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: 240,
+              }}
+            >
+              <Title>Skills</Title>
+
+              <List>
+                <Grid container spacing={2}>
+                  {skills.map((skill) => (
+                    <Grid item xs={12} md={4} lg={3}>
+                      <ListItem key={skill} disablePadding>
+                        <ListItemButton
+                          role={undefined}
+                          // onClick={handleToggle(skill)}
+                          dense
+                        >
+                          <ListItemIcon>
+                            <Checkbox
+                              edge="start"
+                              // checked={checked.indexOf(skill) !== -1}
+                              tabIndex={-1}
+                              disableRipple
+                              // inputProps={{ 'aria-labelledby': labelId }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText id={skill} primary={skill} />
+                        </ListItemButton>
+                      </ListItem>
+                    </Grid>
+                  ))}
+                </Grid>
+              </List>
+            </Paper>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sx={{ display: 'flex', justifyContent: 'flex-end' }}
+          >
+            <Button variant="contained">Update</Button>
+          </Grid>
+        </Grid>
+      </Container>
     )
   );
 }
-
-/*
-<div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
-            Profile Information
-          </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Subtitleeeeeeeeeee
-          </p>
-        </div>
-        <div className="border-t border-gray-200">
-          <dl>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Full name</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {user.name}
-              </dd>
-            </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">
-                Current Occupation
-              </dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                Backend Developer
-              </dd>
-            </div>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">
-                Email address
-              </dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {user.email}
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
- */
