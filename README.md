@@ -1,3 +1,10 @@
+# Resources
+
+## Prisma
+
+https://github.com/prisma/prisma/issues/7292
+https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database
+
 # Next.js example
 
 ## How to use
