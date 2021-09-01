@@ -6,7 +6,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   const { email } = req.query;
 
   try {
-    const unencryptedEmail = decrypt(email);
+    const unencryptedEmail = decrypt(email as string);
     switch (req.method) {
       case 'GET':
         const users = await prisma.user.findUnique({

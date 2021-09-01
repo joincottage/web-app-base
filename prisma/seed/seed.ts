@@ -7,17 +7,10 @@ async function main() {
     data: {
       email: 'test@test.com',
       name: 'Connor Jones',
-      profile: {
-        create: { bio: 'I like milkshakes' },
-      },
     },
   });
 
-  const allUsers = await prisma.user.findMany({
-    include: {
-      profile: true,
-    },
-  });
+  const allUsers = await prisma.user.findMany();
   console.dir(allUsers, { depth: null });
 }
 
