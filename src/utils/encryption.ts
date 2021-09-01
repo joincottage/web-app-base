@@ -5,18 +5,25 @@ const IV = process.env.ENCRYPTION_IV || '';
 const KEY = process.env.ENCRYPTION_KEY || '';
 
 export function encrypt(text: string) {
-  const cipher = crypto.createCipheriv(ALGORITHM, KEY, IV);
-  let encrypted = cipher.update(text);
-  encrypted = Buffer.concat([encrypted, cipher.final()]);
+  const cipher = crypto.createCipheriv(
+    ALGORITHM,
+    Buffer.from(KEY, 'base64'),
+    Buffer.from(IV, 'base64')
+  );
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
 
-  return encrypted.toString('utf-8');
+  return encrypted;
 }
 
 export function decrypt(text: string) {
-  const encryptedText = Buffer.from(text, 'utf-8');
-  const decipher = crypto.createDecipheriv(ALGORITHM, KEY, IV);
-  let decrypted = decipher.update(encryptedText);
-  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  const decipher = crypto.createDecipheriv(
+    ALGORITHM,
+    Buffer.from(KEY, 'base64'),
+    Buffer.from(IV, 'base64')
+  );
+  let decrypted = decipher.update(text, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
 
-  return decrypted.toString();
+  return decrypted;
 }
