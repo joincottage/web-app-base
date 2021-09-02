@@ -19,7 +19,7 @@ const Div = styled(MuiLink)(({ theme }) => ({
   textDecoration: 'none',
 }));
 
-export const Navbar = () => {
+export const Navbar = (): JSX.Element => {
   const { user, isLoading } = useUser();
 
   return (

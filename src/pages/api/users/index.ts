@@ -2,9 +2,12 @@ import { prisma } from '../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { encrypt } from '../../../utils/encryption';
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> {
   switch (req.method) {
-    case 'POST':
+    case 'POST': {
       await prisma.user.create({
         data: {
           ...req.body,
@@ -12,6 +15,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       });
       res.send('OK');
       break;
+    }
     // case 'PUT':
     //   await prisma.user.create({
     //     data: {
@@ -20,7 +24,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     //   });
     //   res.send('OK');
     //   break;
-    case 'GET':
+    case 'GET': {
       const users = await prisma.user.findMany();
       const cleansedUsers = users.map((user) => {
         return {
@@ -32,12 +36,14 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       });
       res.json(cleansedUsers);
       break;
-    default:
+    }
+    default: {
       console.error(
         `Unsupported method type ${req.method} made to endpoint ${req.url}`
       );
       res.status(404).end();
       break;
+    }
   }
 }
 

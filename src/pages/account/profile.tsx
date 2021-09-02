@@ -28,9 +28,8 @@ const skills = [
   'Rails',
 ];
 
-export default function Profile() {
+export default function Profile(): JSX.Element {
   const { user, error, isLoading } = useUser();
-  console.log(user);
 
   if (isLoading) {
     return <div>Loading</div>;
@@ -40,7 +39,7 @@ export default function Profile() {
   }
 
   return (
-    user && (
+    user ? (
       <Container maxWidth="lg" sx={{ mt: 6, mb: 4 }}>
         <Grid container spacing={3}>
           {/* Account Details */}
@@ -136,7 +135,7 @@ export default function Profile() {
               <List>
                 <Grid container spacing={2}>
                   {skills.map((skill) => (
-                    <Grid item xs={12} md={4} lg={3}>
+                    <Grid item xs={12} md={4} lg={3} key={skill}>
                       <ListItem key={skill} disablePadding>
                         <ListItemButton
                           role={undefined}
@@ -171,5 +170,6 @@ export default function Profile() {
         </Grid>
       </Container>
     )
+      : <></>
   );
 }

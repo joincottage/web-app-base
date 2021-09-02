@@ -4,8 +4,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const stripeAPIKey = process.env.STRIPE_AUTH_KEY || '';
 const stripe = new Stripe(stripeAPIKey, { apiVersion: '2020-08-27' });
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const { body, method } = req;
+export default async function (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> {
+  const { method } = req;
 
   if (method !== 'POST') {
     res.setHeader('Allow', ['POST']);
