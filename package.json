@@ -21,6 +21,7 @@
     "@types/node": "^16.3.3",
     "@types/react": "^17.0.14",
     "clsx": "latest",
+    "discord.js": "^12.5.3",
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
