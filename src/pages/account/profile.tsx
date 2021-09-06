@@ -1,4 +1,4 @@
-import { useUser } from '@auth0/nextjs-auth0';
+import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
@@ -27,6 +27,8 @@ const skills = [
   'Ruby',
   'Rails',
 ];
+
+export const getServerSideProps = withPageAuthRequired();
 
 export default function Profile(): JSX.Element {
   const { user, error, isLoading } = useUser();

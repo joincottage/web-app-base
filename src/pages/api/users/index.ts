@@ -2,12 +2,18 @@ import { prisma } from '../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { encrypt } from '../../../utils/encryption';
 
+const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
+
 export default async function (
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
   switch (req.method) {
     case 'POST': {
+      if (req.headers.authorization !== auth0HookToken) {
+        res.status(401).json({ message: 'You are not authorized' });
+        break;
+      }
       await prisma.user.create({
         data: {
           ...req.body,

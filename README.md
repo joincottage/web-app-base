@@ -2,8 +2,13 @@
 
 ## Prisma
 
-https://github.com/prisma/prisma/issues/7292
-https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database
+- [Prisma & Planetscale Issues](https://github.com/prisma/prisma/issues/7292)
+- [Prisma Shadow Database](https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database)
+- [Deploying Prisma & Planetscale](https://davidparks.dev/blog/planetscale-deployment-with-prisma/)
+- [Data Modeling](https://www.prisma.io/dataguide/datamodeling)
+
+## Auth0
+https://marketplace.auth0.com/integrations/google-social-connection
 
 # Next.js example
 

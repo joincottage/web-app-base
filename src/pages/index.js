@@ -5,6 +5,9 @@ import Box from '@material-ui/core/Box';
 import ProTip from '../ProTip';
 import NextLink from 'next/link';
 import Copyright from '../Copyright';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+
+export const getServerSideProps = withPageAuthRequired();
 
 export default function Index() {
   return (
