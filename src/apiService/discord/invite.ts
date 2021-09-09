@@ -20,7 +20,14 @@ export const createInviteLink = async () => {
   }
 };
 
-export const addUserToServer = async (user: string) => {
+export const addUserToServer = async (roles: string[]) => {
   // todo use guild.addMember() in future so we can map discord to cottage accounts
   // https://discord.js.org/#/docs/main/v12/class/Guild?scrollTo=addMember
+  try {
+    const client = await getClient();
+    const guild = await client.guilds.fetch(guildId);
+    //guild.addMember()
+  } catch (e) {
+    throw e;
+  }
 };

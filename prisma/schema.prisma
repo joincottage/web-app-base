@@ -9,15 +9,16 @@ datasource db {
 }
 
 generator client {
-  provider          = "prisma-client-js"
-  previewFeatures   = ["planetScaleMode"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["planetScaleMode"]
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  auth_id   Int      @unique
-  email     String   @unique
-  name      String?
-  img_url   String?
-  bio       String?
+  id      Int      @id @default(autoincrement())
+  auth_id Int      @unique
+  email   String   @unique
+  name    String?
+  img_url String?
+  bio     String?
+  skills  String?
 }

@@ -12,6 +12,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Title from '../../components/Title';
 import { Typography } from '@material-ui/core';
 import { ChangeEvent, useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
+import Axios from 'axios';
 
 function removeItem(arr: any[], value: any) {
   const index = arr.indexOf(value);
@@ -40,6 +42,8 @@ const allSkills = [
 export const getServerSideProps = withPageAuthRequired();
 
 export default function Profile(): JSX.Element {
+  const router = useRouter();
+  const [isPendingSubmission, setIsPendingSubmission] = useState(false);
   const [checked, setChecked] = useState<string[]>([]);
   const { user, error, isLoading } = useUser();
   if (isLoading) {
@@ -54,7 +58,24 @@ export default function Profile(): JSX.Element {
       checked.indexOf(skill) === -1
         ? setChecked([...checked, skill])
         : setChecked(removeItem(checked, skill));
-  
+
+  const handleStartFreelancing = async () => {
+    try {
+      setIsPendingSubmission(true);
+      await Axios.post('/api/discord/notify-new-user', {
+        name: user?.name,
+        email: user?.email,
+        skills: checked.join(',')
+      });
+    } catch (error) {
+      console.error(
+        `There was an error communicating with the Cottage notify-new-user api for name: ${user?.name}, email: ${user?.email}, skills: ${checked.join(',')}`,
+        error
+      );
+      throw error;
+    }
+    router.push('/api/discord/invite');
+  }
 
   return (
     user ? (
@@ -112,9 +133,10 @@ export default function Profile(): JSX.Element {
             <Button
               variant="contained"
               size="large"
-              onClick={() => alert(JSON.stringify(checked))}
+              disabled={checked.length === 0 || isPendingSubmission}
+              onClick={handleStartFreelancing}
             >
-              Start freelancing
+              { isPendingSubmission ? 'Submitting...' : 'Start freelancing' }
             </Button>
           </Grid>
         </Grid>
@@ -122,8 +144,5 @@ export default function Profile(): JSX.Element {
     )
       : <></>
   );
-}
-function setState(arg0: never[]): [any, any] {
-  throw new Error('Function not implemented.');
 }
 
