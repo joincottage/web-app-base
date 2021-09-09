@@ -10,8 +10,6 @@ interface NotifyNewUserRequest extends NextApiRequest {
   };
 }
 const discordWebhookBaseUrl = 'https://discord.com/api/webhooks';
-const channelID = process.env.DISCORD_NOTIFY_NEW_USER_CHANNEL_TOKEN;
-const discordToken = process.env.DISCORD_NOTIFY_NEW_USER_CHANNEL_ID;
 const formatInfo = (name:string, email:string, skills:string) => `Welcome new user!
 Name: ${name}
 Email: ${email}

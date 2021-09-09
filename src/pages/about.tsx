@@ -15,7 +15,7 @@ export default function About() {
           Next.js example
         </Typography>
         <NextLink href="/">
-          <Button variant="contained" color="primary" naked>
+          <Button variant="contained" color="primary">
             Go to the main page
           </Button>
         </NextLink>

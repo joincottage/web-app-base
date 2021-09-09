@@ -11,7 +11,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Title from '../../components/Title';
 import { Typography } from '@material-ui/core';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import Axios from 'axios';
 

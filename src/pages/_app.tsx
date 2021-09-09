@@ -5,14 +5,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../theme';
 import { Navbar } from '../components/Navbar';
 import { UserProvider } from '@auth0/nextjs-auth0';
+import { AppProps } from 'next/app';
 
-export default function MyApp(props) {
+export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
+      jssStyles.parentElement?.removeChild(jssStyles);
     }
   }, []);
   return (
