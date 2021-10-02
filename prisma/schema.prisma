@@ -22,3 +22,13 @@ model User {
   bio     String?
   skills  String?
 }
+
+model Task {
+  id           Int      @id @default(autoincrement())
+  clientName   String?
+  clientImgUrl String?
+  name         String?
+  shortDesc    String?
+  longDesc     String?
+  skills       String?
+}
