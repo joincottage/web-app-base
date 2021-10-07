@@ -9,6 +9,7 @@ import MuiLink from '@material-ui/core/Link';
 import { useUser } from '@auth0/nextjs-auth0';
 import { styled } from '@material-ui/core/styles';
 import { AccountIconMenu } from './AccountIconMenu';
+import Container from '@material-ui/core/Container';
 
 const Div = styled(MuiLink)(({ theme }) => ({
   ...theme.typography.h6,
@@ -23,39 +24,41 @@ export const Navbar = (): JSX.Element => {
   const { user, isLoading } = useUser();
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton> */}
-          <NextLink href="/" passHref={true}>
-            <img src="./logo.svg" alt="Cottage Logo" width="200" height="38" style={{ cursor: 'pointer' }} />
-          </NextLink>
-          <NextLink href="/" passHref={true}>
-            {/*<MuiLink component="typography" variant="h6">*/}
-            {/*  <Typography variant="h6" sx={ { flexGrow: 1 } }>*/}
-            <Div></Div>
-            {/*</Typography>*/}
-            {/*</MuiLink>*/}
-          </NextLink>
-          {!isLoading && user ? (
-            <AccountIconMenu user={user} />
-          ) : (
-            !isLoading && (
-              <NextLink href="/api/auth/login" passHref={true}>
-                <Button color="inherit">Login</Button>
-              </NextLink>
-            )
-          )}
-        </Toolbar>
-      </AppBar>
-    </Box>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Container maxWidth="lg">
+            <Toolbar>
+              {/* <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+              >
+                <MenuIcon />
+              </IconButton> */}
+                <NextLink href="/" passHref={true}>
+                  <img src="./logo.svg" alt="Cottage Logo" width="200" height="38" style={{ cursor: 'pointer' }} />
+                </NextLink>
+                <NextLink href="/" passHref={true}>
+                  {/*<MuiLink component="typography" variant="h6">*/}
+                  {/*  <Typography variant="h6" sx={ { flexGrow: 1 } }>*/}
+                  <Div></Div>
+                  {/*</Typography>*/}
+                  {/*</MuiLink>*/}
+                </NextLink>
+                {!isLoading && user ? (
+                  <AccountIconMenu user={user} />
+                ) : (
+                  !isLoading && (
+                    <NextLink href="/api/auth/login" passHref={true}>
+                      <Button color="inherit">Login</Button>
+                    </NextLink>
+                  )
+                )}
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </Box>
   );
 };

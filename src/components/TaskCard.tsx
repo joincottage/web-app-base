@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
-      margin: '25px 0'
+      borderRadius: 0,
     },
     media: {
       height: 0,
