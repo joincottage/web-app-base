@@ -36,14 +36,11 @@ export default function Index() {
   return (
     <Container maxWidth="lg">
       <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom style={{ textAlign: 'center' }}>
-          Available tasks
-        </Typography>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div>
             <ClientTabs clients={mockClients} />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', minWidth: '600px' }}>
             { loading
               ? 'Loading...'
               : error
@@ -52,9 +49,11 @@ export default function Index() {
             }
           </div>
           <div>
-            {!isLoading && user ? (
-              <AccountIconMenu user={user} />
-            ) : (
+            {!isLoading && user ? (<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginLeft: '25px' }}>
+              <AccountIconMenu user={user} style={{ width: '80px', height: '80px' }} />
+              <Typography variant="h6" style={{ textAlign: 'center' }}>Availability</Typography>
+              <div>10 hrs/week</div>
+            </div>) : (
               !isLoading && (
                 <NextLink href="/api/auth/login" passHref={true}>
                   <Button color="inherit">Login</Button>
@@ -63,7 +62,6 @@ export default function Index() {
             )}
           </div>
         </div>
-        <ProTip />
         <Copyright />
       </Box>
     </Container>

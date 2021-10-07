@@ -10,6 +10,8 @@ import { useUser } from '@auth0/nextjs-auth0';
 import { styled } from '@material-ui/core/styles';
 import { AccountIconMenu } from './AccountIconMenu';
 import Container from '@material-ui/core/Container';
+import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import HelpIcon from '@material-ui/icons/Help';
 
 const Div = styled(MuiLink)(({ theme }) => ({
   ...theme.typography.h6,
@@ -47,8 +49,14 @@ export const Navbar = (): JSX.Element => {
                   {/*</Typography>*/}
                   {/*</MuiLink>*/}
                 </NextLink>
+                <IconButton style={{ color: 'white' }}>
+                  <HelpIcon style={{ cursor: 'pointer' }} />
+                </IconButton>
+                <IconButton style={{ color: 'white' }}>
+                  <NotificationsNoneIcon style={{ cursor: 'pointer' }} />
+                </IconButton>
                 {!isLoading && user ? (
-                  <AccountIconMenu user={user} />
+                  <AccountIconMenu user={user} style={{ transform: 'scale(1.3)', width: '24px', height: '24px' }} />
                 ) : (
                   !isLoading && (
                     <NextLink href="/api/auth/login" passHref={true}>
