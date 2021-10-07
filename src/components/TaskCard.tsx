@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Button } from '@material-ui/core';
 import { Task } from '.prisma/client';
+import Chip from '@material-ui/core/Chip';
 
 interface OwnProps {
   task: Task;
@@ -82,6 +83,7 @@ export default function TaskCard({ task }: OwnProps) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+        { task.skills?.split(',').map(skill => <Chip label={skill} style={{ marginLeft: '5px' }} />)}
         <div className={classes.primaryActionsContainer}>
           <Button className={classes.ctaButton} variant="contained" color="primary">I'll do it!</Button>
           <IconButton

@@ -31,4 +31,5 @@ model Task {
   shortDesc    String?
   longDesc     String?
   skills       String?
+  datePosted   String?
 }

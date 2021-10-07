@@ -26,7 +26,7 @@ export const Navbar = (): JSX.Element => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -34,11 +34,14 @@ export const Navbar = (): JSX.Element => {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
+          <NextLink href="/" passHref={true}>
+            <img src="./logo.svg" alt="Cottage Logo" width="200" height="38" style={{ cursor: 'pointer' }} />
+          </NextLink>
           <NextLink href="/" passHref={true}>
             {/*<MuiLink component="typography" variant="h6">*/}
             {/*  <Typography variant="h6" sx={ { flexGrow: 1 } }>*/}
-            <Div>Cottage</Div>
+            <Div></Div>
             {/*</Typography>*/}
             {/*</MuiLink>*/}
           </NextLink>

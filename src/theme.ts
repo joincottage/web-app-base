@@ -9,18 +9,19 @@ import { red } from '@material-ui/core/colors';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      light: 'rgb(31,87,184)',
+      main: 'rgb(31,87,184)',
+      dark: 'rgb(31,87,184)'
     },
     secondary: {
-      main: '#19857b',
-    },
-    error: {
-      main: red.A400,
-    },
-    background: {
-      default: '#fff',
+      light: 'rgb(31,87,184)',
+      main: 'rgb(31,87,184)',
+      dark: 'rgb(31,87,184)'
     },
   },
+  typography: {
+    fontFamily: '"Poppins", sans serif'
+  }
 });
 
 export default theme;
