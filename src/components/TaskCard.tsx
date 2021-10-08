@@ -19,9 +19,11 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Button } from '@material-ui/core';
 import { Task } from '.prisma/client';
 import Chip from '@material-ui/core/Chip';
+import { ClientInfo } from './ClientTabs';
 
 interface OwnProps {
   task: Task;
+  client: ClientInfo;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -53,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function TaskCard({ task }: OwnProps) {
+export default function TaskCard({ task, client }: OwnProps) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -64,11 +66,7 @@ export default function TaskCard({ task }: OwnProps) {
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
+        avatar={ client.logo }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />

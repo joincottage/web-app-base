@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { AppDataContext } from '../contexts/AppContext';
 
-interface ClientInfo {
+export interface ClientInfo {
   name: string;
   logo: JSX.Element;
 }

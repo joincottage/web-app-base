@@ -66,7 +66,9 @@ export default function Index() {
               ? 'Loading...'
               : error
                 ? JSON.stringify(error)
-                : data && data.map((task: Task) => <TaskCard task={task} />)
+                : state.client.name === 'All'
+                  ? data?.map((task: Task) => <TaskCard task={task} client={state.client} />)
+                  : data?.filter((task: Task) => task.clientName === state.client.name).map((task: Task) => <TaskCard task={task} client={state.client} />)
             }
           </div>
           <div>
