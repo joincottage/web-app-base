@@ -3,6 +3,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { AppDataContext } from '../contexts/AppContext';
 
 interface ClientInfo {
   name: string;
@@ -46,6 +47,7 @@ function a11yProps(index: number) {
 
 export default function BasicTabs({ clients }: OwnProps) {
   const [value, setValue] = React.useState(0);
+  const { dispatch } = React.useContext(AppDataContext);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -55,7 +57,12 @@ export default function BasicTabs({ clients }: OwnProps) {
     <Box sx={{ width: '100%' }}>
       <Box>
         <Tabs orientation="vertical" value={value} onChange={handleChange} aria-label="basic tabs example">
-          { clients.map((client, index) => <Tab icon={client.logo} label={client.name} {...a11yProps(index)} />)}
+          { clients.map((client, index) => <Tab onClick={() => {
+            dispatch({
+              type: 'SET_SELECTED_CLIENT',
+              payload: { client },
+            });
+          }} icon={client.logo} label={client.name} {...a11yProps(index)} />)}
         </Tabs>
       </Box>
     </Box>

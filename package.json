@@ -10,6 +10,7 @@
     "seed": "ts-node prisma/seed/seed.ts",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
     "update-db": "prisma migrate dev && prisma generate",
+    "prisma-studio": "prisma studio",
     "prisma-format": "prisma format"
   },
   "dependencies": {
