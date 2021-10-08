@@ -23,7 +23,6 @@ import { ClientInfo } from './ClientTabs';
 
 interface OwnProps {
   task: Task;
-  client: ClientInfo;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function TaskCard({ task, client }: OwnProps) {
+export default function TaskCard({ task }: OwnProps) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -66,14 +65,14 @@ export default function TaskCard({ task, client }: OwnProps) {
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={ client.logo }
+        avatar={ <Avatar sx={{ width: 24, height: 24 }} alt="Company logo" src={task.clientImgUrl || ''} aria-haspopup="true" /> }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
         title={task.name}
-        subheader="September 14, 2016"
+        subheader="October 14, 2021"
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -83,23 +82,32 @@ export default function TaskCard({ task, client }: OwnProps) {
       <CardActions disableSpacing>
         { task.skills?.split(',').map(skill => <Chip label={skill} style={{ marginLeft: '5px' }} />)}
         <div className={classes.primaryActionsContainer}>
-          <Button className={classes.ctaButton} variant="contained" color="primary">I'll do it!</Button>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
+          <Button
+            className={classes.ctaButton}
+            variant="outlined"
+            color="primary"
             onClick={handleExpandClick}
             aria-expanded={expanded}
-            aria-label="show more"
           >
-            <ExpandMoreIcon />
-          </IconButton>
+            Learn more
+          </Button>
         </div>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>{ task.longDesc }</Typography>
         </CardContent>
+        <CardActions disableSpacing>
+          <div className={classes.primaryActionsContainer}>
+            <Button
+              className={classes.ctaButton}
+              variant="contained"
+              color="primary"
+            >
+              I'll do it!
+            </Button>
+          </div>
+        </CardActions>
       </Collapse>
     </Card>
   );

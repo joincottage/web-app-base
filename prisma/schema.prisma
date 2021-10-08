@@ -29,7 +29,7 @@ model Task {
   clientImgUrl String?
   name         String?
   shortDesc    String?
-  longDesc     String?
+  longDesc     String?  @db.VarChar(1000)
   skills       String?
   datePosted   String?
 }

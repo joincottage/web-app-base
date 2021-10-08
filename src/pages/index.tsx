@@ -57,7 +57,7 @@ export default function Index() {
           <div>
             <ClientTabs clients={mockClients} />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', minWidth: '600px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', minWidth: '600px', maxWidth: '600px' }}>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '15px' }}>
               <span style={{ marginRight: '15px' }}>{ state.client.largeLogo }</span>
               <Typography variant="h6" style={{ paddingRight: '30px' }}>{ state.client.name }</Typography>
@@ -68,7 +68,7 @@ export default function Index() {
                 ? JSON.stringify(error)
                 : state.client.name === 'All'
                   ? data?.map((task: Task) => <TaskCard task={task} client={state.client} />)
-                  : data?.filter((task: Task) => task.clientName === state.client.name).map((task: Task) => <TaskCard task={task} client={state.client} />)
+                  : data?.filter((task: Task) => task.clientName === state.client.name).map((task: Task) => <TaskCard task={task} />)
             }
           </div>
           <div>
