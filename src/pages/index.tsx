@@ -27,6 +27,15 @@ const mockClients = [{
 },{
   name: 'SpiritTree',
   logo: <Avatar sx={{ width: 24, height: 24 }} alt="Company logo" src={'https://pbs.twimg.com/profile_images/1413998231797764105/wkdWkZPO_400x400.jpg'} aria-haspopup="true" />
+},{
+  name: 'Piggybank',
+  logo: <Avatar sx={{ width: 24, height: 24 }} alt="Company logo" src={'https://media-exp1.licdn.com/dms/image/C4D0BAQHClt0kh3jkzQ/company-logo_100_100/0/1631221115874?e=1642032000&v=beta&t=-h12TZPgGFBEqSMc3YSS3Xmkj9reLHGhtDrgbge2IQ8'} aria-haspopup="true" />
+},{
+  name: 'Strong Network',
+  logo: <Avatar sx={{ width: 24, height: 24 }} alt="Company logo" src={'https://media-exp1.licdn.com/dms/image/C4D0BAQGo_dRkMmWYVA/company-logo_200_200/0/1607589671903?e=1642032000&v=beta&t=_ad8jMQh0msfzuyqo_M0TGBeFZjijrC3GHtV1qNX0zg'} aria-haspopup="true" />
+},{
+  name: 'Cottage',
+  logo: <Avatar sx={{ width: 24, height: 24 }} alt="Company logo" src={'https://media-exp1.licdn.com/dms/image/C4E0BAQF3nI3dMkialQ/company-logo_100_100/0/1625689480587?e=1642032000&v=beta&t=pVqZQLKd1l4XS3m5RHxT8avXdekg4v0EeZOeAnmC9uM'} aria-haspopup="true" />
 }];
 
 export default function Index() {
