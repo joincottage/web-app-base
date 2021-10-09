@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import ProTip from '../ProTip';
 import NextLink from 'next/link';
 import Copyright from '../Copyright';
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
@@ -67,8 +66,8 @@ export default function Index() {
               : error
                 ? JSON.stringify(error)
                 : state.client.name === 'All'
-                  ? data?.map((task: Task) => <TaskCard task={task} client={state.client} />)
-                  : data?.filter((task: Task) => task.clientName === state.client.name).map((task: Task) => <TaskCard task={task} />)
+                  ? data?.map((task: Task) => <TaskCard key={task.id} task={task} />)
+                  : data?.filter((task: Task) => task.clientName === state.client.name).map((task: Task) => <TaskCard key={task.id} task={task} />)
             }
           </div>
           <div>

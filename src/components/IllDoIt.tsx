@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/styles';
-import { Button, TextField, Typography, FormControlLabel, FormControl, FormLabel, Radio, RadioGroup } from '@material-ui/core';
-import Axios from 'axios';
+import { makeStyles, createStyles } from '@material-ui/styles';
+import { Button, Typography, Theme } from '@material-ui/core';
+//import Axios from 'axios';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,7 +48,7 @@ export default function Signup() {
   const handleRequestAccess = async () => {
     setRequestStatus(RequestStatus.PENDING);
     try {
-      await Axios.post('/api/beta-access', { name, email, portfolioURL, userType });
+      //await Axios.post('/api/beta-access', { name });
       setRequestStatus(RequestStatus.SUCCEEDED);
     } catch (e) {
       setRequestStatus(RequestStatus.FAILED);
@@ -73,7 +73,7 @@ export default function Signup() {
               Are you sure?
             </Typography>
             <Typography variant="h6" gutterBottom>
-              You can only apply to perform three tasks at a time. Clicking "Yes, I'm sure" will send your name and a link to your LinkedIn or online portfolio to the client for approval.
+              You can only apply to perform three tasks at a time. Clicking &quot;Yes, I&apos;m sure&quot; will send your name and a link to your LinkedIn or online portfolio to the client for approval.
             </Typography>
             <Button
               className={classes.submitButton}
@@ -85,7 +85,7 @@ export default function Signup() {
             >
               { requestStatus === RequestStatus.PENDING ? 'Submitting...' : "Yes, I'm sure" }
             </Button>
-            { requestStatus === RequestStatus.FAILED ? <div className={classes.error}>Something went wrong. We're on it!</div> : null}
+            { requestStatus === RequestStatus.FAILED ? <div className={classes.error}>Something went wrong. We&apos;re on it!</div> : null}
           </>
         )}
     </div>

@@ -3,7 +3,6 @@ import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import NextLink from 'next/link';
 import MuiLink from '@material-ui/core/Link';
 import { useUser } from '@auth0/nextjs-auth0';
