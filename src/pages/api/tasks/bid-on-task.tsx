@@ -1,4 +1,4 @@
-import { prisma } from '../../database/prisma';
+import { prisma } from '../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
@@ -19,19 +19,6 @@ export default async function (
         },
       });
       res.send('OK');
-      break;
-    }
-    // case 'PUT':
-    //   await prisma.user.create({
-    //     data: {
-    //       ...req.body,
-    //     },
-    //   });
-    //   res.send('OK');
-    //   break;
-    case 'GET': {
-      const tasks = await prisma.task.findMany();
-      res.json(tasks);
       break;
     }
     default: {
