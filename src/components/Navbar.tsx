@@ -11,6 +11,9 @@ import { AccountIconMenu } from './AccountIconMenu';
 import Container from '@material-ui/core/Container';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import HelpIcon from '@material-ui/icons/Help';
+import useClient from 'src/hooks/useClient';
+import { Avatar } from '@material-ui/core';
+import { useEffect } from 'react';
 
 const Div = styled(MuiLink)(({ theme }) => ({
   ...theme.typography.h6,
@@ -22,7 +25,7 @@ const Div = styled(MuiLink)(({ theme }) => ({
 }));
 
 export const Navbar = (): JSX.Element => {
-  const { user, isLoading } = useUser();
+  const { client, user, isLoading } = useClient();
 
   return (
       <Box sx={{ flexGrow: 1 }}>
@@ -54,9 +57,10 @@ export const Navbar = (): JSX.Element => {
                 <IconButton style={{ color: 'white' }}>
                   <NotificationsNoneIcon style={{ cursor: 'pointer' }} />
                 </IconButton>
-                {!isLoading && user ? (
+                {!isLoading && user ? (<>
                   <AccountIconMenu user={user} style={{ transform: 'scale(1.3)', width: '24px', height: '24px' }} />
-                ) : (
+                  { client.map(c => <Avatar alt="Account" src={c?.logoUrl || ''} aria-haspopup="true" style={{ width: '24px', height: '24px' }} />)}
+                </>) : (
                   !isLoading && (
                     <NextLink href="/api/auth/login" passHref={true}>
                       <Button color="inherit">Login</Button>
