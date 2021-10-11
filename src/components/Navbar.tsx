@@ -58,8 +58,8 @@ export const Navbar = (): JSX.Element => {
                   <NotificationsNoneIcon style={{ cursor: 'pointer' }} />
                 </IconButton>
                 {!isLoading && user ? (<>
-                  <AccountIconMenu user={user} style={{ transform: 'scale(1.3)', width: '24px', height: '24px' }} />
-                  { client.map(c => <Avatar alt="Account" src={c?.logoUrl || ''} aria-haspopup="true" style={{ width: '24px', height: '24px' }} />)}
+                  <AccountIconMenu user={user} style={{ transform: 'scale(1.3)', width: '24px', height: '24px', marginLeft: '15px' }} />
+                  { client.map(c => <Avatar alt="Account" src={c?.logoUrl || ''} aria-haspopup="true" style={{ width: '28px', height: '28px', marginRight: '8px' }} />)}
                 </>) : (
                   !isLoading && (
                     <NextLink href="/api/auth/login" passHref={true}>
