@@ -14,30 +14,31 @@ generator client {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  auth_id       Int      @unique
-  email         String   @unique
-  name          String?
-  img_url       String?
-  bio           String?
-  skills        String?
-  type          String?
+  id      Int     @id @default(autoincrement())
+  auth_id Int     @unique
+  email   String  @unique
+  name    String?
+  img_url String?
+  bio     String?
+  skills  String?
+  type    String?
 }
 
 model Task {
-  id           Int      @id @default(autoincrement())
+  id           Int     @id @default(autoincrement())
   clientName   String?
   clientImgUrl String?
   name         String?
   shortDesc    String?
-  longDesc     String?  @db.VarChar(1000)
+  longDesc     String? @db.VarChar(1000)
   skills       String?
   datePosted   String?
+  status       String?
 }
 
 model Client {
-  id                Int      @id @default(autoincrement())
-  name              String?
-  logoUrl           String?
-  userEmailOfOwner  String
+  id               Int     @id @default(autoincrement())
+  name             String?
+  logoUrl          String?
+  userEmailOfOwner String
 }

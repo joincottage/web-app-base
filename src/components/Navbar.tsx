@@ -14,6 +14,8 @@ import HelpIcon from '@material-ui/icons/Help';
 import useClient from 'src/hooks/useClients';
 import { Avatar } from '@material-ui/core';
 import { useEffect } from 'react';
+import Divider from '@material-ui/core/Divider';
+import { useRouter } from 'next/router';
 
 const Div = styled(MuiLink)(({ theme }) => ({
   ...theme.typography.h6,
@@ -24,8 +26,18 @@ const Div = styled(MuiLink)(({ theme }) => ({
   textDecoration: 'none',
 }));
 
+const activeStyles = {
+  color: 'white',
+  borderColor: 'white',
+};
+const inactiveStyles= {
+  color: 'white',
+  opacity: 0.5
+}
+
 export const Navbar = (): JSX.Element => {
   const { clients, user, isLoading } = useClient();
+  const router = useRouter();
 
   return (
       <Box sx={{ flexGrow: 1 }}>
@@ -51,14 +63,25 @@ export const Navbar = (): JSX.Element => {
                   {/*</Typography>*/}
                   {/*</MuiLink>*/}
                 </NextLink>
-                <NextLink href="/create-a-task" passHref={true}>
-                  <Button
-                    variant="outlined"
-                    style={{ color: 'white', borderColor: 'white', marginRight: '15px' }}
-                  >
-                    Create a task
-                  </Button>
-                </NextLink>
+                <div style={{ flexGrow: 1, display: 'flex' }}>
+                  <NextLink href="/" passHref={true}>
+                    <Button
+                      variant={router.pathname == "/" ? "outlined" : "text"}
+                      style={router.pathname == "/" ? activeStyles : inactiveStyles}
+                    >
+                      Freelancer Mode
+                    </Button>
+                  </NextLink>
+                  <Divider orientation="vertical" style={{ backgroundColor: 'white', height: '35px', marginRight: '15px', marginLeft: '15px' }} />
+                  <NextLink href="/manage-tasks" passHref={true}>
+                    <Button
+                      variant={router.pathname == "/manage-tasks" ? "outlined" : "text"}
+                      style={router.pathname == "/manage-tasks" ? activeStyles : inactiveStyles}
+                    >
+                      Client Mode
+                    </Button>
+                  </NextLink>
+                </div>
                 <IconButton style={{ color: 'white' }}>
                   <HelpIcon style={{ cursor: 'pointer' }} />
                 </IconButton>
