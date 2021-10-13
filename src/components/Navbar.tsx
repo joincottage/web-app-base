@@ -11,7 +11,7 @@ import { AccountIconMenu } from './AccountIconMenu';
 import Container from '@material-ui/core/Container';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import HelpIcon from '@material-ui/icons/Help';
-import useClient from 'src/hooks/useClient';
+import useClient from 'src/hooks/useClients';
 import { Avatar } from '@material-ui/core';
 import { useEffect } from 'react';
 
@@ -25,7 +25,7 @@ const Div = styled(MuiLink)(({ theme }) => ({
 }));
 
 export const Navbar = (): JSX.Element => {
-  const { client, user, isLoading } = useClient();
+  const { clients, user, isLoading } = useClient();
 
   return (
       <Box sx={{ flexGrow: 1 }}>
@@ -51,6 +51,14 @@ export const Navbar = (): JSX.Element => {
                   {/*</Typography>*/}
                   {/*</MuiLink>*/}
                 </NextLink>
+                <NextLink href="/create-a-task" passHref={true}>
+                  <Button
+                    variant="outlined"
+                    style={{ color: 'white', borderColor: 'white', marginRight: '15px' }}
+                  >
+                    Create a task
+                  </Button>
+                </NextLink>
                 <IconButton style={{ color: 'white' }}>
                   <HelpIcon style={{ cursor: 'pointer' }} />
                 </IconButton>
@@ -59,7 +67,7 @@ export const Navbar = (): JSX.Element => {
                 </IconButton>
                 {!isLoading && user ? (<>
                   <AccountIconMenu user={user} style={{ transform: 'scale(1.3)', width: '24px', height: '24px', marginLeft: '15px' }} />
-                  { client.map(c => <Avatar alt="Account" src={c?.logoUrl || ''} aria-haspopup="true" style={{ width: '28px', height: '28px', marginRight: '8px' }} />)}
+                  { clients.map(c => <Avatar alt="Account" src={c?.logoUrl || ''} aria-haspopup="true" style={{ width: '28px', height: '28px', marginRight: '8px' }} />)}
                 </>) : (
                   !isLoading && (
                     <NextLink href="/api/auth/login" passHref={true}>

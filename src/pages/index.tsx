@@ -12,6 +12,7 @@ import { Avatar, Button } from '@material-ui/core';
 import { AccountIconMenu } from 'src/components/AccountIconMenu';
 import ClientTabs from 'src/components/ClientTabs';
 import { AppDataContext } from '../contexts/AppContext';
+import Divider from '@material-ui/core/Divider';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -66,8 +67,15 @@ export default function Index() {
               : error
                 ? JSON.stringify(error)
                 : state.client.name === 'All'
-                  ? data?.map((task: Task) => <TaskCard key={task.id} task={task} />)
-                  : data?.filter((task: Task) => task.clientName === state.client.name).map((task: Task) => <TaskCard key={task.id} task={task} />)
+                  ? data?.map((task: Task) => <>
+                      <Divider />
+                      <TaskCard key={task.id} task={task} />
+                    </>)
+                  : data?.filter((task: Task) =>
+                      task.clientName === state.client.name).map((task: Task) => <>
+                          <Divider />
+                          <TaskCard key={task.id} task={task} />
+                        </>)
             }
           </div>
           <div>

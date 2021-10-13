@@ -9,10 +9,10 @@ export default async function (
 ): Promise<void> {
   switch (req.method) {
     case 'POST': {
-      if (req.headers.authorization !== auth0HookToken) {
-        res.status(401).json({ message: 'You are not authorized' });
-        break;
-      }
+      // if (req.headers.authorization !== auth0HookToken) {
+      //   res.status(401).json({ message: 'You are not authorized' });
+      //   break;
+      // }
       await prisma.task.create({
         data: {
           ...req.body,
