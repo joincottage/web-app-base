@@ -16,6 +16,7 @@ import { Avatar } from '@material-ui/core';
 import { useEffect } from 'react';
 import Divider from '@material-ui/core/Divider';
 import { useRouter } from 'next/router';
+import HelpMenu from './HelpMenu';
 
 const Div = styled(MuiLink)(({ theme }) => ({
   ...theme.typography.h6,
@@ -82,15 +83,15 @@ export const Navbar = (): JSX.Element => {
                     </Button>
                   </NextLink>
                 </div>
-                <IconButton style={{ color: 'white' }}>
-                  <HelpIcon style={{ cursor: 'pointer' }} />
-                </IconButton>
+                <HelpMenu />
                 <IconButton style={{ color: 'white' }}>
                   <NotificationsNoneIcon style={{ cursor: 'pointer' }} />
                 </IconButton>
                 {!isLoading && user ? (<>
                   <AccountIconMenu user={user} style={{ transform: 'scale(1.3)', width: '24px', height: '24px', marginLeft: '15px' }} />
-                  { clients.map(c => <Avatar alt="Account" src={c?.logoUrl || ''} aria-haspopup="true" style={{ width: '28px', height: '28px', marginRight: '8px' }} />)}
+                  { clients.map(c => <NextLink href={`/manage-tasks?selectedClientName=${c.name}`} passHref={true}>
+                    <Avatar alt="Account" src={c?.logoUrl || ''} aria-haspopup="true" style={{ cursor: 'pointer', width: '28px', height: '28px', marginRight: '8px' }} />
+                  </NextLink>)}
                 </>) : (
                   !isLoading && (
                     <NextLink href="/api/auth/login" passHref={true}>

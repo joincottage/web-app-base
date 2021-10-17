@@ -72,8 +72,8 @@ export default function Index() {
                         <Divider />
                         <TaskCard key={task.id} task={task} mode='freelancer' />
                       </>)
-                  : data?.filter((task: Task) =>
-                      task.clientName === state.client.name).map((task: Task) => <>
+                  : data?.filter((task: Task) => task.clientName === state.client.name && task.status === 'task_queued')
+                      .map((task: Task) => <>
                           <Divider />
                           <TaskCard key={task.id} task={task} mode='freelancer' />
                         </>)

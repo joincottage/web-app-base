@@ -78,8 +78,8 @@ export default function ManageTasks() {
   const [modalStyle] = React.useState(getModalStyle);
 
   useEffect(() => {
-    setSelectedClient(clients[0]);
-  }, [clients]);
+    setSelectedClient(clients.find(c => c.name === router.query.selectedClientName) || clients[0]);
+  }, [clients, router.query]);
 
   const handleClickCreateATask = () => {
     setIsCreateATaskOpen(true);
