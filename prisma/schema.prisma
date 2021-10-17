@@ -25,20 +25,24 @@ model User {
 }
 
 model Task {
-  id           Int     @id @default(autoincrement())
-  clientName   String?
-  clientImgUrl String?
-  name         String?
-  shortDesc    String?
-  longDesc     String? @db.VarChar(1000)
-  skills       String?
-  datePosted   String?
-  status       String?
+  id               Int     @id @default(autoincrement())
+  clientName       String?
+  clientImgUrl     String?
+  clientCategoryId String?
+  name             String?
+  shortDesc        String?
+  longDesc         String? @db.VarChar(1000)
+  skills           String?
+  datePosted       String?
+  status           String?
+  price            Int?
+  discordChannelId String?
 }
 
 model Client {
-  id               Int     @id @default(autoincrement())
-  name             String?
-  logoUrl          String?
-  userEmailOfOwner String
+  id                Int     @id @default(autoincrement())
+  name              String?
+  logoUrl           String?
+  userEmailOfOwner  String
+  discordCategoryId String?
 }

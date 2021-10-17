@@ -76,6 +76,7 @@ export default function CreateATask({ client }: OwnProps) {
       await Axios.post('/api/tasks', {
         clientName: client?.name,
         clientImgUrl: client?.logoUrl,
+        clientCategoryId: client?.discordCategoryId,
         name: title,
         shortDesc,
         longDesc,

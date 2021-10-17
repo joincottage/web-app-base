@@ -16,9 +16,12 @@ import { Task } from '.prisma/client';
 import Chip from '@material-ui/core/Chip';
 import CloseIcon from '@material-ui/icons/Close';
 import IllDoIt from './IllDoIt';
+import { UserProfile, useUser } from '@auth0/nextjs-auth0';
+import Axios from 'axios';
 
 interface OwnProps {
   task: Task;
+  mode: 'freelancer' | 'client';
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -72,7 +75,8 @@ function getModalStyle() {
   };
 }
 
-export default function TaskCard({ task }: OwnProps) {
+export default function TaskCard({ task, mode }: OwnProps) {
+  const { user } = useUser();
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [open, setOpen] = useState(false);
@@ -82,7 +86,7 @@ export default function TaskCard({ task }: OwnProps) {
     setExpanded(!expanded);
   };
 
-  const handleClickIllDoIt = () => {
+  const handleClickIllDoIt = async () => {
     setOpen(true);
     // sa_event('click_IllDoIt');
   };
@@ -92,7 +96,7 @@ export default function TaskCard({ task }: OwnProps) {
   const modalBody = (
     <div style={modalStyle} className={classes.paper}>
       <CloseIcon onClick={handleClose} className={classes.closeIcon} style={{ color: 'white' }} />
-      <IllDoIt />
+      <IllDoIt user={(user as UserProfile)} task={task} />
     </div>
   );
 
@@ -100,11 +104,7 @@ export default function TaskCard({ task }: OwnProps) {
     <Card className={classes.root}>
       <CardHeader
         avatar={ <Avatar sx={{ width: 24, height: 24 }} alt="Company logo" src={task.clientImgUrl || ''} aria-haspopup="true" /> }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
+        action={ <Typography variant="h6" style={{ color: 'green' }}>${task.price}</Typography> }
         title={task.name}
         subheader="October 14, 2021"
       />
@@ -115,7 +115,7 @@ export default function TaskCard({ task }: OwnProps) {
       </CardContent>
       <CardActions disableSpacing>
         { task.skills?.split(',').map(skill => <Chip key={skill} label={skill} style={{ marginLeft: '5px' }} />)}
-        <div className={classes.primaryActionsContainer}>
+        { mode === 'freelancer' && <div className={classes.primaryActionsContainer}>
           <Button
             className={classes.ctaButton}
             variant="outlined"
@@ -125,7 +125,7 @@ export default function TaskCard({ task }: OwnProps) {
           >
             Learn more
           </Button>
-        </div>
+        </div> }
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

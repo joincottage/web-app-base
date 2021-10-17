@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/styles';
 import { Button, Typography, Theme } from '@material-ui/core';
-//import Axios from 'axios';
+import Axios from 'axios';
+import { Task } from '.prisma/client';
+import { UserProfile } from '@auth0/nextjs-auth0';
+
+interface OwnProps {
+  user: UserProfile;
+  task: Task;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,14 +48,18 @@ enum RequestStatus {
   SUCCEEDED='succeeded'
 }
 
-export default function Signup() {
+export default function IllDoIt({ user, task }: OwnProps) {
   const classes = useStyles();
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(RequestStatus.IDLE);
 
   const handleRequestAccess = async () => {
     setRequestStatus(RequestStatus.PENDING);
     try {
-      //await Axios.post('/api/beta-access', { name });
+      await Axios.post('/api/discord/notify-task-interest', {
+        name: user?.name,
+        discordChannelId: task.discordChannelId,
+        task,
+      });
       setRequestStatus(RequestStatus.SUCCEEDED);
     } catch (e) {
       setRequestStatus(RequestStatus.FAILED);
@@ -64,7 +75,7 @@ export default function Signup() {
             Success
           </Typography>
           <Typography variant="h6" gutterBottom>
-            The client has received your request and will reach out soon!
+            You have picked up this task! You have been added to the task channel in Discord. Please open Discord to request additional information from the client.
           </Typography>
         </>)
         : (
@@ -73,7 +84,7 @@ export default function Signup() {
               Are you sure?
             </Typography>
             <Typography variant="h6" gutterBottom>
-              You can only apply to perform three tasks at a time. Clicking &quot;Yes, I&apos;m sure&quot; will send your name and a link to your LinkedIn or online portfolio to the client for approval.
+              If you click "Yes", the client will be notified that you have picked up the task and will expect development to begin.
             </Typography>
             <Button
               className={classes.submitButton}

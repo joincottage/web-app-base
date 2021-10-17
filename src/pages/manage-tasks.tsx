@@ -143,7 +143,7 @@ export default function ManageTasks() {
                           .reverse()
                           .map((task: Task) => <>
                             <Divider />
-                            <TaskCard key={task.id} task={task} />
+                            <TaskCard key={task.id} task={task} mode='client' />
                           </>)
               }
             </Box>
@@ -157,7 +157,7 @@ export default function ManageTasks() {
                           .filter((task: Task) => task.status === 'in_progress')
                           .map((task: Task) => <>
                             <Divider />
-                            <TaskCard key={task.id} task={task} />
+                            <TaskCard key={task.id} task={task} mode='client' />
                           </>)
               }
             </Box>
@@ -171,7 +171,7 @@ export default function ManageTasks() {
                           .filter((task: Task) => task.status === 'ready_for_review')
                           .map((task: Task) => <>
                             <Divider />
-                            <TaskCard key={task.id} task={task} />
+                            <TaskCard key={task.id} task={task} mode='client' />
                           </>)
               }
             </Box>
