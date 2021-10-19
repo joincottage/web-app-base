@@ -55,9 +55,10 @@ export default function IllDoIt({ user, task }: OwnProps) {
   const handleRequestAccess = async () => {
     setRequestStatus(RequestStatus.PENDING);
     try {
-      await Axios.post('/api/discord/notify-task-interest', {
+      await Axios.post('/api/discord/notify-task-picked-up', {
         name: user?.name,
         discordChannelId: task.discordChannelId,
+        discordUserId: user.sub?.split('|')[2],
         task,
       });
       setRequestStatus(RequestStatus.SUCCEEDED);

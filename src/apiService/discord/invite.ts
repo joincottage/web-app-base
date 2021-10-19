@@ -1,4 +1,4 @@
-import { GuildChannel } from 'discord.js';
+import { GuildChannel, Role } from 'discord.js';
 import { getClient } from './client';
 
 const guildId = process.env.DISCORD_GUILD_ID || '';
@@ -15,18 +15,6 @@ export const createInviteLink = async () => {
       unique: true,
     });
     return `https://discord.gg/${invite.code}`;
-  } catch (e) {
-    throw e;
-  }
-};
-
-export const addUserToServer = async (roles: string[]) => {
-  // todo use guild.addMember() in future so we can map discord to cottage accounts
-  // https://discord.js.org/#/docs/main/v12/class/Guild?scrollTo=addMember
-  try {
-    const client = await getClient();
-    const guild = await client.guilds.fetch(guildId);
-    //guild.addMember()
   } catch (e) {
     throw e;
   }

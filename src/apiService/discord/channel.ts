@@ -38,6 +38,22 @@ export const postMessageToChannel = async (channelId: string, message: string) =
       (channel as TextChannel).send(message);
     }
   } catch (e) {
+    console.log('Failed to post message to channel');
+    throw e;
+  }
+};
+
+export const addUserToChannel = async (channelId: string, userId: string) => {
+  try {
+    const client = await getClient();
+    const guild = await client.guilds.fetch(guildId);
+    const channel = await guild.channels.cache.find(ch => ch.id === channelId);
+    const user = await guild.members.cache.get(userId);
+    console.log(`user: ${JSON.stringify(user)}`);
+    console.log('creating overwrite');
+    await channel?.createOverwrite(userId, { VIEW_CHANNEL: true });
+  } catch (e) {
+    console.log('Failed to add user to channel');
     throw e;
   }
 };

@@ -1,13 +1,14 @@
 
 import { Task } from '.prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { postMessageToChannel } from 'src/apiService/discord/channel';
+import { addUserToChannel, postMessageToChannel } from 'src/apiService/discord/channel';
 import { prisma } from 'src/database/prisma';
 
 interface NotifyTaskInterestRequest extends NextApiRequest {
   body: {
     name: string;
     discordChannelId: string;
+    discordUserId: string;
     task: Task;
   };
 }
@@ -17,6 +18,7 @@ export default async function (req: NotifyTaskInterestRequest, res: NextApiRespo
   const { body, method } = req;
   const name = body.name;
   const discordChannelId = body.discordChannelId;
+  const discordUserId = body.discordUserId;
   const task = body.task;
 
   if (method !== 'POST') {
@@ -36,11 +38,12 @@ export default async function (req: NotifyTaskInterestRequest, res: NextApiRespo
         status: 'in_progress'
       }
     });
-    await postMessageToChannel(discordChannelId, formatInfo(name));
+    //await postMessageToChannel(discordChannelId, formatInfo(name));
+    await addUserToChannel(discordChannelId, discordUserId);
     console.log(`Successfully posted info to discord`);
     res.status(200).json({ message: 'success' });
   } catch (error) {
-    console.error(`Failed posing info to discord`, error);
+    console.error(`Failed posting info to discord`, error);
     res.status(500).json({ message: 'Failed to post info' });
   }
 

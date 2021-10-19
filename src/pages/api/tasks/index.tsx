@@ -24,7 +24,8 @@ export default async function (
       await prisma.task.create({
         data: {
           ...req.body,
-          discordChannelId: channel.id
+          discordChannelId: channel.id,
+          status: 'task_queued',
         },
       });
 
