@@ -34,6 +34,7 @@ interface OwnProps {
 export default function FirstTimeUser({ user, inviteLink }: OwnProps) {
   const router = useRouter();
   const handleJoinDiscord = () => {
+    // @ts-ignore
     window.open(inviteLink, '_blank').focus();
   };
 

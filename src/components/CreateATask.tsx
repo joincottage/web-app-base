@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { makeStyles } from "@material-ui/styles";
 import { createStyles, Theme } from '@material-ui/core/styles';
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { Client } from ".prisma/client";
 import Axios from 'axios';
 import { Box, Typography, TextField, Button, Snackbar, Alert } from "@material-ui/core";
@@ -97,11 +98,7 @@ export default function CreateATask({ client }: OwnProps) {
     setLongDesc('');
     setRequiredSkills('');
   };
-  const handleCloseShowSuccess = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
+  const handleCloseShowSuccess = (event: SyntheticEvent<Element, Event>) => {
     setShowSuccess(false);
   };
 

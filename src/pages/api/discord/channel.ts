@@ -5,13 +5,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'POST': {
       try {
-        const { name, topic } = req.body;
+        const { name, topic, categoryId } = req.body;
         if (!name) {
           res.status(400).json({
             message: 'Property "name" must be provided to create a channel',
           });
         }
-        const channel = await createTextChannel(name, topic);
+        const channel = await createTextChannel(name, topic, categoryId);
 
         res.json(channel);
       } catch (e) {

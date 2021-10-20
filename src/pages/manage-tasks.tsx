@@ -73,7 +73,7 @@ export default function ManageTasks() {
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const { clients, user, isLoading } = useClient();
   const { loading, error, data: tasks } = useTasks();
-  const [isCreateATaskOpen, setIsCreateATaskOpen] = useState(router.query.showCreateTask);
+  const [isCreateATaskOpen, setIsCreateATaskOpen] = useState(router.query.showCreateTask === 'true');
   const { state, dispatch } = useContext(AppDataContext);
   const [modalStyle] = React.useState(getModalStyle);
 
@@ -116,7 +116,7 @@ export default function ManageTasks() {
             }}
           >
             <Avatar alt="Account" src={c?.logoUrl || ''} aria-haspopup="true" style={{ width: '40px', height: '40px', marginRight: '8px' }} />
-            <Typography variant="h7">
+            <Typography variant="h6">
               { c.name }
             </Typography>
         </div>)}
@@ -189,7 +189,9 @@ export default function ManageTasks() {
         }}
       >
         <Fade in={isCreateATaskOpen}>
+          {/* @ts-ignore */}
           <div style={modalStyle} className={classes.paper}>
+            {/* @ts-ignore */}
             <CloseIcon onClick={handleCloseCreateATask} className={classes.closeIcon} />
             <CreateATask client={selectedClient} />
           </div>

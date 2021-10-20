@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import { createStyles, Theme } from '@material-ui/core/styles';
 import { Button, TextField, Typography, FormControlLabel, FormControl, FormLabel, Radio, RadioGroup, Container, Box } from '@material-ui/core';

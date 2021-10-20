@@ -22,9 +22,13 @@ export default function Index() {
   const { user, isLoading } = useUser();
   const { state } = useContext(AppDataContext);
 
-  useEffect(async () => {
-    const response = await Axios.get('/api/auth/userinfo');
-    console.log(`Discord response: ${JSON.stringify(response)}`);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await Axios.get('/api/auth/userinfo');
+      console.log(`Discord response: ${JSON.stringify(response)}`);
+    };
+
+    fetchData();
   }, []);
   
   return (<div>Adding you to the Cottage Discord server...</div>);
