@@ -1,8 +1,12 @@
-import { TextChannel } from 'discord.js';
+import { Guild, TextChannel } from 'discord.js';
 import { getClient } from './client';
 const guildId = process.env.DISCORD_GUILD_ID || '';
 
-export const createTextChannel = async (channelName: string, topic: string, categoryId: string) => {
+export const createTextChannel = async (
+  channelName: string,
+  topic: string,
+  categoryId: string
+) => {
   console.log(`guildId: ${guildId}`);
   console.log(`clientCategoryId: ${categoryId}`);
   console.log(`channelName: ${channelName}`);
@@ -29,13 +33,20 @@ export const createTextChannel = async (channelName: string, topic: string, cate
   }
 };
 
-export const postMessageToChannel = async (channelId: string, message: string) => {
+export const postMessageToChannel = async (
+  channelId: string,
+  message: string
+) => {
   try {
+    console.log('Posting message to Discord channel');
     const client = await getClient();
     const guild = await client.guilds.fetch(guildId);
-    const channel = await guild.channels.cache.find(ch => ch.id === channelId);
+    const channel = await guild.channels.cache.find(
+      (ch) => ch.id === channelId
+    );
     if (channel?.isText()) {
       (channel as TextChannel).send(message);
+      console.log('Message successfully posted to Discord channel');
     }
   } catch (e) {
     console.log('Failed to post message to channel');
@@ -45,13 +56,17 @@ export const postMessageToChannel = async (channelId: string, message: string) =
 
 export const addUserToChannel = async (channelId: string, userId: string) => {
   try {
+    console.log(`Adding user to Discord channel`);
     const client = await getClient();
-    const guild = await client.guilds.fetch(guildId);
-    const channel = await guild.channels.cache.find(ch => ch.id === channelId);
-    const user = await guild.members.cache.get(userId);
-    console.log(`user: ${JSON.stringify(user)}`);
-    console.log('creating overwrite');
-    await channel?.createOverwrite(userId, { VIEW_CHANNEL: true });
+    const guild = await client.guilds.fetch(guildId, true);
+    console.log('Fetched guild object');
+    const channel = await guild.channels.cache.find(
+      (ch) => ch.id === channelId
+    );
+    console.log('Fetched channel object');
+    const user = await client.users.fetch(userId);
+    await channel?.createOverwrite(user, { VIEW_CHANNEL: true });
+    console.log('Successfully added user to channel');
   } catch (e) {
     console.log('Failed to add user to channel');
     throw e;
