@@ -40,14 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
     textField: {
       margin: theme.spacing(1),
     },
-    form: {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
     submitButton: {
       padding: '25px',
       margin: theme.spacing(1),
@@ -77,7 +69,7 @@ export default function ManageTasks() {
       maxWidth={false}
       style={{ display: 'flex', flexDirection: 'column' }}
     >
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className={classes.root}>
         {clients.length > 0 ? (
           <>
             {clients.map((c) => (

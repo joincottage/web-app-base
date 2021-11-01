@@ -85,76 +85,78 @@ const KanbanBoard = ({ client }: OwnProps) => {
               Create a task
             </Button>
           </div>
-          <Box m={2} style={{ flexBasis: '33%' }}>
-            <Typography
-              variant="h6"
-              style={{ textAlign: 'center' }}
-              gutterBottom
-            >
-              Task Queue
-            </Typography>
-            {loading
-              ? 'Loading...'
-              : error
-              ? JSON.stringify(error)
-              : tasks
-                  ?.filter((task: Task) => task.clientName === client?.name)
-                  .filter(
-                    (task: Task) =>
-                      task.status === 'task_queued' || !task.status
-                  )
-                  .reverse()
-                  .map((task: Task) => (
-                    <>
-                      <Divider />
-                      <TaskCard key={task.id} task={task} mode="client" />
-                    </>
-                  ))}
-          </Box>
-          <Box m={2} style={{ flexBasis: '33%' }}>
-            <Typography
-              variant="h6"
-              style={{ textAlign: 'center' }}
-              gutterBottom
-            >
-              In Progress
-            </Typography>
-            {loading
-              ? 'Loading...'
-              : error
-              ? JSON.stringify(error)
-              : tasks
-                  ?.filter((task: Task) => task.clientName === client?.name)
-                  .filter((task: Task) => task.status === 'in_progress')
-                  .map((task: Task) => (
-                    <>
-                      <Divider />
-                      <TaskCard key={task.id} task={task} mode="client" />
-                    </>
-                  ))}
-          </Box>
-          <Box m={2} style={{ flexBasis: '33%' }}>
-            <Typography
-              variant="h6"
-              style={{ textAlign: 'center' }}
-              gutterBottom
-            >
-              Ready for Review
-            </Typography>
-            {loading
-              ? 'Loading...'
-              : error
-              ? JSON.stringify(error)
-              : tasks
-                  ?.filter((task: Task) => task.clientName === client?.name)
-                  .filter((task: Task) => task.status === 'ready_for_review')
-                  .map((task: Task) => (
-                    <>
-                      <Divider />
-                      <TaskCard key={task.id} task={task} mode="client" />
-                    </>
-                  ))}
-          </Box>
+          <div style={{ display: 'flex', width: '100vw' }}>
+            <Box m={2} style={{ flexBasis: '33%' }}>
+              <Typography
+                variant="h6"
+                style={{ textAlign: 'center' }}
+                gutterBottom
+              >
+                Task Queue
+              </Typography>
+              {loading
+                ? 'Loading...'
+                : error
+                ? JSON.stringify(error)
+                : tasks
+                    ?.filter((task: Task) => task.clientName === client?.name)
+                    .filter(
+                      (task: Task) =>
+                        task.status === 'task_queued' || !task.status
+                    )
+                    .reverse()
+                    .map((task: Task) => (
+                      <>
+                        <Divider />
+                        <TaskCard key={task.id} task={task} mode="client" />
+                      </>
+                    ))}
+            </Box>
+            <Box m={2} style={{ flexBasis: '33%' }}>
+              <Typography
+                variant="h6"
+                style={{ textAlign: 'center' }}
+                gutterBottom
+              >
+                In Progress
+              </Typography>
+              {loading
+                ? 'Loading...'
+                : error
+                ? JSON.stringify(error)
+                : tasks
+                    ?.filter((task: Task) => task.clientName === client?.name)
+                    .filter((task: Task) => task.status === 'in_progress')
+                    .map((task: Task) => (
+                      <>
+                        <Divider />
+                        <TaskCard key={task.id} task={task} mode="client" />
+                      </>
+                    ))}
+            </Box>
+            <Box m={2} style={{ flexBasis: '33%' }}>
+              <Typography
+                variant="h6"
+                style={{ textAlign: 'center' }}
+                gutterBottom
+              >
+                Ready for Review
+              </Typography>
+              {loading
+                ? 'Loading...'
+                : error
+                ? JSON.stringify(error)
+                : tasks
+                    ?.filter((task: Task) => task.clientName === client?.name)
+                    .filter((task: Task) => task.status === 'ready_for_review')
+                    .map((task: Task) => (
+                      <>
+                        <Divider />
+                        <TaskCard key={task.id} task={task} mode="client" />
+                      </>
+                    ))}
+            </Box>
+          </div>
           <div>
             <Modal
               open={isCreateATaskOpen}
