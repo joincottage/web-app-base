@@ -82,8 +82,8 @@ export default function Index() {
           <div>
             {!isLoading && user ? (<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginLeft: '25px' }}>
               <AccountIconMenu user={user} style={{ width: '80px', height: '80px' }} />
-              <Typography variant="h6" style={{ textAlign: 'center' }}>Availability</Typography>
-              <div>10 hrs/week</div>
+              <Typography variant="h6" style={{ textAlign: 'center' }}>Current Task</Typography>
+              <Typography variant="h6" style={{ textAlign: 'center' }}>Previous Tasks</Typography>
             </div>) : (
               !isLoading && (
                 <NextLink href="/api/auth/login" passHref={true}>
