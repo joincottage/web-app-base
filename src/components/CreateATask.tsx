@@ -1,10 +1,17 @@
 // @ts-nocheck
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from '@material-ui/styles';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import React, { SyntheticEvent, useState } from "react";
-import { Client } from ".prisma/client";
+import React, { SyntheticEvent, useState } from 'react';
+import { Client } from '.prisma/client';
 import Axios from 'axios';
-import { Box, Typography, TextField, Button, Snackbar, Alert } from "@material-ui/core";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+} from '@material-ui/core';
 
 interface OwnProps {
   client: Client | null;
@@ -18,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       flexDirection: 'column',
       textAlign: 'center',
-      minHeight: '405px'
+      minHeight: '405px',
     },
     textField: {
       margin: theme.spacing(1),
@@ -33,10 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     submitButton: {
       padding: '25px',
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
     },
     error: {
-      color: 'red'
+      color: 'red',
     },
     paper: {
       position: 'absolute',
@@ -50,16 +57,16 @@ const useStyles = makeStyles((theme: Theme) =>
     closeIcon: {
       cursor: 'pointer',
       position: 'absolute',
-      right: '15px'
-    }
-  }),
+      right: '15px',
+    },
+  })
 );
 
 enum RequestStatus {
-  IDLE='idle',
-  PENDING='pending',
-  FAILED='failed',
-  SUCCEEDED='succeeded'
+  IDLE = 'idle',
+  PENDING = 'pending',
+  FAILED = 'failed',
+  SUCCEEDED = 'succeeded',
 }
 
 export default function CreateATask({ client }: OwnProps) {
@@ -68,8 +75,11 @@ export default function CreateATask({ client }: OwnProps) {
   const [shortDesc, setShortDesc] = useState('');
   const [longDesc, setLongDesc] = useState('');
   const [requiredSkills, setRequiredSkills] = useState('');
-  const [requestStatus, setRequestStatus] = useState<RequestStatus>(RequestStatus.IDLE);
+  const [requestStatus, setRequestStatus] = useState<RequestStatus>(
+    RequestStatus.IDLE
+  );
   const [showSuccess, setShowSuccess] = useState(false);
+  const [price, setPrice] = useState(0);
 
   const handleSubmit = async () => {
     setRequestStatus(RequestStatus.PENDING);
@@ -82,7 +92,7 @@ export default function CreateATask({ client }: OwnProps) {
         shortDesc,
         longDesc,
         skills: requiredSkills,
-        datePosted: new Date().toString()
+        datePosted: new Date().toString(),
       });
       setRequestStatus(RequestStatus.SUCCEEDED);
       setShowSuccess(true);
@@ -102,65 +112,88 @@ export default function CreateATask({ client }: OwnProps) {
     setShowSuccess(false);
   };
 
-  return (<Box m={4}>
-    <div className={classes.root}>
-      <Typography variant="h5" gutterBottom>
-        Create a task
-      </Typography>
-      <form className={classes.form} noValidate autoComplete="off">
-        <TextField
-          className={classes.textField}
-          value={title} label="Title"
-          variant="outlined"
-          onChange={e => setTitle(e.target.value)} required
-        />
-        <TextField
-          className={classes.textField}
-          value={shortDesc}
-          label="Short Description"
-          variant="outlined"
-          onChange={e => setShortDesc(e.target.value)} required
-        />
-        <TextField
-          className={classes.textField}
-          label="Long Description"
-          variant="outlined"
-          value={longDesc}
-          onChange={e => setLongDesc(e.target.value)}
-          required
-          multiline
-          rows={12}
-        />
-        <TextField
-          className={classes.textField}
-          value={requiredSkills}
-          label="Required Skills"
-          variant="outlined"
-          onChange={e => setRequiredSkills(e.target.value)}
-          required
-        />
-      </form>
-      <Button
-        className={classes.submitButton}
-        variant="contained"
-        color="primary"
-        size="large"
-        disabled={!title || !shortDesc || !longDesc || !requiredSkills || requestStatus === RequestStatus.PENDING}
-        onClick={handleSubmit}
+  return (
+    <Box m={4}>
+      <div className={classes.root}>
+        <Typography variant="h5" gutterBottom>
+          Create a task
+        </Typography>
+        <form className={classes.form} noValidate autoComplete="off">
+          <TextField
+            className={classes.textField}
+            value={title}
+            label="Title"
+            variant="outlined"
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+          <TextField
+            className={classes.textField}
+            value={shortDesc}
+            label="Short Description"
+            variant="outlined"
+            onChange={(e) => setShortDesc(e.target.value)}
+            required
+          />
+          <TextField
+            className={classes.textField}
+            label="Long Description"
+            variant="outlined"
+            value={longDesc}
+            onChange={(e) => setLongDesc(e.target.value)}
+            required
+            multiline
+            rows={12}
+          />
+          <TextField
+            className={classes.textField}
+            value={requiredSkills}
+            label="Required Skills"
+            variant="outlined"
+            onChange={(e) => setRequiredSkills(e.target.value)}
+            required
+          />
+          <TextField
+            className={classes.textField}
+            value={price}
+            label="Price"
+            variant="outlined"
+            onChange={(e) => setPrice(e.target.value)}
+            required
+          />
+        </form>
+        <Button
+          className={classes.submitButton}
+          variant="contained"
+          color="primary"
+          size="large"
+          disabled={
+            !title ||
+            !shortDesc ||
+            !longDesc ||
+            !requiredSkills ||
+            requestStatus === RequestStatus.PENDING
+          }
+          onClick={handleSubmit}
+        >
+          {requestStatus === RequestStatus.PENDING ? 'Submitting...' : 'Submit'}
+        </Button>
+        {requestStatus === RequestStatus.FAILED ? (
+          <div className={classes.error}>
+            Something went wrong. We're on it!
+          </div>
+        ) : null}
+      </div>
+      <Snackbar
+        open={showSuccess}
+        autoHideDuration={6000}
+        onClose={handleCloseShowSuccess}
+        anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
       >
-        { requestStatus === RequestStatus.PENDING ? 'Submitting...' : 'Submit' }
-      </Button>
-      { requestStatus === RequestStatus.FAILED ? <div className={classes.error}>Something went wrong. We're on it!</div> : null}
-    </div>
-    <Snackbar
-      open={showSuccess}
-      autoHideDuration={6000}
-      onClose={handleCloseShowSuccess}
-      anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
-    >
-      <Alert onClose={handleCloseShowSuccess} severity="success">
-        Task posted successfully!
-      </Alert>
-    </Snackbar>
-  </Box>);
+        <Alert onClose={handleCloseShowSuccess} severity="success">
+          Task posted successfully!
+        </Alert>
+      </Snackbar>
+    </Box>
+  );
 }

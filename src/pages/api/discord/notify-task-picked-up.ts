@@ -12,6 +12,7 @@ interface NotifyTaskInterestRequest extends NextApiRequest {
     discordChannelId: string;
     discordUserId: string;
     task: Task;
+    userEmail: string;
   };
 }
 const formatInfo = (name: string) =>
@@ -26,6 +27,7 @@ export default async function (
   const discordChannelId = body.discordChannelId;
   const discordUserId = body.discordUserId;
   const task = body.task;
+  const userEmail = body.userEmail;
 
   if (method !== 'POST') {
     res.setHeader('Allow', ['POST']);
@@ -42,6 +44,14 @@ export default async function (
       },
       data: {
         status: 'in_progress',
+      },
+    });
+    await prisma.user.update({
+      where: {
+        email: userEmail,
+      },
+      data: {
+        currentTaskId: task.id,
       },
     });
     console.log('Task successfully updated in DB');

@@ -23,6 +23,7 @@ model User {
   skills            String?
   type              String?
   hasJoinedDiscord  Boolean?
+  currentTaskId     Int?
 }
 
 model Task {

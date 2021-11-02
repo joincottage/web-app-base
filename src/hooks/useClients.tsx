@@ -2,7 +2,11 @@ import { useUser } from '@auth0/nextjs-auth0';
 import { Client } from '@prisma/client';
 import React, { useState, useEffect } from 'react';
 
-const useClients = () => {
+interface OwnProps {
+  shouldFetchAll?: boolean;
+}
+
+const useClients = ({ shouldFetchAll = false }: OwnProps = {}) => {
   const { user, isLoading } = useUser();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +17,13 @@ const useClients = () => {
       try {
         const response = await fetch('/api/clients');
         const data = await response.json();
-        setClients(data.filter((d: Client) => d.userEmailOfOwner === user?.email));
+        if (shouldFetchAll) {
+          setClients(data);
+        } else {
+          setClients(
+            data.filter((d: Client) => d.userEmailOfOwner === user?.email)
+          );
+        }
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -23,7 +33,13 @@ const useClients = () => {
     fetchData();
   }, [user]);
 
-  return { loading, error, clients: clients || [], user, isLoading: isLoading && loading };
+  return {
+    loading,
+    error,
+    clients: clients || [],
+    user,
+    isLoading: isLoading && loading,
+  };
 };
 
 export default useClients;

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       flexDirection: 'column',
       textAlign: 'center',
-      minHeight: '405px'
+      minHeight: '405px',
     },
     textField: {
       margin: theme.spacing(1),
@@ -33,24 +33,26 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     submitButton: {
       padding: '25px',
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
     },
     error: {
-      color: 'red'
-    }
-  }),
+      color: 'red',
+    },
+  })
 );
 
 enum RequestStatus {
-  IDLE='idle',
-  PENDING='pending',
-  FAILED='failed',
-  SUCCEEDED='succeeded'
+  IDLE = 'idle',
+  PENDING = 'pending',
+  FAILED = 'failed',
+  SUCCEEDED = 'succeeded',
 }
 
 export default function IllDoIt({ user, task }: OwnProps) {
   const classes = useStyles();
-  const [requestStatus, setRequestStatus] = useState<RequestStatus>(RequestStatus.IDLE);
+  const [requestStatus, setRequestStatus] = useState<RequestStatus>(
+    RequestStatus.IDLE
+  );
 
   const handleRequestAccess = async () => {
     setRequestStatus(RequestStatus.PENDING);
@@ -66,40 +68,49 @@ export default function IllDoIt({ user, task }: OwnProps) {
       setRequestStatus(RequestStatus.FAILED);
       throw e;
     }
-  }
+  };
 
   return (
     <div className={classes.root}>
-      { requestStatus === RequestStatus.SUCCEEDED
-        ? (<>
+      {requestStatus === RequestStatus.SUCCEEDED ? (
+        <>
           <Typography variant="h4" gutterBottom>
             Success
           </Typography>
           <Typography variant="h6" gutterBottom>
-            You have picked up this task! You have been added to the task channel in Discord. Please open Discord to request additional information from the client.
+            You have picked up this task! You have been added to the task
+            channel in Discord. Please open Discord to request additional
+            information from the client.
           </Typography>
-        </>)
-        : (
-          <>
-            <Typography variant="h4" gutterBottom>
-              Are you sure?
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              If you click "Yes", the client will be notified that you have picked up the task and will expect development to begin.
-            </Typography>
-            <Button
-              className={classes.submitButton}
-              variant="contained"
-              color="primary"
-              size="large"
-              disabled={requestStatus === RequestStatus.PENDING}
-              onClick={handleRequestAccess}
-            >
-              { requestStatus === RequestStatus.PENDING ? 'Submitting...' : "Yes, I'm sure" }
-            </Button>
-            { requestStatus === RequestStatus.FAILED ? <div className={classes.error}>Something went wrong. We&apos;re on it!</div> : null}
-          </>
-        )}
+        </>
+      ) : (
+        <>
+          <Typography variant="h4" gutterBottom>
+            Are you sure?
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            If you click "Yes", the client will be notified that you have picked
+            up the task and will expect development to begin.
+          </Typography>
+          <Button
+            className={classes.submitButton}
+            variant="contained"
+            color="primary"
+            size="large"
+            disabled={requestStatus === RequestStatus.PENDING}
+            onClick={handleRequestAccess}
+          >
+            {requestStatus === RequestStatus.PENDING
+              ? 'Submitting...'
+              : "Yes, I'm sure"}
+          </Button>
+          {requestStatus === RequestStatus.FAILED ? (
+            <div className={classes.error}>
+              Something went wrong. We&apos;re on it!
+            </div>
+          ) : null}
+        </>
+      )}
     </div>
   );
 }
