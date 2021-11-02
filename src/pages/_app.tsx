@@ -7,6 +7,7 @@ import { Navbar } from '../components/Navbar';
 import { UserProvider } from '@auth0/nextjs-auth0';
 import { AppProps } from 'next/app';
 import { AppAction, AppContext, AppDataContext, AppState, initialState } from '../contexts/AppContext';
+import 'tailwindcss/tailwind.css'
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
