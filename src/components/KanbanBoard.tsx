@@ -30,24 +30,22 @@ function getModalStyle() {
   };
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    paper: {
-      position: 'absolute',
-      width: '600px',
-      minHeight: '405px',
-      backgroundColor: theme.palette.background.paper,
-      borderRadius: '4px',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-    closeIcon: {
-      cursor: 'pointer',
-      position: 'absolute',
-      right: '15px',
-    },
-  })
-);
+const useStyles = makeStyles((theme: Theme) => ({
+  paper: {
+    position: 'absolute',
+    width: '600px',
+    minHeight: '405px',
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: '4px',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  closeIcon: {
+    cursor: 'pointer',
+    position: 'absolute',
+    right: '15px',
+  },
+}));
 
 const KanbanBoard = ({ client }: OwnProps) => {
   const router = useRouter();
@@ -170,9 +168,7 @@ const KanbanBoard = ({ client }: OwnProps) => {
               }}
             >
               <Fade in={isCreateATaskOpen}>
-                {/* @ts-ignore */}
                 <div style={modalStyle} className={classes.paper}>
-                  {/* @ts-ignore */}
                   <CloseIcon
                     onClick={handleCloseCreateATask}
                     className={classes.closeIcon}

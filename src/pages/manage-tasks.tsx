@@ -27,28 +27,26 @@ import KanbanBoard from 'src/components/KanbanBoard';
 
 export const getServerSideProps = withPageAuthRequired();
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'column',
-      textAlign: 'center',
-      minHeight: '405px',
-    },
-    textField: {
-      margin: theme.spacing(1),
-    },
-    submitButton: {
-      padding: '25px',
-      margin: theme.spacing(1),
-    },
-    error: {
-      color: 'red',
-    },
-  })
-);
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    textAlign: 'center',
+    minHeight: '405px',
+  },
+  textField: {
+    margin: theme.spacing(1),
+  },
+  submitButton: {
+    padding: '25px',
+    margin: theme.spacing(1),
+  },
+  error: {
+    color: 'red',
+  },
+}));
 
 export default function ManageTasks() {
   const router = useRouter();

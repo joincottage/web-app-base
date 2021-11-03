@@ -46,14 +46,14 @@ export default async function (
         status: 'in_progress',
       },
     });
-    await prisma.user.update({
-      where: {
-        email: userEmail,
-      },
-      data: {
-        currentTaskId: task.id,
-      },
-    });
+    // await prisma.user.update({
+    //   where: {
+    //     email: userEmail,
+    //   },
+    //   data: {
+    //     currentTaskId: task.id,
+    //   },
+    // });
     console.log('Task successfully updated in DB');
     await postMessageToChannel(discordChannelId, formatInfo(name));
     await addUserToChannel(discordChannelId, discordUserId);
