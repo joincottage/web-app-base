@@ -31,21 +31,21 @@ const activeStyles = {
   color: 'white',
   borderColor: 'white',
 };
-const inactiveStyles= {
+const inactiveStyles = {
   color: 'white',
-  opacity: 0.5
-}
+  opacity: 0.5,
+};
 
 export const Navbar = (): JSX.Element => {
   const { clients, user, isLoading } = useClient();
   const router = useRouter();
 
   return (
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Container maxWidth="lg">
-            <Toolbar>
-              {/* <IconButton
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Container maxWidth="lg">
+          <Toolbar>
+            {/* <IconButton
                 size="large"
                 edge="start"
                 color="inherit"
@@ -54,54 +54,99 @@ export const Navbar = (): JSX.Element => {
               >
                 <MenuIcon />
               </IconButton> */}
-                <NextLink href="/" passHref={true}>
-                  <img src="./logo.svg" alt="Cottage Logo" width="200" height="38" style={{ cursor: 'pointer' }} />
-                </NextLink>
-                <NextLink href="/" passHref={true}>
-                  {/*<MuiLink component="typography" variant="h6">*/}
-                  {/*  <Typography variant="h6" sx={ { flexGrow: 1 } }>*/}
-                  <Div></Div>
-                  {/*</Typography>*/}
-                  {/*</MuiLink>*/}
-                </NextLink>
-                <div style={{ flexGrow: 1, display: 'flex' }}>
-                  <NextLink href="/" passHref={true}>
-                    <Button
-                      variant={router.pathname == "/" ? "outlined" : "text"}
-                      style={router.pathname == "/" ? activeStyles : inactiveStyles}
-                    >
-                      Freelancer Mode
-                    </Button>
+            <NextLink href="/" passHref={true}>
+              <img
+                src="./logo.svg"
+                alt="Cottage Logo"
+                width="200"
+                height="38"
+                style={{ cursor: 'pointer' }}
+              />
+            </NextLink>
+            <NextLink href="/" passHref={true}>
+              {/*<MuiLink component="typography" variant="h6">*/}
+              {/*  <Typography variant="h6" sx={ { flexGrow: 1 } }>*/}
+              <Div></Div>
+              {/*</Typography>*/}
+              {/*</MuiLink>*/}
+            </NextLink>
+            <div style={{ flexGrow: 1, display: 'flex' }}>
+              <NextLink href="/" passHref={true}>
+                <Button
+                  variant={router.pathname == '/' ? 'outlined' : 'text'}
+                  style={router.pathname == '/' ? activeStyles : inactiveStyles}
+                >
+                  Freelancer Mode
+                </Button>
+              </NextLink>
+              <Divider
+                orientation="vertical"
+                style={{
+                  backgroundColor: 'white',
+                  height: '35px',
+                  marginRight: '15px',
+                  marginLeft: '15px',
+                }}
+              />
+              <NextLink href="/manage-tasks" passHref={true}>
+                <Button
+                  variant={
+                    router.pathname == '/manage-tasks' ? 'outlined' : 'text'
+                  }
+                  style={
+                    router.pathname == '/manage-tasks'
+                      ? activeStyles
+                      : inactiveStyles
+                  }
+                >
+                  Client Mode
+                </Button>
+              </NextLink>
+            </div>
+            <HelpMenu />
+            <IconButton style={{ color: 'white' }}>
+              <NotificationsNoneIcon style={{ cursor: 'pointer' }} />
+            </IconButton>
+            {!isLoading && user ? (
+              <>
+                <AccountIconMenu
+                  user={user}
+                  style={{
+                    transform: 'scale(1.3)',
+                    width: '24px',
+                    height: '24px',
+                    marginLeft: '15px',
+                  }}
+                />
+                {clients.map((c) => (
+                  <NextLink
+                    href={`/manage-tasks?selectedClientName=${c.name}`}
+                    passHref={true}
+                  >
+                    <Avatar
+                      alt="Account"
+                      src={c?.logoUrl || ''}
+                      aria-haspopup="true"
+                      style={{
+                        cursor: 'pointer',
+                        width: '28px',
+                        height: '28px',
+                        marginRight: '8px',
+                      }}
+                    />
                   </NextLink>
-                  <Divider orientation="vertical" style={{ backgroundColor: 'white', height: '35px', marginRight: '15px', marginLeft: '15px' }} />
-                  <NextLink href="/manage-tasks" passHref={true}>
-                    <Button
-                      variant={router.pathname == "/manage-tasks" ? "outlined" : "text"}
-                      style={router.pathname == "/manage-tasks" ? activeStyles : inactiveStyles}
-                    >
-                      Client Mode
-                    </Button>
-                  </NextLink>
-                </div>
-                <HelpMenu />
-                <IconButton style={{ color: 'white' }}>
-                  <NotificationsNoneIcon style={{ cursor: 'pointer' }} />
-                </IconButton>
-                {!isLoading && user ? (<>
-                  <AccountIconMenu user={user} style={{ transform: 'scale(1.3)', width: '24px', height: '24px', marginLeft: '15px' }} />
-                  { clients.map(c => <NextLink href={`/manage-tasks?selectedClientName=${c.name}`} passHref={true}>
-                    <Avatar alt="Account" src={c?.logoUrl || ''} aria-haspopup="true" style={{ cursor: 'pointer', width: '28px', height: '28px', marginRight: '8px' }} />
-                  </NextLink>)}
-                </>) : (
-                  !isLoading && (
-                    <NextLink href="/api/auth/login" passHref={true}>
-                      <Button color="inherit">Login</Button>
-                    </NextLink>
-                  )
-                )}
-            </Toolbar>
-          </Container>
-        </AppBar>
-      </Box>
+                ))}
+              </>
+            ) : (
+              !isLoading && (
+                <NextLink href="/api/auth/login" passHref={true}>
+                  <Button color="inherit">Login</Button>
+                </NextLink>
+              )
+            )}
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </Box>
   );
 };

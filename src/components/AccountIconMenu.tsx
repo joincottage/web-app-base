@@ -30,7 +30,12 @@ export const AccountIconMenu = ({ user, style }: OwnProps): JSX.Element => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <Avatar alt="Account" src={user.picture || ''} aria-haspopup="true" style={style} />
+        <Avatar
+          alt="Account"
+          src={user.picture || ''}
+          aria-haspopup="true"
+          style={style}
+        />
       </Button>
       <Menu
         id="simple-menu"

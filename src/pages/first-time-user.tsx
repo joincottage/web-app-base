@@ -4,7 +4,11 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import NextLink from 'next/link';
 import Copyright from '../Copyright';
-import { UserProfile, useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import {
+  UserProfile,
+  useUser,
+  withPageAuthRequired,
+} from '@auth0/nextjs-auth0';
 import TaskCard from '../components/TaskCard';
 import useTasks from 'src/hooks/useTasks';
 import { Task } from '@prisma/client';
@@ -20,10 +24,10 @@ export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(ctx) {
     return {
       props: {
-        inviteLink: await createInviteLink()
-      }
+        inviteLink: await createInviteLink(),
+      },
     };
-  }
+  },
 });
 
 interface OwnProps {
@@ -41,10 +45,24 @@ export default function FirstTimeUser({ user, inviteLink }: OwnProps) {
   return (
     <Container maxWidth="lg">
       <Box my={4}>
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          <Typography variant="h3" gutterBottom>Welcome {user.name}!</Typography>
-          <Typography variant="h5" gutterBottom>Discord is used to facilitate communication between clients and freelancers.</Typography>
-          <Typography variant="h5" gutterBottom>Click the link below to join the server.</Typography>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h3" gutterBottom>
+            Welcome {user.name}!
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Discord is used to facilitate communication between clients and
+            freelancers.
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Click the link below to join the server.
+          </Typography>
           <Button
             variant="contained"
             color="primary"

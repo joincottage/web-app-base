@@ -46,7 +46,7 @@ export default function HelpMenu({ style }: OwnProps): JSX.Element {
           rel="noopener noreferrer"
           style={{
             textDecoration: 'none',
-            color: 'inherit'
+            color: 'inherit',
           }}
         >
           <MenuItem onClick={handleClose}>Documentation</MenuItem>
@@ -57,4 +57,4 @@ export default function HelpMenu({ style }: OwnProps): JSX.Element {
       </Menu>
     </div>
   );
-};
+}

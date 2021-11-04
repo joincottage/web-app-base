@@ -1,4 +1,3 @@
-
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios from 'axios';
 
@@ -10,12 +9,19 @@ interface NotifyNewUserRequest extends NextApiRequest {
   };
 }
 const discordWebhookBaseUrl = 'https://discord.com/api/webhooks';
-const formatInfo = (name:string, email:string, skills:string) => `Welcome new user!
+const formatInfo = (
+  name: string,
+  email: string,
+  skills: string
+) => `Welcome new user!
 Name: ${name}
 Email: ${email}
 Skills: ${skills}`;
 
-export default async function (req: NotifyNewUserRequest, res: NextApiResponse) {
+export default async function (
+  req: NotifyNewUserRequest,
+  res: NextApiResponse
+) {
   const { body, method } = req;
   const name = body.name;
   const email = body.email;
@@ -34,7 +40,7 @@ export default async function (req: NotifyNewUserRequest, res: NextApiResponse) 
     await Axios.post(
       `${discordWebhookBaseUrl}/${process.env.DISCORD_NOTIFY_NEW_USER_CHANNEL_ID}/${process.env.DISCORD_NOTIFY_NEW_USER_CHANNEL_TOKEN}`,
       {
-        content: formatInfo(name, email, skills) 
+        content: formatInfo(name, email, skills),
       }
     );
 
@@ -44,5 +50,4 @@ export default async function (req: NotifyNewUserRequest, res: NextApiResponse) 
     console.error(`Failed posing info to discord`, error);
     res.status(500).json({ message: 'Failed to post info' });
   }
-
-};
+}

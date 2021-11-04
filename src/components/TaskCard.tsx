@@ -62,9 +62,9 @@ const useStyles = makeStyles((theme: Theme) =>
     closeIcon: {
       cursor: 'pointer',
       position: 'absolute',
-      right: '15px'
-    }
-  }),
+      right: '15px',
+    },
+  })
 );
 
 function getModalStyle() {
@@ -95,41 +95,60 @@ export default function TaskCard({ task, mode }: OwnProps) {
   };
   const modalBody = (
     <div style={modalStyle} className={classes.paper}>
-      <CloseIcon onClick={handleClose} className={classes.closeIcon} style={{ color: 'white' }} />
-      <IllDoIt user={(user as UserProfile)} task={task} />
+      <CloseIcon
+        onClick={handleClose}
+        className={classes.closeIcon}
+        style={{ color: 'white' }}
+      />
+      <IllDoIt user={user as UserProfile} task={task} />
     </div>
   );
 
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={ <Avatar sx={{ width: 24, height: 24 }} alt="Company logo" src={task.clientImgUrl || ''} aria-haspopup="true" /> }
-        action={ <Typography variant="h6" style={{ color: 'green' }}>${task.price}</Typography> }
+        avatar={
+          <Avatar
+            sx={{ width: 24, height: 24 }}
+            alt="Company logo"
+            src={task.clientImgUrl || ''}
+            aria-haspopup="true"
+          />
+        }
+        action={
+          <Typography variant="h6" style={{ color: 'green' }}>
+            ${task.price}
+          </Typography>
+        }
         title={task.name}
         subheader="October 14, 2021"
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          { task.shortDesc }
+          {task.shortDesc}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        { task.skills?.split(',').map(skill => <Chip key={skill} label={skill} style={{ marginLeft: '5px' }} />)}
-        { mode === 'freelancer' && <div className={classes.primaryActionsContainer}>
-          <Button
-            className={classes.ctaButton}
-            variant="outlined"
-            color="primary"
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-          >
-            Learn more
-          </Button>
-        </div> }
+        {task.skills?.split(',').map((skill) => (
+          <Chip key={skill} label={skill} style={{ marginLeft: '5px' }} />
+        ))}
+        {mode === 'freelancer' && (
+          <div className={classes.primaryActionsContainer}>
+            <Button
+              className={classes.ctaButton}
+              variant="outlined"
+              color="primary"
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+            >
+              Learn more
+            </Button>
+          </div>
+        )}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{ task.longDesc }</Typography>
+          <Typography paragraph>{task.longDesc}</Typography>
         </CardContent>
         <CardActions disableSpacing>
           <div className={classes.primaryActionsContainer}>
@@ -155,9 +174,7 @@ export default function TaskCard({ task, mode }: OwnProps) {
           timeout: 500,
         }}
       >
-        <Fade in={open}>
-          { modalBody }
-        </Fade>
+        <Fade in={open}>{modalBody}</Fade>
       </Modal>
     </Card>
   );

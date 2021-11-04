@@ -13,7 +13,8 @@
     "prisma-generate": "prisma generate",
     "prisma-studio": "prisma studio",
     "prisma-format": "prisma format",
-    "prettier-format": "prettier format"
+    "prettier-check": "prettier --check ./src",
+    "prettier-format": "prettier --write ./src"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.5.0",

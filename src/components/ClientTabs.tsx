@@ -30,13 +30,26 @@ export default function BasicTabs({ clients }: OwnProps) {
   return (
     <Box sx={{ width: '100%' }}>
       <Box>
-        <Tabs orientation="vertical" value={value} onChange={handleChange} aria-label="basic tabs example">
-          { clients.map((client, index) => <Tab key={index} onClick={() => {
-            dispatch({
-              type: 'SET_SELECTED_CLIENT',
-              payload: { client },
-            });
-          }} icon={client.logo} label={client.name} {...a11yProps(index)} />)}
+        <Tabs
+          orientation="vertical"
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          {clients.map((client, index) => (
+            <Tab
+              key={index}
+              onClick={() => {
+                dispatch({
+                  type: 'SET_SELECTED_CLIENT',
+                  payload: { client },
+                });
+              }}
+              icon={client.logo}
+              label={client.name}
+              {...a11yProps(index)}
+            />
+          ))}
         </Tabs>
       </Box>
     </Box>

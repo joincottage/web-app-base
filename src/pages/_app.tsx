@@ -6,15 +6,21 @@ import theme from '../theme';
 import { Navbar } from '../components/Navbar';
 import { UserProvider } from '@auth0/nextjs-auth0';
 import { AppProps } from 'next/app';
-import { AppAction, AppContext, AppDataContext, AppState, initialState } from '../contexts/AppContext';
-import 'tailwindcss/tailwind.css'
+import {
+  AppAction,
+  AppContext,
+  AppDataContext,
+  AppState,
+  initialState,
+} from '../contexts/AppContext';
+import 'tailwindcss/tailwind.css';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
     case 'SET_SELECTED_CLIENT':
       return {
         ...state,
-        client: action.payload.client
+        client: action.payload.client,
       };
     default:
       // TODO: report unknown action types as an error
@@ -38,7 +44,7 @@ export default function MyApp(props: AppProps) {
   const contextValue = useMemo(() => {
     return { state, dispatch };
   }, [state, dispatch]) as AppContext;
-  
+
   return (
     <UserProvider>
       <AppDataContext.Provider value={contextValue}>

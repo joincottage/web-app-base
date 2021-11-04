@@ -11,17 +11,17 @@ const theme = createTheme({
     primary: {
       light: 'rgb(31,87,184)',
       main: 'rgb(31,87,184)',
-      dark: 'rgb(31,87,184)'
+      dark: 'rgb(31,87,184)',
     },
     secondary: {
       light: 'rgb(31,87,184)',
       main: 'rgb(31,87,184)',
-      dark: 'rgb(31,87,184)'
+      dark: 'rgb(31,87,184)',
     },
   },
   typography: {
-    fontFamily: '"Poppins", sans serif'
-  }
+    fontFamily: '"Poppins", sans serif',
+  },
 });
 
 export default theme;

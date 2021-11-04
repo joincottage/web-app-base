@@ -47,17 +47,16 @@ export default function Profile(): JSX.Element {
   const [checked, setChecked] = useState<string[]>([]);
   const { user, error, isLoading } = useUser();
   if (isLoading) {
-      return <div>Loading</div>;
+    return <div>Loading</div>;
   }
   if (error) {
-      return <div>error</div>;
+    return <div>error</div>;
   }
 
-  const handleToggle = (skill: string) =>
-    () => 
-      checked.indexOf(skill) === -1
-        ? setChecked([...checked, skill])
-        : setChecked(removeItem(checked, skill));
+  const handleToggle = (skill: string) => () =>
+    checked.indexOf(skill) === -1
+      ? setChecked([...checked, skill])
+      : setChecked(removeItem(checked, skill));
 
   const handleStartFreelancing = async () => {
     try {
@@ -65,84 +64,80 @@ export default function Profile(): JSX.Element {
       await Axios.post('/api/discord/notify-new-user', {
         name: user?.name,
         email: user?.email,
-        skills: checked.join(',')
+        skills: checked.join(','),
       });
     } catch (error) {
       console.error(
-        `There was an error communicating with the Cottage notify-new-user api for name: ${user?.name}, email: ${user?.email}, skills: ${checked.join(',')}`,
+        `There was an error communicating with the Cottage notify-new-user api for name: ${
+          user?.name
+        }, email: ${user?.email}, skills: ${checked.join(',')}`,
         error
       );
       throw error;
     }
     router.push('/api/discord/invite');
-  }
+  };
 
-  return (
-    user ? (
-      <Container maxWidth="lg" sx={{ mt: 6, mb: 4 }}>
-        <Grid container spacing={3}>
+  return user ? (
+    <Container maxWidth="lg" sx={{ mt: 6, mb: 4 }}>
+      <Grid container spacing={3}>
         <Typography variant="h2" gutterBottom>
-            One last thing...
+          One last thing...
         </Typography>
-          {/* Skills */}
-          <Grid item xs={12}>
-            <Paper
-              sx={{
-                padding: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: 240,
-              }}
-            >
-              <Title>What skills do you have to offer clients?</Title>
-
-              <List>
-                <Grid container spacing={2}>
-                  {allSkills.map((skill) => (
-                    <Grid item xs={12} md={4} lg={3} key={skill}>
-                      <ListItem key={skill} disablePadding>
-                        <ListItemButton
-                          role={undefined}
-                          onClick={handleToggle(skill)}
-                          dense
-                        >
-                          <ListItemIcon>
-                            <Checkbox
-                              edge="start"
-                              checked={checked.indexOf(skill) !== -1}
-                              tabIndex={-1}
-                              disableRipple
-                              // inputProps={{ 'aria-labelledby': labelId }}
-                              onChange={handleToggle(skill)}
-                            />
-                          </ListItemIcon>
-                          <ListItemText id={skill} primary={skill} />
-                        </ListItemButton>
-                      </ListItem>
-                    </Grid>
-                  ))}
-                </Grid>
-              </List>
-            </Paper>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{ display: 'flex', justifyContent: 'center' }}
+        {/* Skills */}
+        <Grid item xs={12}>
+          <Paper
+            sx={{
+              padding: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: 240,
+            }}
           >
-            <Button
-              variant="contained"
-              size="large"
-              disabled={checked.length === 0 || isPendingSubmission}
-              onClick={handleStartFreelancing}
-            >
-              { isPendingSubmission ? 'Submitting...' : 'Start freelancing' }
-            </Button>
-          </Grid>
+            <Title>What skills do you have to offer clients?</Title>
+
+            <List>
+              <Grid container spacing={2}>
+                {allSkills.map((skill) => (
+                  <Grid item xs={12} md={4} lg={3} key={skill}>
+                    <ListItem key={skill} disablePadding>
+                      <ListItemButton
+                        role={undefined}
+                        onClick={handleToggle(skill)}
+                        dense
+                      >
+                        <ListItemIcon>
+                          <Checkbox
+                            edge="start"
+                            checked={checked.indexOf(skill) !== -1}
+                            tabIndex={-1}
+                            disableRipple
+                            // inputProps={{ 'aria-labelledby': labelId }}
+                            onChange={handleToggle(skill)}
+                          />
+                        </ListItemIcon>
+                        <ListItemText id={skill} primary={skill} />
+                      </ListItemButton>
+                    </ListItem>
+                  </Grid>
+                ))}
+              </Grid>
+            </List>
+          </Paper>
         </Grid>
-      </Container>
-    )
-      : <></>
+        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button
+            variant="contained"
+            size="large"
+            disabled={checked.length === 0 || isPendingSubmission}
+            onClick={handleStartFreelancing}
+          >
+            {isPendingSubmission ? 'Submitting...' : 'Start freelancing'}
+          </Button>
+        </Grid>
+      </Grid>
+    </Container>
+  ) : (
+    <></>
   );
 }
-
