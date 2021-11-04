@@ -14,26 +14,30 @@ generator client {
 }
 
 model User {
-  id                Int     @id @default(autoincrement())
-  auth_id           String     @unique
-  email             String  @unique
-  name              String?
-  img_url           String?
-  bio               String?
-  skills            String?
-  type              String?
-  hasJoinedDiscord  Boolean?
-  currentTaskId     Int?
+  id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  auth_id          String   @unique
+  email            String   @unique
+  name             String?
+  img_url          String?
+  bio              String?
+  skills           String?
+  type             String?
+  hasJoinedDiscord Boolean?
+  currentTaskId    Int?
 }
 
 model Task {
-  id               Int     @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
   clientName       String?
   clientImgUrl     String?
   clientCategoryId String?
   name             String?
   shortDesc        String?
-  longDesc         String? @db.VarChar(1000)
+  longDesc         String?  @db.VarChar(1000)
   skills           String?
   datePosted       String?
   status           String?
@@ -42,7 +46,9 @@ model Task {
 }
 
 model Client {
-  id                Int     @id @default(autoincrement())
+  id                Int      @id @default(autoincrement())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
   name              String?
   logoUrl           String?
   userEmailOfOwner  String
