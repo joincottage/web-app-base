@@ -54,3 +54,4 @@ model Client {
   userEmailOfOwner  String
   discordCategoryId String?
 }
+

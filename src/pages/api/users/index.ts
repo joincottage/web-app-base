@@ -31,6 +31,8 @@ export default async function (
     //   res.send('OK');
     //   break;
     case 'GET': {
+      //TODO: Return current user
+      //TODO: Pull current user from auth0
       const users = await prisma.user.findMany();
       const cleansedUsers = users.map((user) => {
         return {
