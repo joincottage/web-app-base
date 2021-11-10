@@ -60,6 +60,15 @@ export default async function (
 					where: { auth_id: userInfo.sub },
 				});
 
+				if (user === null) {
+					await prisma.user.create({
+						data: {
+							auth_id: userInfo.sub,
+							email: userInfo.email,
+						},
+					});
+				}
+
 				if (user !== null && user.currentTaskId !== null) {
 					const task = await prisma.task.findUnique({
 						where: {
@@ -68,7 +77,7 @@ export default async function (
 					});
 					res.json(task);
 				} else {
-					res.send(null);
+					res.json({ message: 'no task' });
 				}
 				break;
 			}

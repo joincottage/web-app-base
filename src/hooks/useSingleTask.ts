@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react';
 export const useSingleTask = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	//TODO: This needs to be fixed from the typescript build
-	const [data, setData] = useState<Task | null>(null);
+	const [data, setData] = useState<Task | { message: string } | null>(null);
 
 	useEffect(() => {
 		const fetchData = async () => {

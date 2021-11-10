@@ -16,7 +16,7 @@ export default function UserTaskColumn({ user }: OwnProps) {
 	const { data, loading, error } = useSingleTask();
 
 	useEffect(() => {
-		console.log(data);
+		console.log('DATA', data);
 	}, [data]);
 
 	if (loading) return <div>Loading...</div>;
@@ -30,7 +30,8 @@ export default function UserTaskColumn({ user }: OwnProps) {
 				/>
 				<div className="text-left">
 					<p className="my-3 font-semibold text-gray-400">Current Task</p>
-					{hasTask ? (
+					{/* @ts-ignore */}
+					{data !== null && data?.message !== 'no task' ? (
 						<div>
 							<CurrentTask task={data as Task} />
 						</div>
