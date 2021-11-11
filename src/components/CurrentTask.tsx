@@ -109,7 +109,7 @@ export default function CurrentTask({ task }: OwnProps) {
 				) : (
 					<></>
 				)}
-				<div className="bg-blue-100 text-blue-900 p-4 rounded-md max-w-[15rem]">
+				<div className="bg-blue-100 text-blue-900 shadow p-4 rounded-md max-w-[15rem]">
 					<div className="text-left">
 						<div className="flex justify-between items-start">
 							<h3 className="text-lg">{task.name}</h3>
