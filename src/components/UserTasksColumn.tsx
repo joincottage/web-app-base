@@ -19,10 +19,7 @@ export default function UserTaskColumn({ user }: OwnProps) {
   const { reviewTasks, reviewLoading, reviewError } = useReviewTasks();
   const { previousTasks, previousLoading, previousError } = usePreviousTasks();
 
-  useEffect(() => {
-    console.log('DATA', data);
-    console.log('Previous', previousTasks);
-  }, [previousTasks]);
+  useEffect(() => {}, []);
 
   if (loading) return <div>Loading...</div>;
   return (

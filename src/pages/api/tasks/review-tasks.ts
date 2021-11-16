@@ -75,11 +75,11 @@ export default async function (
 						where: {
 							OR: [
 								{
-									userId: 123,
+									userId: 'contact@brentonbeltrami.com',
 									status: 'in_review',
 								},
 								{
-									userId: 123,
+									userId: 'contact@brentonbeltrami.com',
 									status: 'in_attention',
 								},
 							],

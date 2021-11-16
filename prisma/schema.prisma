@@ -42,7 +42,7 @@ model Task {
   datePosted       String?
   status           String?
   price            Int?
-	userId           Int?
+	userId           String?
   discordChannelId String?
 }
 

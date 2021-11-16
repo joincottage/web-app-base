@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Task } from '.prisma/client';
+import axios from 'axios';
 
 interface OwnProps {
   task: Task;
@@ -28,9 +29,9 @@ export default function CurrentTask({ task }: OwnProps) {
   }
 
   //TODO: create api for handleSubmit
-  function handleSubmit() {
-    console.log('Task Has Been Submitted');
-    console.log('TODO: This functionality has not been completed');
+  async function handleSubmit() {
+    const response = await axios.put('/api/tasks/current', { task: task });
+    console.log(response);
   }
   function abandonTask() {
     resetAllPops();

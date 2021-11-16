@@ -31,16 +31,58 @@ export default async function (
       {
         /*
 		case 'PUT':
+			console.log('update task');
 			await prisma.task.update({
 				where: {
-					id: 6,
+					id: req.body.task.id,
 				},
 				data: {
-					number: 3,
+					status: 'in_review',
 				},
 			});
+
+			//await prisma.user.update({
+			//where: {
+			//email: 'contact@brentonbeltrami.com',
+			//},
+			//data: {
+			//currentTaskId: null,
+			//},
+			//});
+
+			//TODO: Get current user
+			//TODO: Update current taskid for logged in user
+			let protocol = 'https://';
+			if (req.headers.host?.indexOf('localhost') !== -1) {
+				protocol = 'http://';
+			}
+			console.log('get auth');
+			const response = await Axios.get(
+				protocol + req.headers.host + '/api/auth/me',
+				{
+					headers: req.headers,
+				}
+			);
+			const userInfo = response.data;
+			console.log('get user');
+			const user = await prisma.user.findFirst({
+				where: { auth_id: userInfo.sub },
+			});
+
+			console.log('Hello', user);
+
+			await prisma.user.update({
+				where: {
+					email: userInfo.email,
+				},
+				data: {
+					currentTaskId: null,
+				},
+			});
+
 			res.send('OK');
 			break;
+<<<<<<< HEAD
 			*/
       }
     case 'GET':
@@ -59,6 +101,24 @@ export default async function (
         const user = await prisma.user.findFirst({
           where: { auth_id: userInfo.sub },
         });
+=======
+		case 'GET':
+			{
+				let protocol = 'https://';
+				if (req.headers.host?.indexOf('localhost') !== -1) {
+					protocol = 'http://';
+				}
+				const response = await Axios.get(
+					protocol + req.headers.host + '/api/auth/me',
+					{
+						headers: req.headers,
+					}
+				);
+				const userInfo = response.data;
+				const user = await prisma.user.findFirst({
+					where: { auth_id: userInfo.sub },
+				});
+>>>>>>> ab93904 (Changed user schema, added change status to current task)
 
         if (user === null) {
           await prisma.user.create({
