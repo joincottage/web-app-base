@@ -38,7 +38,6 @@ export default function CurrentTask({ task }: OwnProps) {
     console.log('Oh The Horror!!! The Task Has Been ABANDONED!!!!');
     console.log('TODO: This functionality has not been completed');
   }
-
   return (
     <>
       {isShowingAbandon ? (
