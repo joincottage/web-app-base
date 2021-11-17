@@ -73,11 +73,10 @@ export default async function (
 				if (user !== null) {
 					const tasks = await prisma.task.findMany({
 						where: {
-							userId: 'contact@brentonbeltrami.com',
+							userId: userInfo.email,
 							status: 'approved',
 						},
 					});
-					console.log(tasks);
 					res.json(tasks);
 				} else {
 					res.json({ message: 'no task' });
