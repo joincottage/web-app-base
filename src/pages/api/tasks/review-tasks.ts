@@ -75,17 +75,16 @@ export default async function (
 						where: {
 							OR: [
 								{
-									userId: 'contact@brentonbeltrami.com',
+									userId: userInfo.email,
 									status: 'in_review',
 								},
 								{
-									userId: 'contact@brentonbeltrami.com',
+									userId: userInfo.email,
 									status: 'in_attention',
 								},
 							],
 						},
 					});
-					console.log(tasks);
 					res.json(tasks);
 				} else {
 					res.json({ message: 'no task' });
