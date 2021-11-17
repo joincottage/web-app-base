@@ -73,7 +73,7 @@ export default function TasksInReview({ tasks }: OwnProps) {
 						<>
 							<span className="relative w-full inline-flex rounded-md shadow-sm mt-3">
 								<a
-									href={discordLink(task.discordChannelId)}
+									href={discordLink(task.discordChannelId as string)}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="w-full border-2 border-red-500 bg-white hover:bg-red-50 transform duration-500 ease-in-out font-bold text-red-500 rounded-md leading-8 text-center "
