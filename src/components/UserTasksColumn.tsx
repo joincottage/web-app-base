@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { UserProfile } from '@auth0/nextjs-auth0';
 import TaskEmptyState from './TaskEmptyState';
-import CurrentTask from './CurrentTask';
+import CurrentTaskContainer from './CurrentTaskContainer';
 import TasksInReview from './TasksInReview';
 import PreviousTasks from './PreviousTasks';
 import { useSingleTask } from './../hooks/useSingleTask';
 import { useReviewTasks } from './../hooks/useReviewTasks';
 import { usePreviousTasks } from './../hooks/usePreviousTasks';
-import Axios from 'axios';
 import { Task } from '.prisma/client';
 
 interface OwnProps {
@@ -19,7 +18,9 @@ export default function UserTaskColumn({ user }: OwnProps) {
 	const { reviewTasks, reviewLoading, reviewError } = useReviewTasks();
 	const { previousTasks, previousLoading, previousError } = usePreviousTasks();
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		console.log(data);
+	}, [data]);
 
 	if (loading) return <div>Loading...</div>;
 	return (
@@ -33,9 +34,9 @@ export default function UserTaskColumn({ user }: OwnProps) {
 				<div className="text-left">
 					<p className="my-3 font-semibold text-gray-400">Current Task</p>
 					{/* @ts-ignore */}
-					{data !== null && data?.message !== 'no task' ? (
+					{data !== null && data.length !== 0 ? (
 						<div>
-							<CurrentTask task={data as Task} />
+							<CurrentTaskContainer task={data as Task[]} />
 						</div>
 					) : (
 						<div>
