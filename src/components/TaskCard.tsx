@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Theme } from '@material-ui/core/styles';
 import { makeStyles, createStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
@@ -19,7 +19,7 @@ import IllDoIt from './IllDoIt';
 import { UserProfile, useUser } from '@auth0/nextjs-auth0';
 import Axios from 'axios';
 import { useSingleTask } from './../hooks/useSingleTask';
-import TaskCardSkeleton from './TaskCardSkeleton';
+import { AppDataContext } from 'src/contexts/AppContext';
 
 interface OwnProps {
 	task: Task;
@@ -83,7 +83,7 @@ export default function TaskCard({ task, mode }: OwnProps) {
 	const [expanded, setExpanded] = React.useState(false);
 	const [open, setOpen] = useState(false);
 	const [modalStyle] = React.useState(getModalStyle);
-	const { data, loading, error } = useSingleTask();
+	const { state, dispatch } = useContext(AppDataContext);
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -107,7 +107,6 @@ export default function TaskCard({ task, mode }: OwnProps) {
 		</div>
 	);
 
-	if (loading) return <TaskCardSkeleton />;
 	return (
 		<Card className={classes.root}>
 			<CardHeader
@@ -157,7 +156,7 @@ export default function TaskCard({ task, mode }: OwnProps) {
 				<CardActions disableSpacing>
 					<div className={classes.primaryActionsContainer}>
 						<Button
-							disabled={data === null || data.length > 0}
+							disabled={state.user.hasCurrentTask}
 							onClick={handleClickIllDoIt}
 							className={classes.ctaButton}
 							variant="contained"

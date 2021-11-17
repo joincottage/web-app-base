@@ -15,6 +15,7 @@ import UserTasksColumn from 'src/components/UserTasksColumn';
 import { AppDataContext } from '../contexts/AppContext';
 import Divider from '@material-ui/core/Divider';
 import useClients from 'src/hooks/useClients';
+import TaskCardSkeleton from 'src/components/TaskCardSkeleton';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -74,31 +75,39 @@ export default function Index() {
 								{state.client.name}
 							</Typography>
 						</div>
-						{loading
-							? 'Loading...'
-							: error
-							? JSON.stringify(error)
-							: state.client.name === 'All'
-							? data
-									?.filter((task: Task) => task.status === 'task_queued')
-									.map((task: Task) => (
-										<>
-											<Divider />
-											<TaskCard key={task.id} task={task} mode="freelancer" />
-										</>
-									))
-							: data
-									?.filter(
-										(task: Task) =>
-											task.clientName === state.client.name &&
-											task.status === 'task_queued'
-									)
-									.map((task: Task) => (
-										<>
-											<Divider />
-											<TaskCard key={task.id} task={task} mode="freelancer" />
-										</>
-									))}
+						{loading ? (
+							<div>
+								<TaskCardSkeleton />
+								<TaskCardSkeleton />
+								<TaskCardSkeleton />
+								<TaskCardSkeleton />
+								<TaskCardSkeleton />
+							</div>
+						) : error ? (
+							JSON.stringify(error)
+						) : state.client.name === 'All' ? (
+							data
+								?.filter((task: Task) => task.status === 'task_queued')
+								.map((task: Task) => (
+									<>
+										<Divider />
+										<TaskCard key={task.id} task={task} mode="freelancer" />
+									</>
+								))
+						) : (
+							data
+								?.filter(
+									(task: Task) =>
+										task.clientName === state.client.name &&
+										task.status === 'task_queued'
+								)
+								.map((task: Task) => (
+									<>
+										<Divider />
+										<TaskCard key={task.id} task={task} mode="freelancer" />
+									</>
+								))
+						)}
 					</div>
 					<div>
 						{!isLoading && user ? (

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserProfile } from '@auth0/nextjs-auth0';
 import TaskEmptyState from './TaskEmptyState';
 import CurrentTaskContainer from './CurrentTaskContainer';
@@ -8,6 +8,7 @@ import { useSingleTask } from './../hooks/useSingleTask';
 import { useReviewTasks } from './../hooks/useReviewTasks';
 import { usePreviousTasks } from './../hooks/usePreviousTasks';
 import { Task } from '.prisma/client';
+import { AppDataContext } from 'src/contexts/AppContext';
 
 interface OwnProps {
 	user: UserProfile;
@@ -17,9 +18,16 @@ export default function UserTaskColumn({ user }: OwnProps) {
 	const { data, loading, error } = useSingleTask();
 	const { reviewTasks, reviewLoading, reviewError } = useReviewTasks();
 	const { previousTasks, previousLoading, previousError } = usePreviousTasks();
+	const { state, dispatch } = useContext(AppDataContext);
 
 	useEffect(() => {
-		console.log(data);
+		//console.log(data);
+		if (data !== null && (data as Task[]).length > 0) {
+			dispatch({
+				type: 'SET_USER',
+				payload: { user: { hasCurrentTask: true } },
+			});
+		}
 	}, [data]);
 
 	if (loading) return <div>Loading...</div>;
