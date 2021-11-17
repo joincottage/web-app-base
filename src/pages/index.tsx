@@ -5,22 +5,17 @@ import Box from '@material-ui/core/Box';
 import NextLink from 'next/link';
 import Copyright from '../Copyright';
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
-import TaskCard from '../components/TaskCard';
-import useTasks from 'src/hooks/useTasks';
-import { Task } from '@prisma/client';
 import { Avatar, Button } from '@material-ui/core';
 import { AccountIconMenu } from 'src/components/AccountIconMenu';
 import ClientTabs from 'src/components/ClientTabs';
 import UserTasksColumn from 'src/components/UserTasksColumn';
 import { AppDataContext } from '../contexts/AppContext';
-import Divider from '@material-ui/core/Divider';
 import useClients from 'src/hooks/useClients';
-import TaskCardSkeleton from 'src/components/TaskCardSkeleton';
+import TaskList from 'src/components/TaskList';
 
 export const getServerSideProps = withPageAuthRequired();
 
 export default function Index() {
-	const { loading, error, data } = useTasks();
 	const { user, isLoading } = useUser();
 	const { state } = useContext(AppDataContext);
 	const { clients } = useClients({ shouldFetchAll: true });
@@ -33,22 +28,28 @@ export default function Index() {
 						<ClientTabs
 							clients={clients.map((c) => ({
 								name: c.name as string,
-								logo: (
-									<Avatar
-										sx={{ width: 24, height: 24 }}
-										alt="Company logo"
-										src={c.logoUrl as string}
-										aria-haspopup="true"
-									/>
-								),
-								largeLogo: (
-									<Avatar
-										sx={{ width: 80, height: 80 }}
-										alt="Company logo"
-										src={c.logoUrl as string}
-										aria-haspopup="true"
-									/>
-								),
+								logo:
+									c.logoUrl === undefined ? (
+										<></>
+									) : (
+										<Avatar
+											sx={{ width: 24, height: 24 }}
+											alt="Company logo"
+											src={c.logoUrl as string}
+											aria-haspopup="true"
+										/>
+									),
+								largeLogo:
+									c.logoUrl === undefined ? (
+										<></>
+									) : (
+										<Avatar
+											sx={{ width: 80, height: 80 }}
+											alt="Company logo"
+											src={c.logoUrl as string}
+											aria-haspopup="true"
+										/>
+									),
 							}))}
 						/>
 					</div>
@@ -75,39 +76,7 @@ export default function Index() {
 								{state.client.name}
 							</Typography>
 						</div>
-						{loading ? (
-							<div>
-								<TaskCardSkeleton />
-								<TaskCardSkeleton />
-								<TaskCardSkeleton />
-								<TaskCardSkeleton />
-								<TaskCardSkeleton />
-							</div>
-						) : error ? (
-							JSON.stringify(error)
-						) : state.client.name === 'All' ? (
-							data
-								?.filter((task: Task) => task.status === 'task_queued')
-								.map((task: Task) => (
-									<>
-										<Divider />
-										<TaskCard key={task.id} task={task} mode="freelancer" />
-									</>
-								))
-						) : (
-							data
-								?.filter(
-									(task: Task) =>
-										task.clientName === state.client.name &&
-										task.status === 'task_queued'
-								)
-								.map((task: Task) => (
-									<>
-										<Divider />
-										<TaskCard key={task.id} task={task} mode="freelancer" />
-									</>
-								))
-						)}
+						<TaskList />
 					</div>
 					<div>
 						{!isLoading && user ? (

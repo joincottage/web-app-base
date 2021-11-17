@@ -20,7 +20,7 @@ export interface AppContext {
 
 export const initialState: AppState = {
 	client: {
-		name: '',
+		name: 'All',
 		logo: <div></div>,
 	},
 	user: {
