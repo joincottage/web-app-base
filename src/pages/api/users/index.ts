@@ -1,6 +1,7 @@
 import { prisma } from '../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { encrypt } from '../../../utils/encryption';
+import Axios from 'axios';
 
 const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
@@ -31,18 +32,21 @@ export default async function (
     //   res.send('OK');
     //   break;
     case 'GET': {
-      //TODO: Return current user
-      //TODO: Pull current user from auth0
-      const users = await prisma.user.findMany();
-      const cleansedUsers = users.map((user) => {
-        return {
-          bio: user.bio,
-          name: user.name,
-          imgUrl: user.img_url,
-          id: encrypt(user.email), // give em the old swap-a-roo
-        };
+      let protocol = 'https://';
+      if (req.headers.host?.indexOf('localhost') !== -1) {
+        protocol = 'http://';
+      }
+      const response = await Axios.get(
+        protocol + req.headers.host + '/api/auth/me',
+        {
+          headers: req.headers,
+        }
+      );
+      const userInfo = response.data;
+      const user = await prisma.user.findFirst({
+        where: { auth_id: userInfo.sub },
       });
-      res.json(cleansedUsers);
+      res.json(user);
       break;
     }
     default: {
