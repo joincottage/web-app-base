@@ -5,8 +5,8 @@ import { getSession } from '@auth0/nextjs-auth0';
 import { postMessageToChannel } from 'src/apiService/discord/channel';
 
 export default async function (
-  req: NextApiRequest,
-  res: NextApiResponse
+	req: NextApiRequest,
+	res: NextApiResponse
 ): Promise<void> {
 	const { body } = req;
 	const name = body.name;
@@ -44,42 +44,48 @@ export default async function (
 			break;
 		case 'GET':
 			{
-				const session = getSession(req, res);
+				const session = await getSession(req, res);
 				const userInfo = session?.user;
+				console.log(userInfo);
 
-        if (userInfo == null) {
-          res.status(401).end();
-          return;
-        }
+				if (userInfo == null) {
+					res.status(401).end();
+					return;
+				}
 
-        const user = await prisma.user.findFirst({
-          where: { auth_id: userInfo.sub },
-        });
+				if (userInfo == null) {
+					res.status(401).end();
+					return;
+				}
 
-        if (user === null) {
-          await prisma.user.create({
-            data: {
-              auth_id: userInfo.sub,
-              email: userInfo.email,
-            },
-          });
-        }
+				const user = await prisma.user.findFirst({
+					where: { auth_id: userInfo.sub },
+				});
 
-        if (user !== null) {
-          const tasks = await prisma.task.findMany({
-            where: {
-              userId: userInfo.email,
-              status: 'in_progress',
-            },
-          });
-          res.json(tasks);
-        } else {
-          res.json({ message: 'no task' });
-        }
-        break;
-      }
-      {
-        /*
+				if (user === null) {
+					await prisma.user.create({
+						data: {
+							auth_id: userInfo.sub,
+							email: userInfo.email,
+						},
+					});
+				}
+
+				if (user !== null) {
+					const tasks = await prisma.task.findMany({
+						where: {
+							userId: userInfo.email,
+							status: 'in_progress',
+						},
+					});
+					res.json(tasks);
+				} else {
+					res.json({ message: 'no task' });
+				}
+				break;
+			}
+			{
+				/*
 		case 'DELETE': {
 			await prisma.task.deleteMany({
 				where: {
@@ -90,15 +96,15 @@ export default async function (
 			});
 		}
 		*/
-      }
-    default: {
-      console.error(
-        `Unsupported method type ${req.method} made to endpoint ${req.url}`
-      );
-      res.status(404).end();
-      break;
-    }
-  }
+			}
+		default: {
+			console.error(
+				`Unsupported method type ${req.method} made to endpoint ${req.url}`
+			);
+			res.status(404).end();
+			break;
+		}
+	}
 }
 
 // potential util for testing https://dev.to/jamesharv/comment/145f8
