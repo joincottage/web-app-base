@@ -164,7 +164,7 @@ export default function TaskCard({ task, mode }: OwnProps) {
 						<button
 							disabled={state.user.hasCurrentTask}
 							onClick={handleClickIllDoIt}
-							className="mb-2 mr-2 px-3 py-2 bg-blue-800 hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
+							className="mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
 						>
 							I&apos;ll do it!
 						</button>
