@@ -5,7 +5,7 @@ import {
 	postMessageToChannel,
 } from 'src/apiService/discord/channel';
 import { prisma } from 'src/database/prisma';
-import Axios from 'axios';
+import { getSession } from '@auth0/nextjs-auth0';
 
 interface NotifyTaskInterestRequest extends NextApiRequest {
 	body: {
@@ -28,7 +28,6 @@ export default async function (
 	const discordChannelId = body.discordChannelId;
 	const discordUserId = body.discordUserId;
 	const task = body.task;
-	const userEmail = body.userEmail;
 
 	if (method !== 'POST') {
 		res.setHeader('Allow', ['POST']);
@@ -38,25 +37,24 @@ export default async function (
 	}
 
 	try {
-		//TODO: Securely fetch user email
 		console.log(`Updating task in DB with Prisma`);
+		const session = getSession(req, res);
+		const userInfo = session?.user;
+
+		if (userInfo == null) {
+			res.status(401).end();
+			return;
+		}
+
 		await prisma.task.update({
 			where: {
 				id: task.id,
 			},
 			data: {
 				status: 'in_progress',
-				userId: userEmail,
+				userId: userInfo.email,
 			},
 		});
-		// await prisma.user.update({
-		//   where: {
-		//     email: userEmail,
-		//   },
-		//   data: {
-		//     currentTaskId: task.id,
-		//   },
-		// });
 		console.log('Task successfully updated in DB');
 		await postMessageToChannel(discordChannelId, formatInfo(name));
 		await addUserToChannel(discordChannelId, discordUserId);

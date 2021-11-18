@@ -2,7 +2,7 @@
 import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios from 'axios';
-import {getSession} from '@auth0/nextjs-auth0'
+import { getSession } from '@auth0/nextjs-auth0';
 
 export default async function (
 	req: NextApiRequest,
@@ -39,9 +39,8 @@ export default async function (
 			break;
 		case 'GET':
 			{
-				const session = await getSession(req, res)
+				const session = getSession(req, res);
 				const userInfo = session?.user;
-				console.log(userInfo);
 
 				if (userInfo == null) {
 					res.status(401).end();
