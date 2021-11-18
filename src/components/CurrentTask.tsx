@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { UserProfile, useUser } from '@auth0/nextjs-auth0';
+import { useContext, useState, useEffect } from 'react';
+import { AppDataContext } from '../contexts/AppContext';
 import { Task } from '.prisma/client';
 import axios from 'axios';
+import { UserProfile, useUser } from '@auth0/nextjs-auth0';
 
 interface OwnProps {
 	task: Task;
@@ -30,9 +31,12 @@ export default function CurrentTask({ task }: OwnProps) {
 		setConfirmDelete('');
 	}
 
-	//TODO: create api for handleSubmit
 	async function handleSubmit() {
-		const response = await axios.put('/api/tasks/current', { task: task });
+		const response = await axios.put('/api/tasks/current', {
+			task: task,
+			name: user?.name ?? 'Freelancer',
+			discordChannelId: task.discordChannelId,
+		});
 		console.log(response);
 	}
 	async function abandonTask() {

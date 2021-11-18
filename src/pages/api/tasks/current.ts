@@ -1,46 +1,51 @@
 //https://www.prisma.io/docs/concepts/components/prisma-client/crud
 import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
-import Axios from 'axios';
 import { getSession } from '@auth0/nextjs-auth0';
+import { postMessageToChannel } from 'src/apiService/discord/channel';
 
 export default async function (
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
-  switch (req.method) {
-    case 'POST': {
-      // TODO: reenable before launch
-      // if (req.headers.authorization !== auth0HookToken) {
-      //   res.status(401).json({ message: 'You are not authorized' });
-      //   break;
-      // }
-      await prisma.task.create({
-        data: {
-          ...req.body,
-        },
-      });
+	const { body } = req;
+	const name = body.name;
+	const discordChannelId = body.discordChannelId;
+	switch (req.method) {
+		case 'POST': {
+			// TODO: reenable before launch
+			// if (req.headers.authorization !== auth0HookToken) {
+			//   res.status(401).json({ message: 'You are not authorized' });
+			//   break;
+			// }
+			await prisma.task.create({
+				data: {
+					...req.body,
+				},
+			});
 
-      res.send('OK');
-      break;
-    }
-    //MARK: Change current task to in_review
-    case 'PUT':
-      await prisma.task.update({
-        where: {
-          id: req.body.task.id,
-        },
-        data: {
-          status: 'in_review',
-        },
-      });
+			res.send('OK');
+			break;
+		}
+		//NOTE: Change current task to in_review
+		case 'PUT':
+			await prisma.task.update({
+				where: {
+					id: req.body.task.id,
+				},
+				data: {
+					status: 'in_review',
+				},
+			});
 
-      res.send('OK');
-      break;
-    case 'GET':
-      {
-        const session = getSession(req, res);
-        const userInfo = session?.user;
+			const reviewMessage = `${name} has submitted this task for review. Please take a look at the task as soon as you can.`;
+			await postMessageToChannel(discordChannelId, reviewMessage);
+			res.send('OK');
+			break;
+		case 'GET':
+			{
+				const session = getSession(req, res);
+				const userInfo = session?.user;
 
         if (userInfo == null) {
           res.status(401).end();
