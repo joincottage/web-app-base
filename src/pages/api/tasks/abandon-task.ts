@@ -1,7 +1,7 @@
 //https://www.prisma.io/docs/concepts/components/prisma-client/crud
 import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
-import Axios from 'axios';
+import { removeUserFromChannel } from 'src/apiService/discord/channel';
 
 //const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
@@ -25,6 +25,10 @@ export default async function (
 	req: NextApiRequest,
 	res: NextApiResponse
 ): Promise<void> {
+	const { body } = req;
+	const discordChannelId = body.discordChannelId;
+	const discordUserId = body.discordUserId;
+
 	switch (req.method) {
 		case 'POST': {
 		}
@@ -40,6 +44,7 @@ export default async function (
 				},
 			});
 
+			await removeUserFromChannel(discordChannelId, discordUserId);
 			res.send('OK');
 			break;
 		case 'GET': {

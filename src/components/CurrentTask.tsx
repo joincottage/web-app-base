@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { UserProfile, useUser } from '@auth0/nextjs-auth0';
 import { Task } from '.prisma/client';
 import axios from 'axios';
 
@@ -7,6 +8,7 @@ interface OwnProps {
 }
 
 export default function CurrentTask({ task }: OwnProps) {
+	const { user } = useUser();
 	const [isShowingMenu, setIsShowingMenu] = useState(false);
 	const [isShowingAbandon, setIsShowingAbandon] = useState(false);
 	const [confirmDelete, setConfirmDelete] = useState('');
@@ -35,8 +37,14 @@ export default function CurrentTask({ task }: OwnProps) {
 	}
 	async function abandonTask() {
 		resetAllPops();
+		if (user === undefined) {
+			console.log('user is undefined');
+			return;
+		}
 		const response = await axios.put('/api/tasks/abandon-task', {
 			task: task,
+			discordChannelId: task.discordChannelId,
+			discordUserId: user.sub?.split('|')[2],
 		});
 		console.log(response);
 	}
