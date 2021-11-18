@@ -74,7 +74,7 @@ export const removeUserFromChannel = async (
 	userId: string
 ) => {
 	try {
-		console.log(`Adding user to Discord channel`);
+		console.log(`Removing user to Discord channel`);
 		const client = await getClient();
 		const guild = await client.guilds.fetch(guildId, true);
 		console.log('Fetched guild object');
