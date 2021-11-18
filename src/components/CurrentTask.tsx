@@ -57,25 +57,23 @@ export default function CurrentTask({ task }: OwnProps) {
 		<>
 			{isShowingAbandon ? (
 				<div className="absolute top-0 left-0 z-50 bg-black bg-opacity-90 grid place-content-center w-screen h-screen">
-					<div className="bg-gray-200 p-6 rounded-lg max-w-lg text-center">
-						<p className="my-3 text-red-700 font-semibold text-2xl">
-							Are you sure?
-						</p>
+					<div className="bg-white p-6 rounded-lg max-w-lg text-center">
+						<p className="my-3 font-thin text-4xl">Are you sure?</p>
 						<p className="text-center mb-8 mx-6">
 							Abandoning this current task will mean you won't be paid for the
 							work done until this point.
 						</p>
 						<div className="flex flex-col my-2">
-							<label className="my-3" htmlFor="delete">
+							<label className="my-3 text-center" htmlFor="delete">
 								Please type
-								<span className="mx-2 py-1 px-2 rounded-lg bg-gray-300 font-medium">
+								<span className="mx-2 py-1 px-2 rounded-lg bg-gray-100 font-bold">
 									{task.clientName}/{task.name}
 								</span>
 								to confirm.
 							</label>
 							<input
 								id="delete"
-								className="mx-6 rounded leading-8 pl-2"
+								className="mx-6 rounded bg-blue-100 leading-8 pl-2"
 								type="text"
 								onChange={(e) => {
 									setConfirmDelete(e.target.value);
@@ -84,7 +82,7 @@ export default function CurrentTask({ task }: OwnProps) {
 						</div>
 						<div className="mt-4 flex justify-center">
 							<button
-								className="disabled:opacity-20  px-5 py-2 rounded bg-red-800 disabled:hover:bg-red-800 disabled:cursor-default hover:bg-red-600 text-white font-medium transition ease-in-out duration-500"
+								className="disabled:opacity-20  px-5 py-2 rounded border-2 border-red-800 text-red-800 disabled:hover:bg-white disabled:cursor-default hover:bg-red-100 hover:text-red-900 font-semibold transition ease-in-out duration-500"
 								disabled={confirmDelete !== confirmDeleteCheck}
 								onClick={abandonTask}
 							>
@@ -92,7 +90,7 @@ export default function CurrentTask({ task }: OwnProps) {
 							</button>
 							<button
 								onClick={resetAllPops}
-								className="px-3 py-1 ml-4 rounded bg-green-600 text-white font-semibold"
+								className="px-3 py-1 ml-4 rounded bg-blue-500 hover:bg-blue-500 text-white font-semibold"
 							>
 								Keep working on task.
 							</button>
@@ -104,7 +102,7 @@ export default function CurrentTask({ task }: OwnProps) {
 			)}
 			<div className="relative">
 				{isShowingMenu ? (
-					<div className="absolute px-3 py-3 z-10 right-2 top-12 -left-20 bg-gray-200 shadow-md rounded">
+					<div className="absolute px-3 py-3 z-10 right-2 top-12 -left-20 border-2 border-blue-500 bg-white shadow-md rounded-lg">
 						<div className="text-left">
 							<p className="text-lg">{task.clientName}</p>
 							<p className="text-sm">{task.longDesc}</p>
@@ -115,7 +113,7 @@ export default function CurrentTask({ task }: OwnProps) {
 								>
 									Abandon Task
 								</button>
-								<button className="px-3 py-1 ml-4 rounded bg-indigo-300">
+								<button className="px-3 py-1 ml-4 rounded border-2 border-blue-500 text-blue-800 hover:text-blue-900 hover:bg-blue-50">
 									Request Help
 								</button>
 							</div>
