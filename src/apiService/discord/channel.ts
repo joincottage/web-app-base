@@ -41,9 +41,7 @@ export const postMessageToChannel = async (
 		console.log('Posting message to Discord channel');
 		const client = await getClient();
 		const guild = await client.guilds.fetch(guildId);
-		const channel = await guild.channels.cache.find(
-			(ch) => ch.id === channelId
-		);
+		const channel = guild.channels.cache.find((ch) => ch.id === channelId);
 		if (channel?.isText()) {
 			(channel as TextChannel).send(message);
 			console.log('Message successfully posted to Discord channel');
@@ -60,9 +58,7 @@ export const addUserToChannel = async (channelId: string, userId: string) => {
 		const client = await getClient();
 		const guild = await client.guilds.fetch(guildId, true);
 		console.log('Fetched guild object');
-		const channel = await guild.channels.cache.find(
-			(ch) => ch.id === channelId
-		);
+		const channel = guild.channels.cache.find((ch) => ch.id === channelId);
 		console.log('Fetched channel object');
 		const user = await client.users.fetch(userId);
 		await channel?.createOverwrite(user, { VIEW_CHANNEL: true });
