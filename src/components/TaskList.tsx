@@ -28,7 +28,9 @@ export default function TaskList({}: OwnProps) {
 				JSON.stringify(error)
 			) : state.client.name === 'All' ? (
 				data
-					?.filter((task: Task) => task.status === 'task_queued')
+					?.filter(
+						(task: Task) => task.status === 'task_queued' && task.price !== null
+					)
 					.map((task: Task) => (
 						<>
 							<Divider />
@@ -40,7 +42,8 @@ export default function TaskList({}: OwnProps) {
 					?.filter(
 						(task: Task) =>
 							task.clientName === state.client.name &&
-							task.status === 'task_queued'
+							task.status === 'task_queued' &&
+							task.price !== null
 					)
 					.map((task: Task) => (
 						<>
