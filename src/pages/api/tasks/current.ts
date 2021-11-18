@@ -2,6 +2,7 @@
 import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios from 'axios';
+import {getSession} from '@auth0/nextjs-auth0'
 
 export default async function (
 	req: NextApiRequest,
@@ -38,17 +39,15 @@ export default async function (
 			break;
 		case 'GET':
 			{
-				let protocol = 'https://';
-				if (req.headers.host?.indexOf('localhost') !== -1) {
-					protocol = 'http://';
+				const session = await getSession(req, res)
+				const userInfo = session?.user;
+				console.log(userInfo);
+
+				if (userInfo == null) {
+					res.status(401).end();
+					return;
 				}
-				const response = await Axios.get(
-					protocol + req.headers.host + '/api/auth/me',
-					{
-						headers: req.headers,
-					}
-				);
-				const userInfo = response.data;
+
 				const user = await prisma.user.findFirst({
 					where: { auth_id: userInfo.sub },
 				});
