@@ -13,7 +13,7 @@ import {
   AppState,
   initialState,
 } from '../contexts/AppContext';
-import 'tailwindcss/tailwind.css';
+import './../styles/theme.css';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
