@@ -16,92 +16,92 @@ import TaskList from 'src/components/TaskList';
 export const getServerSideProps = withPageAuthRequired();
 
 export default function Index() {
-	const { user, isLoading } = useUser();
-	const { state } = useContext(AppDataContext);
-	const { clients } = useClients({ shouldFetchAll: true });
+  const { user, isLoading } = useUser();
+  const { state } = useContext(AppDataContext);
+  const { clients } = useClients({ shouldFetchAll: true });
 
-	return (
-		<Container maxWidth="lg">
-			<Box my={4}>
-				<div style={{ display: 'flex', justifyContent: 'center' }}>
-					<div>
-						<ClientTabs
-							clients={clients.map((c) => ({
-								name: c.name as string,
-								logo:
-									c.logoUrl === undefined ? (
-										<></>
-									) : (
-										<Avatar
-											sx={{ width: 24, height: 24 }}
-											alt="Company logo"
-											src={c.logoUrl as string}
-											aria-haspopup="true"
-										/>
-									),
-								largeLogo:
-									c.logoUrl === undefined ? (
-										<></>
-									) : (
-										<Avatar
-											sx={{ width: 80, height: 80 }}
-											alt="Company logo"
-											src={c.logoUrl as string}
-											aria-haspopup="true"
-										/>
-									),
-							}))}
-						/>
-					</div>
-					<div
-						style={{
-							display: 'flex',
-							flexDirection: 'column',
-							minWidth: '600px',
-							maxWidth: '600px',
-						}}
-					>
-						<div
-							style={{
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-								marginBottom: '15px',
-							}}
-						>
-							<span style={{ marginRight: '15px' }}>
-								{state.client.largeLogo}
-							</span>
-							<Typography variant="h6" style={{ paddingRight: '30px' }}>
-								{state.client.name}
-							</Typography>
-						</div>
-						<TaskList />
-					</div>
-					<div>
-						{!isLoading && user ? (
-							<div
-								style={{
-									display: 'flex',
-									flexDirection: 'column',
-									justifyContent: 'center',
-									alignItems: 'center',
-									marginLeft: '25px',
-								}}
-							>
-								<UserTasksColumn user={user} />
-							</div>
-						) : (
-							!isLoading && (
-								<NextLink href="/api/auth/login" passHref={true}>
-									<Button color="inherit">Login</Button>
-								</NextLink>
-							)
-						)}
-					</div>
-				</div>
-				<Copyright />
-			</Box>
-		</Container>
-	);
+  return (
+    <Container maxWidth="lg">
+      <Box my={4}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div>
+            <ClientTabs
+              clients={clients.map((c) => ({
+                name: c.name as string,
+                logo:
+                  c.logoUrl === undefined ? (
+                    <></>
+                  ) : (
+                    <Avatar
+                      sx={{ width: 24, height: 24 }}
+                      alt="Company logo"
+                      src={c.logoUrl as string}
+                      aria-haspopup="true"
+                    />
+                  ),
+                largeLogo:
+                  c.logoUrl === undefined ? (
+                    <></>
+                  ) : (
+                    <Avatar
+                      sx={{ width: 80, height: 80 }}
+                      alt="Company logo"
+                      src={c.logoUrl as string}
+                      aria-haspopup="true"
+                    />
+                  ),
+              }))}
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              minWidth: '600px',
+              maxWidth: '600px',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: '15px',
+              }}
+            >
+              <span style={{ marginRight: '15px' }}>
+                {state.client.largeLogo}
+              </span>
+              <Typography variant="h6" style={{ paddingRight: '30px' }}>
+                {state.client.name}
+              </Typography>
+            </div>
+            <TaskList />
+          </div>
+          <div>
+            {!isLoading && user ? (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginLeft: '25px',
+                }}
+              >
+                <UserTasksColumn user={user} />
+              </div>
+            ) : (
+              !isLoading && (
+                <NextLink href="/api/auth/login" passHref={true}>
+                  <Button color="inherit">Login</Button>
+                </NextLink>
+              )
+            )}
+          </div>
+        </div>
+        <Copyright />
+      </Box>
+    </Container>
+  );
 }

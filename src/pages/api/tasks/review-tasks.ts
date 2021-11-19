@@ -7,29 +7,29 @@ import Axios from 'axios';
 //const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
 export default async function (
-	req: NextApiRequest,
-	res: NextApiResponse
+  req: NextApiRequest,
+  res: NextApiResponse
 ): Promise<void> {
-	switch (req.method) {
-		//Create
-		case 'POST':
-			{
-				// TODO: reenable before launch
-				// if (req.headers.authorization !== auth0HookToken) {
-				//   res.status(401).json({ message: 'You are not authorized' });
-				//   break;
-				// }
-				await prisma.task.create({
-					data: {
-						...req.body,
-					},
-				});
+  switch (req.method) {
+    //Create
+    case 'POST':
+      {
+        // TODO: reenable before launch
+        // if (req.headers.authorization !== auth0HookToken) {
+        //   res.status(401).json({ message: 'You are not authorized' });
+        //   break;
+        // }
+        await prisma.task.create({
+          data: {
+            ...req.body,
+          },
+        });
 
-				res.send('OK');
-				break;
-			}
-			{
-				/*
+        res.send('OK');
+        break;
+      }
+      {
+        /*
 		case 'PUT':
 			await prisma.task.update({
 				where: {
@@ -42,57 +42,57 @@ export default async function (
 			res.send('OK');
 			break;
 			*/
-			}
-		case 'GET':
-			{
-				let protocol = 'https://';
-				if (req.headers.host?.indexOf('localhost') !== -1) {
-					protocol = 'http://';
-				}
-				const response = await Axios.get(
-					protocol + req.headers.host + '/api/auth/me',
-					{
-						headers: req.headers,
-					}
-				);
-				const userInfo = response.data;
-				const user = await prisma.user.findFirst({
-					where: { auth_id: userInfo.sub },
-				});
+      }
+    case 'GET':
+      {
+        let protocol = 'https://';
+        if (req.headers.host?.indexOf('localhost') !== -1) {
+          protocol = 'http://';
+        }
+        const response = await Axios.get(
+          protocol + req.headers.host + '/api/auth/me',
+          {
+            headers: req.headers,
+          }
+        );
+        const userInfo = response.data;
+        const user = await prisma.user.findFirst({
+          where: { auth_id: userInfo.sub },
+        });
 
-				if (user === null) {
-					await prisma.user.create({
-						data: {
-							auth_id: userInfo.sub,
-							email: userInfo.email,
-						},
-					});
-				}
+        if (user === null) {
+          await prisma.user.create({
+            data: {
+              auth_id: userInfo.sub,
+              email: userInfo.email,
+            },
+          });
+        }
 
-				//TODO: Change userID to email
-				if (user !== null) {
-					const tasks = await prisma.task.findMany({
-						where: {
-							OR: [
-								{
-									userId: userInfo.email,
-									status: 'in_review',
-								},
-								{
-									userId: userInfo.email,
-									status: 'in_attention',
-								},
-							],
-						},
-					});
-					res.json(tasks);
-				} else {
-					res.json({ message: 'no task' });
-				}
-				break;
-			}
-			{
-				/*
+        //TODO: Change userID to email
+        if (user !== null) {
+          const tasks = await prisma.task.findMany({
+            where: {
+              OR: [
+                {
+                  userId: userInfo.email,
+                  status: 'in_review',
+                },
+                {
+                  userId: userInfo.email,
+                  status: 'in_attention',
+                },
+              ],
+            },
+          });
+          res.json(tasks);
+        } else {
+          res.json({ message: 'no task' });
+        }
+        break;
+      }
+      {
+        /*
 		case 'DELETE': {
 			await prisma.task.deleteMany({
 				where: {
@@ -103,15 +103,15 @@ export default async function (
 			});
 		}
 		*/
-			}
-		default: {
-			console.error(
-				`Unsupported method type ${req.method} made to endpoint ${req.url}`
-			);
-			res.status(404).end();
-			break;
-		}
-	}
+      }
+    default: {
+      console.error(
+        `Unsupported method type ${req.method} made to endpoint ${req.url}`
+      );
+      res.status(404).end();
+      break;
+    }
+  }
 }
 
 // potential util for testing https://dev.to/jamesharv/comment/145f8

@@ -3,44 +3,44 @@ import { Client } from '@prisma/client';
 import React, { useState, useEffect } from 'react';
 
 interface OwnProps {
-	shouldFetchAll?: boolean;
+  shouldFetchAll?: boolean;
 }
 
 const useClients = ({ shouldFetchAll = false }: OwnProps = {}) => {
-	const { user, isLoading } = useUser();
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-	const [clients, setClients] = useState<Client[] | null>(null);
+  const { user, isLoading } = useUser();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [clients, setClients] = useState<Client[] | null>(null);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await fetch('/api/clients');
-				const data = await response.json();
-				if (shouldFetchAll) {
-					data.unshift({ name: 'All' });
-					setClients(data);
-				} else {
-					setClients(
-						data.filter((d: Client) => d.userEmailOfOwner === user?.email)
-					);
-				}
-				setLoading(false);
-			} catch (err) {
-				setError(err);
-			}
-		};
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/clients');
+        const data = await response.json();
+        if (shouldFetchAll) {
+          data.unshift({ name: 'All' });
+          setClients(data);
+        } else {
+          setClients(
+            data.filter((d: Client) => d.userEmailOfOwner === user?.email)
+          );
+        }
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+      }
+    };
 
-		fetchData();
-	}, [user]);
+    fetchData();
+  }, [user]);
 
-	return {
-		loading,
-		error,
-		clients: clients || [],
-		user,
-		isLoading: isLoading && loading,
-	};
+  return {
+    loading,
+    error,
+    clients: clients || [],
+    user,
+    isLoading: isLoading && loading,
+  };
 };
 
 export default useClients;
