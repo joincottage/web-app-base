@@ -37,7 +37,7 @@
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "stripe": "^8.169.0"
+    "stripe": "^8.191.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.3",
