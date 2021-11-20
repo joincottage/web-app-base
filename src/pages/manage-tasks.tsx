@@ -70,41 +70,47 @@ export default function ManageTasks() {
       <div className={classes.root}>
         {clients.length > 0 ? (
           <>
-            {clients.map((c) => (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  marginTop: '15px',
-                  marginRight: '10px',
-                  marginLeft: '10px',
-                  opacity: selectedClient?.id === c.id ? 1 : 0.2,
-                  cursor: 'pointer',
-                }}
-                onClick={() => {
-                  setSelectedClient(c);
-                  dispatch({
-                    type: 'SET_SELECTED_CLIENT',
-                    payload: {
-                      client: {
-                        name: c.name || '',
-                        logo: <></>,
-                        largeLogo: <></>,
+            <div style={{ display: 'flex' }}>
+              {clients.map((c) => (
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    marginTop: '15px',
+                    marginRight: '10px',
+                    marginLeft: '10px',
+                    opacity: selectedClient?.id === c.id ? 1 : 0.2,
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    setSelectedClient(c);
+                    dispatch({
+                      type: 'SET_SELECTED_CLIENT',
+                      payload: {
+                        client: {
+                          name: c.name || '',
+                          logo: <></>,
+                          largeLogo: <></>,
+                        },
                       },
-                    },
-                  });
-                }}
-              >
-                <Avatar
-                  alt="Account"
-                  src={c?.logoUrl || ''}
-                  aria-haspopup="true"
-                  style={{ width: '40px', height: '40px', marginRight: '8px' }}
-                />
-                <Typography variant="h6">{c.name}</Typography>
-              </div>
-            ))}
+                    });
+                  }}
+                >
+                  <Avatar
+                    alt="Account"
+                    src={c?.logoUrl || ''}
+                    aria-haspopup="true"
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      marginRight: '8px',
+                    }}
+                  />
+                  <Typography variant="h6">{c.name}</Typography>
+                </div>
+              ))}
+            </div>
             <KanbanBoard client={selectedClient} />
           </>
         ) : (

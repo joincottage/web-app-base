@@ -26,6 +26,7 @@ import moment from 'moment';
 interface OwnProps {
   task: Task;
   mode: 'freelancer' | 'client';
+  showAcceptButton?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -79,7 +80,7 @@ function getModalStyle() {
   };
 }
 
-export default function TaskCard({ task, mode }: OwnProps) {
+export default function TaskCard({ task, mode, showAcceptButton }: OwnProps) {
   const { user } = useUser();
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -95,6 +96,7 @@ export default function TaskCard({ task, mode }: OwnProps) {
     setOpen(true);
     // sa_event('click_IllDoIt');
   };
+  const handleClickAccept = async () => {};
   const handleClose = () => {
     setOpen(false);
   };
@@ -153,6 +155,16 @@ export default function TaskCard({ task, mode }: OwnProps) {
             </Button>
           </div>
         )}
+        <div className={classes.primaryActionsContainer}>
+          {showAcceptButton && (
+            <button
+              onClick={handleClickAccept}
+              className="mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
+            >
+              Accept and Pay
+            </button>
+          )}
+        </div>
       </div>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <div className="my-6 mx-4 prose-sm text-gray-500">
