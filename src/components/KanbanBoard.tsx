@@ -107,7 +107,12 @@ const KanbanBoard = ({ client }: OwnProps) => {
                     .map((task: Task) => (
                       <>
                         <Divider />
-                        <TaskCard key={task.id} task={task} mode="client" />
+                        <TaskCard
+                          key={task.id}
+                          task={task}
+                          mode="client"
+                          showCompanyLogo={false}
+                        />
                       </>
                     ))}
             </Box>
@@ -129,7 +134,12 @@ const KanbanBoard = ({ client }: OwnProps) => {
                     .map((task: Task) => (
                       <>
                         <Divider />
-                        <TaskCard key={task.id} task={task} mode="client" />
+                        <TaskCard
+                          key={task.id}
+                          task={task}
+                          mode="client"
+                          showUserImg={true}
+                        />
                       </>
                     ))}
             </Box>
@@ -156,6 +166,7 @@ const KanbanBoard = ({ client }: OwnProps) => {
                           task={task}
                           mode="client"
                           showAcceptButton={true}
+                          showUserImg={true}
                         />
                       </>
                     ))}

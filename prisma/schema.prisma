@@ -42,6 +42,7 @@ model Task {
   status           String?
   price            Int?
 	userId           String?
+  userImgUrl       String?
   discordChannelId String?
 }
 

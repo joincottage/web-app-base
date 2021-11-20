@@ -41,7 +41,7 @@ export default async function (
     console.log(`Updating task in DB with Prisma`);
     const session = getSession(req, res);
     const userInfo = session?.user;
-
+    console.log(`userInfo: ${JSON.stringify(userInfo)}`);
     if (userInfo == null) {
       res.status(401).end();
       return;
@@ -54,6 +54,7 @@ export default async function (
       data: {
         status: IN_PROGRESS,
         userId: userInfo.email,
+        userImgUrl: userInfo.picture,
       },
     });
     console.log('Task successfully updated in DB');

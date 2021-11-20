@@ -27,6 +27,8 @@ interface OwnProps {
   task: Task;
   mode: 'freelancer' | 'client';
   showAcceptButton?: boolean;
+  showUserImg?: boolean;
+  showCompanyLogo?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -80,7 +82,13 @@ function getModalStyle() {
   };
 }
 
-export default function TaskCard({ task, mode, showAcceptButton }: OwnProps) {
+export default function TaskCard({
+  task,
+  mode,
+  showAcceptButton,
+  showUserImg,
+  showCompanyLogo = true,
+}: OwnProps) {
   const { user } = useUser();
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -116,11 +124,23 @@ export default function TaskCard({ task, mode, showAcceptButton }: OwnProps) {
       <div className="my-3 flex justify-between mx-4">
         <div>
           <div className="flex items-center">
-            <img
-              className="h-6 w-6 ml-1 mr-3"
-              alt="Company logo"
-              src={task.clientImgUrl || ''}
-            />
+            {showUserImg && (
+              <Avatar
+                className="h-6 w-6 ml-1 mr-3"
+                alt="User image"
+                src={task.userImgUrl || ''}
+              />
+            )}
+            {!showUserImg && !showCompanyLogo && (
+              <Avatar className="h-6 w-6 ml-1 mr-3" alt="User image" src={''} />
+            )}
+            {!showUserImg && showCompanyLogo && (
+              <Avatar
+                className="h-6 w-6 ml-1 mr-3"
+                alt="User image"
+                src={task.clientImgUrl || ''}
+              />
+            )}
             <div className="ml-1">
               <h5 className="font-light">{task.name}</h5>
               <h6 className="text-sm text-gray-500">
