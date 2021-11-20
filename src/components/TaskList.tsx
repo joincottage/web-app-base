@@ -5,6 +5,7 @@ import TaskCard from '../components/TaskCard';
 import Divider from '@material-ui/core/Divider';
 import { Task } from '@prisma/client';
 import useTasks from 'src/hooks/useTasks';
+import { TASK_QUEUED } from 'src/constants/task-stages';
 
 interface OwnProps {
   //DESTRUCTUREDPROP: [];
@@ -29,7 +30,7 @@ export default function TaskList({}: OwnProps) {
       ) : state.client.name === 'All' ? (
         data
           ?.filter(
-            (task: Task) => task.status === 'task_queued' && task.price !== null
+            (task: Task) => task.status === TASK_QUEUED && task.price !== null
           )
           .map((task: Task) => (
             <>
@@ -42,7 +43,7 @@ export default function TaskList({}: OwnProps) {
           ?.filter(
             (task: Task) =>
               task.clientName === state.client.name &&
-              task.status === 'task_queued' &&
+              task.status === TASK_QUEUED &&
               task.price !== null
           )
           .map((task: Task) => (

@@ -6,6 +6,7 @@ import {
 } from 'src/apiService/discord/channel';
 import { prisma } from 'src/database/prisma';
 import { getSession } from '@auth0/nextjs-auth0';
+import { IN_PROGRESS } from 'src/constants/task-stages';
 
 interface NotifyTaskInterestRequest extends NextApiRequest {
   body: {
@@ -51,7 +52,7 @@ export default async function (
         id: task.id,
       },
       data: {
-        status: 'in_progress',
+        status: IN_PROGRESS,
         userId: userInfo.email,
       },
     });

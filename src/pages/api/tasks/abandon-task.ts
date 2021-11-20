@@ -2,6 +2,7 @@
 import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { removeUserFromChannel } from 'src/apiService/discord/channel';
+import { TASK_QUEUED } from 'src/constants/task-stages';
 
 //const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
@@ -39,7 +40,7 @@ export default async function (
           id: req.body.task.id,
         },
         data: {
-          status: 'task_queued',
+          status: TASK_QUEUED,
           userId: null,
         },
       });

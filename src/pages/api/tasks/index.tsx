@@ -2,6 +2,7 @@ import { prisma } from '../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createTextChannel } from 'src/apiService/discord/channel';
 import { Task } from '@prisma/client';
+import { TASK_QUEUED } from 'src/constants/task-stages';
 
 const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
@@ -25,7 +26,7 @@ export default async function (
         data: {
           ...req.body,
           discordChannelId: channel.id,
-          status: 'task_queued',
+          status: TASK_QUEUED,
         },
       });
 

@@ -17,6 +17,7 @@ import useTasks from 'src/hooks/useTasks';
 import CreateATask from './CreateATask';
 import TaskCard from './TaskCard';
 import CloseIcon from '@material-ui/icons/Close';
+import { TASK_QUEUED, IN_PROGRESS, IN_REVIEW } from 'src/constants/task-stages';
 
 interface OwnProps {
   client: Client | null;
@@ -100,7 +101,7 @@ const KanbanBoard = ({ client }: OwnProps) => {
                     ?.filter((task: Task) => task.clientName === client?.name)
                     .filter(
                       (task: Task) =>
-                        task.status === 'task_queued' || !task.status
+                        task.status === TASK_QUEUED || !task.status
                     )
                     .reverse()
                     .map((task: Task) => (
@@ -124,7 +125,7 @@ const KanbanBoard = ({ client }: OwnProps) => {
                 ? JSON.stringify(error)
                 : tasks
                     ?.filter((task: Task) => task.clientName === client?.name)
-                    .filter((task: Task) => task.status === 'in_progress')
+                    .filter((task: Task) => task.status === IN_PROGRESS)
                     .map((task: Task) => (
                       <>
                         <Divider />
@@ -146,7 +147,7 @@ const KanbanBoard = ({ client }: OwnProps) => {
                 ? JSON.stringify(error)
                 : tasks
                     ?.filter((task: Task) => task.clientName === client?.name)
-                    .filter((task: Task) => task.status === 'ready_for_review')
+                    .filter((task: Task) => task.status === IN_REVIEW)
                     .map((task: Task) => (
                       <>
                         <Divider />

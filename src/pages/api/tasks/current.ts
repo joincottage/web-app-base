@@ -3,6 +3,7 @@ import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from '@auth0/nextjs-auth0';
 import { postMessageToChannel } from 'src/apiService/discord/channel';
+import { IN_PROGRESS, IN_REVIEW } from 'src/constants/task-stages';
 
 export default async function (
   req: NextApiRequest,
@@ -34,7 +35,7 @@ export default async function (
           id: req.body.task.id,
         },
         data: {
-          status: 'in_review',
+          status: IN_REVIEW,
         },
       });
 
@@ -75,7 +76,7 @@ export default async function (
           const tasks = await prisma.task.findMany({
             where: {
               userId: userInfo.email,
-              status: 'in_progress',
+              status: IN_PROGRESS,
             },
           });
           res.json(tasks);

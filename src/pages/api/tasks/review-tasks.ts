@@ -3,6 +3,7 @@ import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 //import { Task, User } from '@prisma/client';
 import Axios from 'axios';
+import { IN_REVIEW } from 'src/constants/task-stages';
 
 //const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
@@ -76,7 +77,7 @@ export default async function (
               OR: [
                 {
                   userId: userInfo.email,
-                  status: 'in_review',
+                  status: IN_REVIEW,
                 },
                 {
                   userId: userInfo.email,

@@ -1,5 +1,6 @@
 //import { useState, useEffect } from 'react';
 import { Task } from '@prisma/client';
+import { IN_REVIEW } from 'src/constants/task-stages';
 
 interface OwnProps {
   tasks: Task[];
@@ -45,7 +46,7 @@ export default function TasksInReview({ tasks }: OwnProps) {
             </div>
           </div>
           <div className="mt-2">
-            {task.status == 'in_review' ? (
+            {task.status == IN_REVIEW ? (
               <p className="bg-gray-50 rounded-md py-1 px-3 text-sm text-center text-yellow-500">
                 Waiting&nbsp;Approval
               </p>
