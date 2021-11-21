@@ -6,7 +6,6 @@ import NextLink from 'next/link';
 import Copyright from '../Copyright';
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { Avatar, Button } from '@material-ui/core';
-import { AccountIconMenu } from 'src/components/AccountIconMenu';
 import ClientTabs from 'src/components/ClientTabs';
 import UserTasksColumn from 'src/components/UserTasksColumn';
 import { AppDataContext } from '../contexts/AppContext';

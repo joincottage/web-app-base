@@ -25,6 +25,7 @@ import {
 import ProgressBar from './ProgressBar';
 import { AppDataContext } from 'src/contexts/AppContext';
 import ClientToggle from './ClientToggle';
+import TaskColumn from './TaskColumn';
 
 function getModalStyle() {
   return {
@@ -100,220 +101,58 @@ const KanbanBoard = () => {
               >
                 Create a task
               </Button>
-              <Box
-                m={2}
-                style={{
-                  flexBasis: '33%',
-                  backgroundColor: 'rgb(244, 245, 248)',
-                  padding: '10px',
-                  borderRadius: '7px',
-                  border: '1px solid rgb(217, 222, 227)',
-                }}
-              >
-                <div
-                  style={{
-                    textAlign: 'left',
-                    marginBottom: '10px',
-                  }}
-                >
-                  <span className="text-sm font-bold text-gray-700 bg-gray-200 py-1 px-2 mx-2 rounded-full">
-                    {
-                      tasks
-                        ?.filter(
-                          (task: Task) =>
-                            task.clientName === state.selectedClient?.name
-                        )
-                        .filter((task: Task) => task.status === TASK_QUEUED)
-                        .length
-                    }
-                  </span>
-                  <span
-                    style={{
-                      fontSize: '14px',
-                      fontWeight: 600,
-                    }}
-                  >
-                    Task Queue
-                  </span>
-                </div>
-                {loading
-                  ? 'Loading...'
-                  : error
-                  ? JSON.stringify(error)
-                  : tasks
-                      ?.filter(
-                        (task: Task) =>
-                          task.clientName === state.selectedClient?.name
-                      )
-                      .filter(
-                        (task: Task) =>
-                          task.status === TASK_QUEUED || !task.status
-                      )
-                      .reverse()
-                      .map((task: Task) => (
-                        <div style={{ marginBottom: '10px' }}>
-                          <TaskCard
-                            key={task.id}
-                            task={task}
-                            mode="client"
-                            showCompanyLogo={false}
-                          />
-                        </div>
-                      ))}
-              </Box>
+              <TaskColumn
+                title="Task Queue"
+                tasks={tasks
+                  ?.filter(
+                    (task: Task) =>
+                      task.clientName === state.selectedClient?.name
+                  )
+                  .filter(
+                    (task: Task) => task.status === TASK_QUEUED || !task.status
+                  )}
+                loading={loading}
+                error={error}
+                showCompanyLogos={false}
+              />
             </div>
-            <Box
-              m={2}
-              style={{
-                flexBasis: '33%',
-                backgroundColor: 'rgb(244, 245, 248)',
-                padding: '10px',
-                borderRadius: '7px',
-                border: '1px solid rgb(217, 222, 227)',
-              }}
-            >
-              <div
-                style={{
-                  textAlign: 'left',
-                  marginBottom: '10px',
-                }}
-              >
-                <span className="text-sm font-bold text-gray-700 bg-gray-200 py-1 px-2 mx-2 rounded-full">
-                  {
-                    tasks
-                      ?.filter(
-                        (task: Task) =>
-                          task.clientName === state.selectedClient?.name
-                      )
-                      .filter((task: Task) => task.status === IN_PROGRESS)
-                      .length
-                  }
-                </span>
-                <span
-                  style={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                  }}
-                >
-                  In Progress
-                </span>
-              </div>
-              {loading
-                ? 'Loading...'
-                : error
-                ? JSON.stringify(error)
-                : tasks
-                    ?.filter(
-                      (task: Task) =>
-                        task.clientName === state.selectedClient?.name
-                    )
-                    .filter((task: Task) => task.status === IN_PROGRESS)
-                    .map((task: Task) => (
-                      <>
-                        <Divider />
-                        <TaskCard
-                          key={task.id}
-                          task={task}
-                          mode="client"
-                          showUserImg={true}
-                        />
-                      </>
-                    ))}
-            </Box>
-            <Box
-              m={2}
-              style={{
-                flexBasis: '33%',
-                backgroundColor: 'rgb(244, 245, 248)',
-                padding: '10px',
-                borderRadius: '7px',
-                border: '1px solid rgb(217, 222, 227)',
-              }}
-            >
-              <div
-                style={{
-                  textAlign: 'left',
-                  marginBottom: '10px',
-                }}
-              >
-                <span className="text-sm font-bold text-gray-700 bg-gray-200 py-1 px-2 mx-2 rounded-full">
-                  {
-                    tasks
-                      ?.filter(
-                        (task: Task) =>
-                          task.clientName === state.selectedClient?.name
-                      )
-                      .filter((task: Task) => task.status === IN_REVIEW).length
-                  }
-                </span>
-                <span
-                  style={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                  }}
-                >
-                  Ready for Review
-                </span>
-              </div>
-              {loading
-                ? 'Loading...'
-                : error
-                ? JSON.stringify(error)
-                : tasks
-                    ?.filter(
-                      (task: Task) =>
-                        task.clientName === state.selectedClient?.name
-                    )
-                    .filter((task: Task) => task.status === IN_REVIEW)
-                    .map((task: Task) => (
-                      <>
-                        <Divider />
-                        <TaskCard
-                          key={task.id}
-                          task={task}
-                          mode="client"
-                          showAcceptButton={true}
-                          showUserImg={true}
-                        />
-                      </>
-                    ))}
-            </Box>
-            <Box
-              m={2}
-              style={{
-                flexBasis: '33%',
-                backgroundColor: 'rgb(244, 245, 248)',
-                padding: '10px',
-                borderRadius: '7px',
-                border: '1px solid rgb(217, 222, 227)',
-              }}
-            >
-              <div
-                style={{
-                  textAlign: 'left',
-                  marginBottom: '10px',
-                }}
-              >
-                <span className="text-sm font-bold text-gray-700 bg-gray-200 py-1 px-2 mx-2 rounded-full">
-                  {
-                    tasks
-                      ?.filter(
-                        (task: Task) =>
-                          task.clientName === state.selectedClient?.name
-                      )
-                      .filter((task: Task) => task.status === DONE).length
-                  }
-                </span>
-                <span
-                  style={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                  }}
-                >
-                  Done
-                </span>
-              </div>
-            </Box>
+            <TaskColumn
+              title="In Progress"
+              tasks={tasks
+                ?.filter(
+                  (task: Task) => task.clientName === state.selectedClient?.name
+                )
+                .filter((task: Task) => task.status === IN_PROGRESS)}
+              loading={loading}
+              error={error}
+              showCompanyLogos={false}
+              showUserImgs={true}
+            />
+            <TaskColumn
+              title="In Review"
+              tasks={tasks
+                ?.filter(
+                  (task: Task) => task.clientName === state.selectedClient?.name
+                )
+                .filter((task: Task) => task.status === IN_REVIEW)}
+              loading={loading}
+              error={error}
+              showCompanyLogos={false}
+              showUserImgs={true}
+              showAcceptButtons={true}
+            />
+            <TaskColumn
+              title="Done"
+              tasks={tasks
+                ?.filter(
+                  (task: Task) => task.clientName === state.selectedClient?.name
+                )
+                .filter((task: Task) => task.status === DONE)}
+              loading={loading}
+              error={error}
+              showCompanyLogos={false}
+              showUserImgs={true}
+            />
           </div>
           <div>
             <Modal
