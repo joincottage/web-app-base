@@ -24,6 +24,7 @@ import { AppDataContext } from 'src/contexts/AppContext';
 import CreateATask from 'src/components/CreateATask';
 import { useRouter } from 'next/router';
 import KanbanBoard from 'src/components/KanbanBoard';
+import { SdCardAlert } from '@material-ui/icons';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -80,7 +81,9 @@ export default function ManageTasks() {
                     marginTop: '15px',
                     marginRight: '10px',
                     marginLeft: '10px',
-                    opacity: selectedClient?.id === c.id ? 1 : 0.2,
+                    opacity: selectedClient?.id === c.id ? 1 : 0.5,
+                    transform:
+                      selectedClient?.id === c.id ? 'scale(1.0)' : 'scale(0.6)',
                     cursor: 'pointer',
                   }}
                   onClick={() => {

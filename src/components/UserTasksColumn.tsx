@@ -34,11 +34,6 @@ export default function UserTaskColumn({ user }: OwnProps) {
   return (
     <div className="flex mt-2">
       <div>
-        <img
-          className="mx-auto rounded-full h-20 w-20"
-          src={user.picture || ''}
-          alt="User Picture"
-        />
         <div className="text-left">
           <p className="my-3 font-semibold text-gray-400">Current Task</p>
           {/* @ts-ignore */}
