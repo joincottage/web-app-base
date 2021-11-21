@@ -14,15 +14,17 @@ import {
   initialState,
 } from '../contexts/AppContext';
 import './../styles/theme.css';
+import { SET_SELECTED_CLIENT } from 'src/actions/setSelectedClient';
+import { SET_USER } from 'src/actions/setUser';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
-    case 'SET_SELECTED_CLIENT':
+    case SET_SELECTED_CLIENT:
       return {
         ...state,
-        client: action.payload.client,
+        selectedClient: action.payload.selectedClient,
       };
-    case 'SET_USER':
+    case SET_USER:
       return {
         ...state,
         user: action.payload.user,

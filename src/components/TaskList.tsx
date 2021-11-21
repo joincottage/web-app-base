@@ -27,7 +27,7 @@ export default function TaskList({}: OwnProps) {
         </div>
       ) : error ? (
         JSON.stringify(error)
-      ) : state.client.name === 'All' ? (
+      ) : state.selectedClient.name === 'All' ? (
         data
           ?.filter(
             (task: Task) => task.status === TASK_QUEUED && task.price !== null
@@ -42,7 +42,7 @@ export default function TaskList({}: OwnProps) {
         data
           ?.filter(
             (task: Task) =>
-              task.clientName === state.client.name &&
+              task.clientName === state.selectedClient.name &&
               task.status === TASK_QUEUED &&
               task.price !== null
           )

@@ -1,13 +1,9 @@
+import { Client } from '@prisma/client';
 import React, { Dispatch } from 'react';
+import { SavedUserState } from 'src/actions/setUser';
 export interface AppState {
-  client: {
-    name: string;
-    logo: JSX.Element;
-    largeLogo?: JSX.Element;
-  };
-  user: {
-    hasCurrentTask: boolean;
-  };
+  selectedClient: Client | { name: 'All' };
+  user: SavedUserState;
 }
 export interface AppAction {
   type: string;
@@ -19,9 +15,8 @@ export interface AppContext {
 }
 
 export const initialState: AppState = {
-  client: {
+  selectedClient: {
     name: 'All',
-    logo: <div></div>,
   },
   user: {
     hasCurrentTask: false,

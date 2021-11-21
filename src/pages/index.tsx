@@ -12,6 +12,7 @@ import UserTasksColumn from 'src/components/UserTasksColumn';
 import { AppDataContext } from '../contexts/AppContext';
 import useClients from 'src/hooks/useClients';
 import TaskList from 'src/components/TaskList';
+import { Client } from '.prisma/client';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -25,33 +26,7 @@ export default function Index() {
       <Box my={4}>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div>
-            <ClientTabs
-              clients={clients.map((c) => ({
-                name: c.name as string,
-                logo:
-                  c.logoUrl === undefined ? (
-                    <></>
-                  ) : (
-                    <Avatar
-                      sx={{ width: 24, height: 24 }}
-                      alt="Company logo"
-                      src={c.logoUrl as string}
-                      aria-haspopup="true"
-                    />
-                  ),
-                largeLogo:
-                  c.logoUrl === undefined ? (
-                    <></>
-                  ) : (
-                    <Avatar
-                      sx={{ width: 80, height: 80 }}
-                      alt="Company logo"
-                      src={c.logoUrl as string}
-                      aria-haspopup="true"
-                    />
-                  ),
-              }))}
-            />
+            <ClientTabs clients={clients} />
           </div>
           <div
             style={{
@@ -70,10 +45,17 @@ export default function Index() {
               }}
             >
               <span style={{ marginRight: '15px' }}>
-                {state.client.largeLogo}
+                {(state.selectedClient as Client).logoUrl && (
+                  <Avatar
+                    sx={{ width: 80, height: 80 }}
+                    alt="Company logo"
+                    src={(state.selectedClient as Client).logoUrl as string}
+                    aria-haspopup="true"
+                  />
+                )}
               </span>
               <Typography variant="h6" style={{ paddingRight: '30px' }}>
-                {state.client.name}
+                {state.selectedClient.name}
               </Typography>
             </div>
             <TaskList />
