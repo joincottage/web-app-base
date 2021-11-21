@@ -25,6 +25,7 @@ import CreateATask from 'src/components/CreateATask';
 import { useRouter } from 'next/router';
 import KanbanBoard from 'src/components/KanbanBoard';
 import { SdCardAlert } from '@material-ui/icons';
+import useLocalStorage from 'src/hooks/useLocalStorage';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -52,14 +53,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function ManageTasks() {
   const router = useRouter();
   const classes = useStyles();
-  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const { clients, user, isLoading } = useClient();
   const { state, dispatch } = useContext(AppDataContext);
+  const [selectedClient, setSelectedClient] = useLocalStorage(
+    'selectedClient',
+    ''
+  );
 
   useEffect(() => {
     setSelectedClient(
       clients.find((c) => c.name === router.query.selectedClientName) ||
-        clients[0]
+        selectedClient
     );
   }, [clients, router.query]);
 
