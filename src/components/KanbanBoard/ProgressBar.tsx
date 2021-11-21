@@ -84,13 +84,13 @@ export default function ProgressBar({ tasks, client }: OwnProps) {
 
   return (
     <div style={{ width: '150px', margin: '25px' }}>
-      {tasks && (
-        <Tooltip
-          title={`${tasksQueued.length} queued / ${
-            tasksInProgress.length + tasksInReview.length
-          } in progress / ${tasksDone.length} done`}
-        >
-          <div className={classes.miniBar}>
+      <Tooltip
+        title={`${tasksQueued.length} queued / ${
+          tasksInProgress.length + tasksInReview.length
+        } in progress / ${tasksDone.length} done`}
+      >
+        <div className={classes.miniBar}>
+          {tasks && (
             <div
               className={classes.miniBarProgress}
               style={{
@@ -101,6 +101,8 @@ export default function ProgressBar({ tasks, client }: OwnProps) {
                 backgroundColor: 'rgb(45, 164, 78)',
               }}
             ></div>
+          )}
+          {tasks && (
             <div
               className={classes.miniBarProgress}
               style={{
@@ -115,9 +117,9 @@ export default function ProgressBar({ tasks, client }: OwnProps) {
                 backgroundColor: 'rgb(130, 80, 223)',
               }}
             ></div>
-          </div>
-        </Tooltip>
-      )}
+          )}
+        </div>
+      </Tooltip>
     </div>
   );
 }

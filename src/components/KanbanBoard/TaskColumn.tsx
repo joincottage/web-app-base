@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import { TASK_QUEUED } from 'src/constants/task-stages';
 import { AppDataContext } from 'src/contexts/AppContext';
 import TaskCard from '../TaskCard';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface OwnProps {
   title: string;
@@ -13,7 +14,14 @@ interface OwnProps {
   showCompanyLogos?: boolean;
   showUserImgs?: boolean;
   showAcceptButtons?: boolean;
+  style?: any;
 }
+
+const LoadingSpinner = () => (
+  <div>
+    <CircularProgress style={{ width: '30px', height: '30px' }} />
+  </div>
+);
 
 export default function TaskColumn({
   title,
@@ -23,18 +31,22 @@ export default function TaskColumn({
   showCompanyLogos,
   showUserImgs,
   showAcceptButtons,
+  style = {},
 }: OwnProps) {
   const { state } = useContext(AppDataContext);
 
   return (
     <Box
-      m={2}
       style={{
-        flexBasis: '33%',
-        backgroundColor: 'rgb(244, 245, 248)',
-        padding: '10px',
-        borderRadius: '7px',
-        border: '1px solid rgb(217, 222, 227)',
+        ...{
+          backgroundColor: 'rgb(244, 245, 248)',
+          padding: '10px',
+          borderRadius: '7px',
+          border: '1px solid rgb(217, 222, 227)',
+          display: 'relative',
+          marginRight: '15px',
+        },
+        ...style,
       }}
     >
       <div
@@ -55,11 +67,13 @@ export default function TaskColumn({
           {title}
         </span>
       </div>
-      {loading
-        ? 'Loading...'
-        : error
-        ? JSON.stringify(error)
-        : tasks?.reverse().map((task: Task) => (
+      <div style={{ overflow: 'scroll', width: '23vw', height: '68vh' }}>
+        {loading ? (
+          <LoadingSpinner />
+        ) : error ? (
+          JSON.stringify(error)
+        ) : (
+          tasks?.reverse().map((task: Task) => (
             <div style={{ marginBottom: '10px' }}>
               <TaskCard
                 key={task.id}
@@ -70,7 +84,9 @@ export default function TaskColumn({
                 showCompanyLogo={showCompanyLogos}
               />
             </div>
-          ))}
+          ))
+        )}
+      </div>
     </Box>
   );
 }

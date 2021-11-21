@@ -88,8 +88,14 @@ const KanbanBoard = () => {
               client={state.selectedClient as Client}
             />
           </div>
-          <div style={{ display: 'flex', width: '100vw' }}>
-            <div style={{ marginTop: '-50px' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100vw',
+            }}
+          >
+            <div style={{ marginTop: '-65px' }}>
               <Button
                 onClick={handleClickCreateATask}
                 variant="outlined"
@@ -97,6 +103,7 @@ const KanbanBoard = () => {
                 size="small"
                 style={{
                   height: '50px',
+                  marginBottom: '15px',
                 }}
               >
                 Create a task
@@ -114,6 +121,7 @@ const KanbanBoard = () => {
                 loading={loading}
                 error={error}
                 showCompanyLogos={false}
+                style={{ marginLeft: '15px' }}
               />
             </div>
             <TaskColumn
@@ -152,6 +160,7 @@ const KanbanBoard = () => {
               error={error}
               showCompanyLogos={false}
               showUserImgs={true}
+              style={{ marginRight: '0' }}
             />
           </div>
           <div>

@@ -30,7 +30,7 @@ export default function ClientToggle() {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', minHeight: '87px' }}>
       {clients?.map((c) => (
         <div
           key={c.name}
