@@ -37,7 +37,7 @@ const inactiveStyles = {
 };
 
 export const Navbar = (): JSX.Element => {
-  const { clients, user, isLoading } = useClient();
+  const { user, isLoading } = useClient();
   const router = useRouter();
 
   return (
@@ -118,24 +118,6 @@ export const Navbar = (): JSX.Element => {
                     marginLeft: '15px',
                   }}
                 />
-                {clients.map((c) => (
-                  <NextLink
-                    href={`/manage-tasks?selectedClientName=${c.name}`}
-                    passHref={true}
-                  >
-                    <Avatar
-                      alt="Account"
-                      src={c?.logoUrl || ''}
-                      aria-haspopup="true"
-                      style={{
-                        cursor: 'pointer',
-                        width: '28px',
-                        height: '28px',
-                        marginRight: '8px',
-                      }}
-                    />
-                  </NextLink>
-                ))}
               </>
             ) : (
               !isLoading && (

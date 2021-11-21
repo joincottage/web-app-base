@@ -17,7 +17,12 @@ import useTasks from 'src/hooks/useTasks';
 import CreateATask from './CreateATask';
 import TaskCard from './TaskCard';
 import CloseIcon from '@material-ui/icons/Close';
-import { TASK_QUEUED, IN_PROGRESS, IN_REVIEW } from 'src/constants/task-stages';
+import {
+  TASK_QUEUED,
+  IN_PROGRESS,
+  IN_REVIEW,
+  DONE,
+} from 'src/constants/task-stages';
 
 interface OwnProps {
   client: Client | null;
@@ -68,7 +73,7 @@ const KanbanBoard = ({ client }: OwnProps) => {
   return (
     <>
       <div style={{ display: 'flex' }}>
-        <Box m={2} style={{ backgroundColor: 'rgb(244, 245, 248)' }}>
+        <Box m={2}>
           <div
             style={{
               display: 'flex',
@@ -85,14 +90,39 @@ const KanbanBoard = ({ client }: OwnProps) => {
             </Button>
           </div>
           <div style={{ display: 'flex', width: '100vw' }}>
-            <Box m={2} style={{ flexBasis: '33%' }}>
-              <Typography
-                variant="h6"
-                style={{ textAlign: 'center' }}
-                gutterBottom
+            <Box
+              m={2}
+              style={{
+                flexBasis: '33%',
+                backgroundColor: 'rgb(244, 245, 248)',
+                padding: '10px',
+                borderRadius: '7px',
+                border: '1px solid rgb(217, 222, 227)',
+              }}
+            >
+              <div
+                style={{
+                  textAlign: 'left',
+                  marginBottom: '10px',
+                }}
               >
-                Task Queue
-              </Typography>
+                <span className="text-sm font-bold text-gray-700 bg-gray-200 py-1 px-2 mx-2 rounded-full">
+                  {
+                    tasks
+                      ?.filter((task: Task) => task.clientName === client?.name)
+                      .filter((task: Task) => task.status === TASK_QUEUED)
+                      .length
+                  }
+                </span>
+                <span
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: 600,
+                  }}
+                >
+                  Task Queue
+                </span>
+              </div>
               {loading
                 ? 'Loading...'
                 : error
@@ -105,25 +135,49 @@ const KanbanBoard = ({ client }: OwnProps) => {
                     )
                     .reverse()
                     .map((task: Task) => (
-                      <>
-                        <Divider />
+                      <div style={{ marginBottom: '10px' }}>
                         <TaskCard
                           key={task.id}
                           task={task}
                           mode="client"
                           showCompanyLogo={false}
                         />
-                      </>
+                      </div>
                     ))}
             </Box>
-            <Box m={2} style={{ flexBasis: '33%' }}>
-              <Typography
-                variant="h6"
-                style={{ textAlign: 'center' }}
-                gutterBottom
+            <Box
+              m={2}
+              style={{
+                flexBasis: '33%',
+                backgroundColor: 'rgb(244, 245, 248)',
+                padding: '10px',
+                borderRadius: '7px',
+                border: '1px solid rgb(217, 222, 227)',
+              }}
+            >
+              <div
+                style={{
+                  textAlign: 'left',
+                  marginBottom: '10px',
+                }}
               >
-                In Progress
-              </Typography>
+                <span className="text-sm font-bold text-gray-700 bg-gray-200 py-1 px-2 mx-2 rounded-full">
+                  {
+                    tasks
+                      ?.filter((task: Task) => task.clientName === client?.name)
+                      .filter((task: Task) => task.status === IN_PROGRESS)
+                      .length
+                  }
+                </span>
+                <span
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: 600,
+                  }}
+                >
+                  In Progress
+                </span>
+              </div>
               {loading
                 ? 'Loading...'
                 : error
@@ -143,14 +197,38 @@ const KanbanBoard = ({ client }: OwnProps) => {
                       </>
                     ))}
             </Box>
-            <Box m={2} style={{ flexBasis: '33%' }}>
-              <Typography
-                variant="h6"
-                style={{ textAlign: 'center' }}
-                gutterBottom
+            <Box
+              m={2}
+              style={{
+                flexBasis: '33%',
+                backgroundColor: 'rgb(244, 245, 248)',
+                padding: '10px',
+                borderRadius: '7px',
+                border: '1px solid rgb(217, 222, 227)',
+              }}
+            >
+              <div
+                style={{
+                  textAlign: 'left',
+                  marginBottom: '10px',
+                }}
               >
-                Ready for Review
-              </Typography>
+                <span className="text-sm font-bold text-gray-700 bg-gray-200 py-1 px-2 mx-2 rounded-full">
+                  {
+                    tasks
+                      ?.filter((task: Task) => task.clientName === client?.name)
+                      .filter((task: Task) => task.status === IN_REVIEW).length
+                  }
+                </span>
+                <span
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: 600,
+                  }}
+                >
+                  Ready for Review
+                </span>
+              </div>
               {loading
                 ? 'Loading...'
                 : error
@@ -170,6 +248,39 @@ const KanbanBoard = ({ client }: OwnProps) => {
                         />
                       </>
                     ))}
+            </Box>
+            <Box
+              m={2}
+              style={{
+                flexBasis: '33%',
+                backgroundColor: 'rgb(244, 245, 248)',
+                padding: '10px',
+                borderRadius: '7px',
+                border: '1px solid rgb(217, 222, 227)',
+              }}
+            >
+              <div
+                style={{
+                  textAlign: 'left',
+                  marginBottom: '10px',
+                }}
+              >
+                <span className="text-sm font-bold text-gray-700 bg-gray-200 py-1 px-2 mx-2 rounded-full">
+                  {
+                    tasks
+                      ?.filter((task: Task) => task.clientName === client?.name)
+                      .filter((task: Task) => task.status === DONE).length
+                  }
+                </span>
+                <span
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: 600,
+                  }}
+                >
+                  Done
+                </span>
+              </div>
             </Box>
           </div>
           <div>
