@@ -82,6 +82,10 @@ export default function TaskColumn({
                 showUserImg={showUserImgs}
                 showAcceptButton={showAcceptButtons}
                 showCompanyLogo={showCompanyLogos}
+                styles={{
+                  borderRadius: '7px',
+                  border: '1px solid rgb(217, 222, 227)',
+                }}
               />
             </div>
           ))

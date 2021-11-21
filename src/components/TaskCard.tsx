@@ -29,6 +29,7 @@ interface OwnProps {
   showAcceptButton?: boolean;
   showUserImg?: boolean;
   showCompanyLogo?: boolean;
+  styles?: any;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: '100%',
       borderRadius: 0,
+      boxShadow: 'none',
     },
     media: {
       height: 0,
@@ -63,7 +65,6 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: '405px',
       backgroundColor: theme.palette.background.paper,
       borderRadius: '4px',
-      boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
     },
     closeIcon: {
@@ -88,6 +89,7 @@ export default function TaskCard({
   showAcceptButton,
   showUserImg,
   showCompanyLogo = true,
+  styles = {},
 }: OwnProps) {
   const { user } = useUser();
   const classes = useStyles();
@@ -120,7 +122,7 @@ export default function TaskCard({
   );
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={styles}>
       <div className="my-3 flex justify-between mx-4">
         <div>
           <div className="flex items-center">
