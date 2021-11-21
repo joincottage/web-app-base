@@ -12,7 +12,7 @@ export default function Copyright() {
     >
       {'Copyright © '}
       <MuiLink color="inherit" href="https://material-ui.com/">
-        Cottage, a product of Sightglass Engineering
+        Cottage Software INC.
       </MuiLink>{' '}
       {new Date().getFullYear()}
       {'.'}

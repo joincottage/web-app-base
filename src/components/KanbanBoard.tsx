@@ -23,6 +23,7 @@ import {
   IN_REVIEW,
   DONE,
 } from 'src/constants/task-stages';
+import Tooltip from '@material-ui/core/Tooltip';
 
 interface OwnProps {
   client: Client | null;
@@ -129,32 +130,38 @@ const KanbanBoard = ({ client }: OwnProps) => {
           >
             <div style={{ width: '150px', margin: '25px' }}>
               {tasks && (
-                <div className={classes.miniBar}>
-                  <div
-                    className={classes.miniBarProgress}
-                    style={{
-                      left: 0,
-                      width: `${
-                        (tasksDone.length / currentClientTasks.length) * 100
-                      }%`,
-                      backgroundColor: 'rgb(45, 164, 78)',
-                    }}
-                  ></div>
-                  <div
-                    className={classes.miniBarProgress}
-                    style={{
-                      left: `${
-                        (tasksDone.length / currentClientTasks.length) * 100
-                      }%`,
-                      width: `${
-                        ((tasksInProgress.length + tasksInReview.length) /
-                          currentClientTasks.length) *
-                        100
-                      }%`,
-                      backgroundColor: 'rgb(130, 80, 223)',
-                    }}
-                  ></div>
-                </div>
+                <Tooltip
+                  title={`${tasksQueued.length} queued / ${
+                    tasksInProgress.length + tasksInReview.length
+                  } in progress / ${tasksDone.length} done`}
+                >
+                  <div className={classes.miniBar}>
+                    <div
+                      className={classes.miniBarProgress}
+                      style={{
+                        left: 0,
+                        width: `${
+                          (tasksDone.length / currentClientTasks.length) * 100
+                        }%`,
+                        backgroundColor: 'rgb(45, 164, 78)',
+                      }}
+                    ></div>
+                    <div
+                      className={classes.miniBarProgress}
+                      style={{
+                        left: `${
+                          (tasksDone.length / currentClientTasks.length) * 100
+                        }%`,
+                        width: `${
+                          ((tasksInProgress.length + tasksInReview.length) /
+                            currentClientTasks.length) *
+                          100
+                        }%`,
+                        backgroundColor: 'rgb(130, 80, 223)',
+                      }}
+                    ></div>
+                  </div>
+                </Tooltip>
               )}
             </div>
           </div>
