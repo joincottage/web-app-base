@@ -6,6 +6,7 @@ import { AppDataContext } from '../contexts/AppContext';
 import setSelectedClient from 'src/actions/setSelectedClient';
 import { Avatar } from '@material-ui/core';
 import { Client } from '@prisma/client';
+import ClientColumnLoadingState from './emptystates/ClientColumnLoadingState';
 interface OwnProps {
   clients: Client[];
 }
@@ -52,6 +53,7 @@ export default function BasicTabs({ clients }: OwnProps) {
     original: c,
   }));
 
+  if (clients.length == 0) return <ClientColumnLoadingState />;
   return (
     <Box sx={{ width: '100%' }}>
       <Box>
