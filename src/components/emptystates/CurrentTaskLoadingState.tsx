@@ -26,7 +26,8 @@ export default function CurrentTaskLoadingState() {
         </div>
       </div>
       <div className="ml-4 mb-2 h-4 w-10 bg-gray-200 rounded"></div>
-      <div className="mt-6 mx-4 mb-4 h-8 w-52 bg-gray-200 rounded"></div>
+      <div className="mt-6 mx-4 mb-3 h-8 w-52 bg-gray-200 rounded"></div>
+      <div className="mx-4 mb-4 h-8 w-52 bg-gray-200 rounded"></div>
     </div>
   );
 }

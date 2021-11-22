@@ -31,7 +31,7 @@ export default function UserTaskColumn({ user }: OwnProps) {
     }
   }, [data]);
 
-  if (!loading) return <TaskColumnEmptyState />;
+  if (loading) return <TaskColumnEmptyState />;
   return (
     <div className="flex mt-2">
       <div>
