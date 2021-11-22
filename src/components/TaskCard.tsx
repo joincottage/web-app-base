@@ -2,25 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Theme } from '@material-ui/core/styles';
 import { makeStyles, createStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Backdrop, Button, Fade, Modal } from '@material-ui/core';
 import { Task } from '.prisma/client';
-import Chip from '@material-ui/core/Chip';
 import CloseIcon from '@material-ui/icons/Close';
 import IllDoIt from './IllDoIt';
 import { UserProfile, useUser } from '@auth0/nextjs-auth0';
-import Axios from 'axios';
-import { useSingleTask } from './../hooks/useSingleTask';
 import { AppDataContext } from 'src/contexts/AppContext';
-import TaskCardSkeleton from './TaskCardSkeleton';
 import moment from 'moment';
 
 interface OwnProps {
@@ -156,7 +146,7 @@ export default function TaskCard({
       <div className="my-6 mx-4 prose-sm text-gray-500">
         <p>{task.shortDesc}</p>
       </div>
-      <div className="flex mx-3 mb-4">
+      <div className="flex mx-3 mb-4 justify-between">
         <div className="flex space-x-2 mr-3 my-1">
           {task.skills?.split(',').map((skill) => (
             <div className="text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full">
@@ -165,7 +155,7 @@ export default function TaskCard({
           ))}
         </div>
         {mode === 'freelancer' && (
-          <div className={classes.primaryActionsContainer}>
+          <div className="ml-auto">
             <Button
               className={classes.ctaButton}
               variant="outlined"
@@ -177,11 +167,11 @@ export default function TaskCard({
             </Button>
           </div>
         )}
-        <div className={classes.primaryActionsContainer}>
+        <div className="">
           {showAcceptButton && (
             <button
               onClick={handleClickAccept}
-              className="mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
+              className="ml-3 mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
             >
               Accept and Pay
             </button>
