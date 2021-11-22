@@ -1,8 +1,7 @@
-import { useContext, useState, useEffect } from 'react';
-import { AppDataContext } from '../contexts/AppContext';
+import { useState, useEffect } from 'react';
 import { Task } from '.prisma/client';
 import axios from 'axios';
-import { UserProfile, useUser } from '@auth0/nextjs-auth0';
+import { useUser } from '@auth0/nextjs-auth0';
 
 interface OwnProps {
   task: Task;
@@ -14,10 +13,17 @@ export default function CurrentTask({ task }: OwnProps) {
   const [isShowingAbandon, setIsShowingAbandon] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState('');
   const confirmDeleteCheck = `${task.clientName}/${task.name}`;
+  const ideLink = 'https://www.duckduckgo.com';
+  const devServerLink = 'https://www.xkcd.com';
 
   useEffect(() => {
     //console.log('Current Task:', task);
   }, []);
+
+  function openLinks() {
+    window.open(devServerLink, '_blank');
+    window.open(ideLink, '_blank');
+  }
 
   function toggleMenu() {
     setIsShowingMenu(!isShowingMenu);
@@ -128,7 +134,7 @@ export default function CurrentTask({ task }: OwnProps) {
         <div className="bg-blue-100 text-blue-900 shadow p-4 rounded-md max-w-[15rem]">
           <div className="text-left">
             <div className="flex justify-between items-start">
-              <h3 className="text-lg">{task.name}</h3>
+              <h3 className="text-lg capitalize">{task.name}</h3>
               <button onClick={toggleMenu}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -147,8 +153,11 @@ export default function CurrentTask({ task }: OwnProps) {
               </button>
             </div>
             <p className="mb-4 text-green-800">${task.price}</p>
+            <button className="mb-3 button-primary w-full" onClick={openLinks}>
+              Open IDE
+            </button>
             <button
-              className="bg-blue-900 hover:bg-blue-700 font-medium transform ease-in-out duration-500 w-full text-white px-3 py-2 rounded"
+              className="button-secondary w-full leading-7"
               onClick={handleSubmit}
             >
               Submit For Review
