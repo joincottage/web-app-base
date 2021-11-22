@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserProfile } from '@auth0/nextjs-auth0';
 import TaskEmptyState from './TaskEmptyState';
 import CurrentTaskContainer from './CurrentTaskContainer';
+import TaskColumnEmptyState from './TaskColumnEmptyState';
 import TasksInReview from './TasksInReview';
 import PreviousTasks from './PreviousTasks';
 import { useSingleTask } from './../hooks/useSingleTask';
@@ -30,7 +31,7 @@ export default function UserTaskColumn({ user }: OwnProps) {
     }
   }, [data]);
 
-  if (loading) return <div>Loading...</div>;
+  if (!loading) return <TaskColumnEmptyState />;
   return (
     <div className="flex mt-2">
       <div>
