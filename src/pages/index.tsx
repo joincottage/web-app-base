@@ -59,7 +59,7 @@ export default function Index() {
             </div>
             <TaskList />
           </div>
-          <div>
+          <div className="w-64">
             {!isLoading && user ? (
               <div
                 style={{
