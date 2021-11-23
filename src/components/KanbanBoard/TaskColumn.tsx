@@ -74,9 +74,8 @@ export default function TaskColumn({
           JSON.stringify(error)
         ) : (
           tasks?.reverse().map((task: Task) => (
-            <div style={{ marginBottom: '10px' }}>
+            <div style={{ marginBottom: '10px' }} key={task.id}>
               <TaskCard
-                key={task.id}
                 task={task}
                 mode="client"
                 showUserImg={showUserImgs}

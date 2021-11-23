@@ -25,6 +25,8 @@ model User {
   skills           String?
   type             String?
   hasJoinedDiscord Boolean?
+  // Encrypted, needs to be decrypted to be used
+  stripeAccountId  String?
 }
 
 model Task {

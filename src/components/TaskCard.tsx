@@ -12,6 +12,7 @@ import IllDoIt from './IllDoIt';
 import { UserProfile, useUser } from '@auth0/nextjs-auth0';
 import { AppDataContext } from 'src/contexts/AppContext';
 import moment from 'moment';
+import PaymentForm from './PaymentForm';
 
 interface OwnProps {
   task: Task;
@@ -84,7 +85,8 @@ export default function TaskCard({
   const { user } = useUser();
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const [open, setOpen] = useState(false);
+  const [openTaskModal, setOpenTaskModal] = useState(false);
+  const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [modalStyle] = React.useState(getModalStyle);
   const { state, dispatch } = useContext(AppDataContext);
 
@@ -93,12 +95,12 @@ export default function TaskCard({
   };
 
   const handleClickIllDoIt = async () => {
-    setOpen(true);
+    setOpenTaskModal(true);
     // sa_event('click_IllDoIt');
   };
   const handleClickAccept = async () => {};
   const handleClose = () => {
-    setOpen(false);
+    setOpenTaskModal(false);
   };
   const modalBody = (
     <div style={modalStyle} className={classes.paper}>
@@ -108,6 +110,16 @@ export default function TaskCard({
         style={{ color: 'white' }}
       />
       <IllDoIt user={user as UserProfile} task={task} />
+    </div>
+  );
+  const paymentModalBody = (
+    <div style={modalStyle} className={classes.paper}>
+      <CloseIcon
+        onClick={handleClose}
+        className={classes.closeIcon}
+        style={{ color: 'white' }}
+      />
+      <PaymentForm task={task} />
     </div>
   );
 
@@ -149,7 +161,10 @@ export default function TaskCard({
       <div className="flex mx-3 mb-4 justify-between">
         <div className="flex space-x-2 mr-3 my-1">
           {task.skills?.split(',').map((skill) => (
-            <div className="text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full">
+            <div
+              className="text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full"
+              key={skill}
+            >
               {skill}
             </div>
           ))}
@@ -170,7 +185,7 @@ export default function TaskCard({
         <div className="">
           {showAcceptButton && (
             <button
-              onClick={handleClickAccept}
+              onClick={() => setOpenPaymentModal(true)}
               className="ml-3 mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
             >
               Accept and Pay
@@ -195,7 +210,7 @@ export default function TaskCard({
         </div>
       </Collapse>
       <Modal
-        open={open}
+        open={openTaskModal}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -205,7 +220,20 @@ export default function TaskCard({
           timeout: 500,
         }}
       >
-        <Fade in={open}>{modalBody}</Fade>
+        <Fade in={openTaskModal}>{modalBody}</Fade>
+      </Modal>
+      <Modal
+        open={openPaymentModal}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={openPaymentModal}>{paymentModalBody}</Fade>
       </Modal>
     </Card>
   );
