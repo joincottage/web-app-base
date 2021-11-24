@@ -1,0 +1,33 @@
+version: "3.9"
+
+# in order to connect with prisma to the local database set the below in your .env file
+# database connection strings:
+# DATABASE_URL="mysql://admin:mypassword@localhost:3307/cottage"
+# SHADOW_DB_URL="mysql://shadowadmin:shadowpassword@localhost:3308/cottage"
+
+services:
+  db:
+    image: mysql:8.0.27
+#    volumes:
+#      - ./docker/db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: cottage
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3307:3306"
+  shadowdb:
+    image: mysql:8.0.27
+#    volumes:
+#      - ./docker/shadowdb_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: cottage
+      MYSQL_USER: shadowadmin
+      MYSQL_PASSWORD: shadowpassword
+    ports:
+      - "3308:3306"
+

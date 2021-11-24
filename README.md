@@ -1,3 +1,36 @@
+# Development
+When working on this application it is important to only make changes to your local, 
+dockerized database environment. Changes will be automatically deployed to development
+when merged.
+
+## Running the local databases
+A docker-compose.yml file is located in the root direcory that has all the config 
+needed to launch a local development database, plus a shadow database that is 
+necessary for Prisma to run migrations.
+
+### Start up
+1. Setup the environment variables to connect to the local database in your local env file
+   1. ```
+      DATABASE_URL="mysql://admin:mypassword@localhost:3307/cottage"
+      SHADOW_DB_URL="mysql://shadowadmin:shadowpassword@localhost:3308/cottage"
+      ```
+2. Launch the databases in Docker
+   1. `docker-compose up`
+3. Push the current schema to the database
+   1. `prisma db push`
+4. Seed the database with data created for local development
+   1. `npm run seed`
+
+### Changing the data
+If you modify the schema or make changes to the data and want to retain that for the
+starting point for other developers you can use the dump script we added to dump all
+the table data to json files that are used in the seed process.
+
+1. Run the dump script
+   1. `npm run dump`
+   2. this will write to the json files in `/prisma/seed/data` directory
+
+
 # Resources
 
 ## Prisma

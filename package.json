@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "npm run dev",
     "seed": "ts-node prisma/seed/seed.ts",
+    "dump": "ts-node prisma/seed/dump.ts",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
     "update-db": "prisma migrate dev && prisma generate",
     "prisma-generate": "prisma generate",

@@ -1,18 +1,18 @@
 import { PrismaClient } from '@prisma/client';
+import users from './data/users.json';
+import clients from './data/clients.json';
+import tasks from './data/tasks.json';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.user.create({
-    data: {
-      auth_id: '1',
-      email: 'test@test.com',
-      name: 'Connor Jones',
-    },
-  });
+  console.log('Seeding..');
 
-  const allUsers = await prisma.user.findMany();
-  console.dir(allUsers, { depth: null });
+  await prisma.user.createMany({ data: users });
+  await prisma.client.createMany({ data: clients });
+  await prisma.task.createMany({ data: tasks });
+
+  console.log('Finished seeding the database.');
 }
 
 main()
