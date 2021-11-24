@@ -3,7 +3,7 @@ import { Task } from '@prisma/client';
 import React, { useContext } from 'react';
 import { TASK_QUEUED } from 'src/constants/task-stages';
 import { AppDataContext } from 'src/contexts/AppContext';
-import TaskCard from '../TaskCard';
+import KanbanTaskCard from './KanbanTaskCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface OwnProps {
@@ -75,7 +75,7 @@ export default function TaskColumn({
         ) : (
           tasks?.reverse().map((task: Task) => (
             <div style={{ marginBottom: '10px' }} key={task.id}>
-              <TaskCard
+              <KanbanTaskCard
                 task={task}
                 mode="client"
                 showUserImg={showUserImgs}
