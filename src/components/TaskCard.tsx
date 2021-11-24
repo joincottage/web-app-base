@@ -14,6 +14,8 @@ import { AppDataContext } from 'src/contexts/AppContext';
 import moment from 'moment';
 import Axios from 'axios';
 import LoadingSpinner from './LoadingSpinner';
+import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
+import CubeTransparentOutlineIcon from './icons/CubeTransparentOutlineIcon';
 
 interface OwnProps {
   task: Task;
@@ -190,7 +192,17 @@ export default function TaskCard({
             </div>
           </div>
         </div>
-        <h6 className="text-green-700 text-xl font-light">${task.price}</h6>
+        <div className="-mt-1 text-right">
+          <h6 className="text-green-700 text-xl font-light">${task.price}</h6>
+          {/* TODO: This needs to be added to the database schmea*/}
+          {/* BUG: This ts-ignore needs to be removed!!*/}
+          {/* @ts-ignore */}
+          {task.type === 'bug' ? (
+            <BugReportOutlinedIcon style={{ fill: '#E00004' }} />
+          ) : (
+            <CubeTransparentOutlineIcon />
+          )}
+        </div>
       </div>
       <div className="my-6 mx-4 prose-sm text-gray-500">
         <p>{task.shortDesc}</p>

@@ -40,6 +40,7 @@ model Task {
   name             String?
   shortDesc        String?
   longDesc         String?  @db.VarChar(1000)
+  type             String?
   skills           String?
   datePosted       String?
   status           String?
