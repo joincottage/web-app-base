@@ -4,11 +4,12 @@ import TaskEmptyState from './TaskEmptyState';
 import CurrentTaskContainer from './CurrentTaskContainer';
 import TaskColumnEmptyState from './TaskColumnEmptyState';
 import TasksInReview from './TasksInReview';
-import TasksInAttention from './TasksInAttention';
+import AttentionTasksContainer from './AttentionTasksContainer';
 import PreviousTasks from './PreviousTasks';
 import { useSingleTask } from './../hooks/useSingleTask';
 import { useReviewTasks } from './../hooks/useReviewTasks';
 import { usePreviousTasks } from './../hooks/usePreviousTasks';
+import { useAttentionTasks } from './../hooks/useAttentionTasks';
 import { Task } from '.prisma/client';
 import { AppDataContext } from 'src/contexts/AppContext';
 
@@ -20,6 +21,8 @@ export default function UserTaskColumn({ user }: OwnProps) {
   const { data, loading, error } = useSingleTask();
   const { reviewTasks, reviewLoading, reviewError } = useReviewTasks();
   const { previousTasks, previousLoading, previousError } = usePreviousTasks();
+  const { attentionTasks, attentionLoading, attentionError } =
+    useAttentionTasks();
   const { state, dispatch } = useContext(AppDataContext);
   //TODO: Import attention tasks hook
 
@@ -38,12 +41,13 @@ export default function UserTaskColumn({ user }: OwnProps) {
     <div className="flex mt-2">
       <div>
         <div className="text-left">
-          {true ? (
+          {/* @ts-ignore */}
+          {attentionTasks !== null && attentionTasks.length !== 0 ? (
             <div>
               <p className="my-3 font-semibold text-gray-400">
                 Attention Tasks
               </p>
-              <TasksInAttention tasks={data as Task[]} />
+              <AttentionTasksContainer tasks={attentionTasks as Task[]} />
             </div>
           ) : (
             <div></div>

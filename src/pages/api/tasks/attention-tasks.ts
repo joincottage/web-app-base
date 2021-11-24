@@ -1,21 +1,21 @@
 import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from '@auth0/nextjs-auth0';
-import { IN_REVIEW } from 'src/constants/task-stages';
-
-//const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
+import { IN_ATTENTION } from 'src/constants/task-stages';
 
 export default async function (
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
   switch (req.method) {
+    //Create
     case 'POST':
       console.error(
         `Unsupported method type ${req.method} made to endpoint ${req.url}`
       );
       res.status(404).end();
       break;
+
     case 'GET':
       const session = getSession(req, res);
       const userInfo = session?.user;
@@ -41,7 +41,7 @@ export default async function (
         const tasks = await prisma.task.findMany({
           where: {
             userId: userInfo.email,
-            status: IN_REVIEW,
+            status: IN_ATTENTION,
           },
         });
         res.json(tasks);
@@ -59,4 +59,4 @@ export default async function (
   }
 }
 
-// potential util for testing https://dev.to/jamesharv/comment/145f8
+// potentia util for testing https://dev.to/jamesharv/comment/145f8

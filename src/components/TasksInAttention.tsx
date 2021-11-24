@@ -1,18 +1,23 @@
-//import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
 import { Task } from '.prisma/client';
 import axios from 'axios';
 
 interface OwnProps {
-  tasks: Task[];
+  task: Task;
 }
-export default function TasksInAttention({ tasks }: OwnProps) {
+export default function TasksInAttention({ task }: OwnProps) {
   const { user } = useUser();
   const ideLink = 'https://www.duckduckgo.com';
   const devServerLink = 'https://www.xkcd.com';
+  const [isShowingMenu, setIsShowingMenu] = useState(false);
+
+  function discordLink(id: String) {
+    return `https://discord.com/channels/872949298105552996/${id}`;
+  }
 
   function toggleMenu() {
-    //setIsShowingMenu(!isShowingMenu);
+    setIsShowingMenu(!isShowingMenu);
   }
 
   function openLinks() {
@@ -33,15 +38,39 @@ export default function TasksInAttention({ tasks }: OwnProps) {
 
   return (
     <>
-      {tasks.map((task) => (
-        <div className="bg-blue-100 text-blue-900 shadow p-4 rounded-md max-w-[15rem]">
+      <div className="relative">
+        {isShowingMenu ? (
+          <div className="absolute px-3 py-3 z-10 right-2 top-12 -left-20 bg-gray-200 shadow-md rounded">
+            <div className="text-left">
+              <p className="text-lg">{task.clientName}</p>
+              <p className="text-sm">{task.longDesc}</p>
+              <div className="mt-6 flex justify-center">
+                <button
+                  //onClick={toggleAbandon}
+                  className="button-primary-destructive"
+                >
+                  Abandon Task
+                </button>
+                <button
+                  disabled={true}
+                  className="ml-3 button-secondary disabled:hover:bg-white disabled:hover:border-blue-500 disabled:hover:text-blue-700"
+                >
+                  Request Help
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+        <div className="border-2 border-red-500 bg-red-50 text-blue-900 shadow p-4 rounded-md max-w-[15rem]">
           <div className="text-left">
             <div className="flex justify-between items-start">
               <h3 className="text-lg capitalize">{task.name}</h3>
               <button onClick={toggleMenu}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-gray-400 ml-6"
+                  className="h-6 w-6 text-gray-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -56,6 +85,23 @@ export default function TasksInAttention({ tasks }: OwnProps) {
               </button>
             </div>
             <p className="mb-4 text-green-800">${task.price}</p>
+
+            <div className="mb-3">
+              <span className="relative w-full inline-flex rounded-md shadow-sm mt-3">
+                <a
+                  href={discordLink(task.discordChannelId as string)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full border-2 border-red-500 bg-white hover:bg-red-50 transform duration-500 ease-in-out font-bold text-red-500 rounded-md leading-8 text-center "
+                >
+                  View Issues
+                </a>
+                <span className="flex absolute h-4 w-4 top-0 right-0 -mt-1.5 -mr-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-95"></span>
+                  <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
+                </span>
+              </span>
+            </div>
             <button className="mb-3 button-primary w-full" onClick={openLinks}>
               Open IDE
             </button>
@@ -67,7 +113,7 @@ export default function TasksInAttention({ tasks }: OwnProps) {
             </button>
           </div>
         </div>
-      ))}
+      </div>
     </>
   );
 }
