@@ -26,14 +26,12 @@ export default function TasksInAttention({ task }: OwnProps) {
   }
 
   async function handleSubmit() {
-    /*
-		const response = await axios.put('/api/tasks/current', {
-			task: task,
-			name: user?.name ?? 'Freelancer',
-			discordChannelId: task.discordChannelId,
-		});
-		console.log(response);
-		*/
+    const response = await axios.put('/api/tasks/current', {
+      task: task,
+      name: user?.name ?? 'Freelancer',
+      discordChannelId: task.discordChannelId,
+    });
+    console.log(response);
   }
 
   return (
@@ -45,12 +43,14 @@ export default function TasksInAttention({ task }: OwnProps) {
               <p className="text-lg">{task.clientName}</p>
               <p className="text-sm">{task.longDesc}</p>
               <div className="mt-6 flex justify-center">
+                {/*
                 <button
                   //onClick={toggleAbandon}
                   className="button-primary-destructive"
                 >
                   Abandon Task
                 </button>
+								*/}
                 <button
                   disabled={true}
                   className="ml-3 button-secondary disabled:hover:bg-white disabled:hover:border-blue-500 disabled:hover:text-blue-700"
