@@ -32,6 +32,7 @@ export default function TaskList({}: OwnProps) {
           ?.filter(
             (task: Task) => task.status === TASK_QUEUED && task.price !== null
           )
+          .reverse()
           .map((task: Task) => (
             <>
               <Divider />
