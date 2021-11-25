@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import CheckoutForm from 'src/components/CheckoutForm';
+import CheckoutForm from 'src/components/stripe/CheckoutForm';
 
 interface OwnProps {
   task: Task;
@@ -28,8 +28,12 @@ export default function PaymentForm({ task }: OwnProps) {
   };
 
   return (
-    <Elements stripe={stripePromise} options={options}>
-      <CheckoutForm />
-    </Elements>
+    <>
+      {clientSecret && (
+        <Elements stripe={stripePromise} options={options}>
+          <CheckoutForm />
+        </Elements>
+      )}
+    </>
   );
 }

@@ -5,6 +5,8 @@ import { prisma } from './../../../database/prisma';
 // See your keys here: https://dashboard.stripe.com/apikeys
 import Stripe from 'stripe';
 
+const CENTS_IN_A_DOLLAR = 100;
+
 const stripe = new Stripe(
   'sk_test_51JFMlLAUYz6Zd3huPRlc0iHX4HkV8qvnCR3ek83u4xk1UMgOnlSuo6LGGp71va8Mnf58R2p8RLifP8crrgnIhB3O00u2NNyKEs',
   {
@@ -19,20 +21,26 @@ export default async function (
 ): Promise<void> {
   switch (req.method) {
     case 'POST':
-      const { task } = req.body;
+      try {
+        const { task } = req.body;
 
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: task.price,
-        currency: 'usd',
-        payment_method_types: ['card'],
-        setup_future_usage: 'on_session',
-        statement_descriptor: 'Cottage Software INC.',
-        metadata: {
-          clientName: task.clientName,
-        },
-      });
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount: task.price * CENTS_IN_A_DOLLAR,
+          currency: 'usd',
+          payment_method_types: ['card'],
+          setup_future_usage: 'on_session',
+          statement_descriptor: 'Cottage Software INC.',
+          metadata: {
+            clientName: task.clientName,
+          },
+        });
 
-      res.json({ client_secret: paymentIntent.client_secret });
+        res.json({ client_secret: paymentIntent.client_secret });
+      } catch (e) {
+        console.error(`Failed to create Stripe secret`, e);
+        res.status(500).end();
+      }
+      break;
     default: {
       console.error(
         `Unsupported method type ${req.method} made to endpoint ${req.url}`

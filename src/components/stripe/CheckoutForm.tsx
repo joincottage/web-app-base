@@ -25,9 +25,7 @@ const CheckoutForm = () => {
     const { error } = await stripe.confirmPayment({
       //`Elements` instance that was used to create the Payment Element
       elements,
-      confirmParams: {
-        return_url: 'https://my-site.com/order/123/complete',
-      },
+      redirect: 'if_required',
     });
 
     if (error) {
@@ -45,7 +43,13 @@ const CheckoutForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <button disabled={!stripe}>Submit</button>
+      <button
+        disabled={!stripe}
+        type="submit"
+        className="ml-3 mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
+      >
+        Submit
+      </button>
       {/* Show error message to your customers */}
       {errorMessage && <div>{errorMessage}</div>}
     </form>

@@ -1,14 +1,17 @@
 # Development
-When working on this application it is important to only make changes to your local, 
+
+When working on this application it is important to only make changes to your local,
 dockerized database environment. Changes will be automatically deployed to development
 when merged.
 
 ## Running the local databases
-A docker-compose.yml file is located in the root direcory that has all the config 
-needed to launch a local development database, plus a shadow database that is 
+
+A docker-compose.yml file is located in the root direcory that has all the config
+needed to launch a local development database, plus a shadow database that is
 necessary for Prisma to run migrations.
 
 ### Start up
+
 1. Setup the environment variables to connect to the local database in your local env file
    1. ```
       DATABASE_URL="mysql://admin:mypassword@localhost:3307/cottage"
@@ -22,6 +25,7 @@ necessary for Prisma to run migrations.
    1. `npm run seed`
 
 ### Changing the data
+
 If you modify the schema or make changes to the data and want to retain that for the
 starting point for other developers you can use the dump script we added to dump all
 the table data to json files that are used in the seed process.
@@ -30,6 +34,11 @@ the table data to json files that are used in the seed process.
    1. `npm run dump`
    2. this will write to the json files in `/prisma/seed/data` directory
 
+## Testing the payments flow with Stripe
+
+Go to the [Stripe dashboard](https://dashboard.stripe.com/) and ensure that "Test mode" is enabled.
+
+When making a payment via the Cottage UI, be sure to use a [test credit card number](https://stripe.com/docs/testing). Stripe provides multiple test credit card numbers that cover every possible use case.
 
 # Resources
 
@@ -41,7 +50,13 @@ the table data to json files that are used in the seed process.
 - [Data Modeling](https://www.prisma.io/dataguide/datamodeling)
 
 ## Auth0
+
 https://marketplace.auth0.com/integrations/google-social-connection
+
+## Stripe
+
+- [How to Test Payments Flow with Stripe](https://stripe.com/docs/testing)
+- [Stripe Dashboard](https://dashboard.stripe.com/)
 
 # Next.js example
 

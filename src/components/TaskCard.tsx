@@ -12,7 +12,7 @@ import IllDoIt from './IllDoIt';
 import { UserProfile, useUser } from '@auth0/nextjs-auth0';
 import { AppDataContext } from 'src/contexts/AppContext';
 import moment from 'moment';
-import PaymentForm from './PaymentForm';
+import PaymentForm from './stripe/PaymentForm';
 
 interface OwnProps {
   task: Task;
@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       position: 'absolute',
       right: '15px',
+      zIndex: 2,
     },
   })
 );
@@ -98,7 +99,6 @@ export default function TaskCard({
     setOpenTaskModal(true);
     // sa_event('click_IllDoIt');
   };
-  const handleClickAccept = async () => {};
   const handleClose = () => {
     setOpenTaskModal(false);
   };
@@ -112,12 +112,14 @@ export default function TaskCard({
       <IllDoIt user={user as UserProfile} task={task} />
     </div>
   );
+  const handleClosePaymentForm = () => {
+    setOpenPaymentModal(false);
+  };
   const paymentModalBody = (
     <div style={modalStyle} className={classes.paper}>
       <CloseIcon
-        onClick={handleClose}
+        onClick={handleClosePaymentForm}
         className={classes.closeIcon}
-        style={{ color: 'white' }}
       />
       <PaymentForm task={task} />
     </div>

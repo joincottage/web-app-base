@@ -22,7 +22,7 @@ export default function ClientToggle() {
       selectedClient;
     setSelectedClient(selectedClientFromRouterQuery);
     dispatch(setSelectedClientAction(selectedClientFromRouterQuery));
-  }, [clients, router.query]);
+  }, [router.query]);
 
   const handleClickClientButton = (client: Client) => {
     setSelectedClient(client);
