@@ -12,7 +12,8 @@ import IllDoIt from './IllDoIt';
 import { UserProfile, useUser } from '@auth0/nextjs-auth0';
 import { AppDataContext } from 'src/contexts/AppContext';
 import moment from 'moment';
-import PaymentForm from './stripe/PaymentForm';
+import PaymentForm from './Stripe/PaymentForm';
+import Axios from 'axios';
 
 interface OwnProps {
   task: Task;
@@ -75,6 +76,13 @@ function getModalStyle() {
   };
 }
 
+enum RequestStatus {
+  IDLE = 'idle',
+  PENDING = 'pending',
+  FAILED = 'failed',
+  SUCCEEDED = 'succeeded',
+}
+
 export default function TaskCard({
   task,
   mode,
@@ -90,6 +98,9 @@ export default function TaskCard({
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [modalStyle] = React.useState(getModalStyle);
   const { state, dispatch } = useContext(AppDataContext);
+  const [requestStatus, setRequestStatus] = useState<RequestStatus>(
+    RequestStatus.IDLE
+  );
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -124,6 +135,19 @@ export default function TaskCard({
       <PaymentForm task={task} />
     </div>
   );
+
+  const submitPayment = async () => {
+    setRequestStatus(RequestStatus.PENDING);
+    try {
+      await Axios.post('/api/stripe/submit-payment', {
+        task,
+      });
+      setRequestStatus(RequestStatus.SUCCEEDED);
+    } catch (e) {
+      setRequestStatus(RequestStatus.FAILED);
+      throw e;
+    }
+  };
 
   return (
     <Card className={classes.root} style={styles}>
@@ -187,7 +211,7 @@ export default function TaskCard({
         <div className="">
           {showAcceptButton && (
             <button
-              onClick={() => setOpenPaymentModal(true)}
+              onClick={submitPayment}
               className="ml-3 mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
             >
               Accept and Pay

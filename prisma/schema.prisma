@@ -27,6 +27,7 @@ model User {
   hasJoinedDiscord Boolean?
   // Encrypted, needs to be decrypted to be used
   stripeAccountId  String?
+  stripeCustomerId String?
 }
 
 model Task {

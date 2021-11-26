@@ -47,12 +47,6 @@ export default async function (
       {
         const session = await getSession(req, res);
         const userInfo = session?.user;
-
-        if (userInfo == null) {
-          res.status(401).end();
-          return;
-        }
-
         if (userInfo == null) {
           res.status(401).end();
           return;

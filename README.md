@@ -38,7 +38,7 @@ the table data to json files that are used in the seed process.
 
 Go to the [Stripe dashboard](https://dashboard.stripe.com/) and ensure that "Test mode" is enabled.
 
-When making a payment via the Cottage UI, be sure to use a [test credit card number](https://stripe.com/docs/testing). Stripe provides multiple test credit card numbers that cover every possible use case.
+When making a payment via the Cottage UI, be sure to use a [test credit card number](https://stripe.com/docs/testing). Stripe provides [multiple test credit card numbers](https://stripe.com/docs/testing#regulatory-cards) that cover every possible use case.
 
 # Resources
 
@@ -57,6 +57,7 @@ https://marketplace.auth0.com/integrations/google-social-connection
 
 - [How to Test Payments Flow with Stripe](https://stripe.com/docs/testing)
 - [Stripe Dashboard](https://dashboard.stripe.com/)
+- [List of Regulatory Test Credit Cards](https://stripe.com/docs/testing#regulatory-cards)
 
 # Next.js example
 

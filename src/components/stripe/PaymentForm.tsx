@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import CheckoutForm from 'src/components/stripe/CheckoutForm';
+import SetupForm from 'src/components/Stripe/SetupForm';
 
 interface OwnProps {
   task: Task;
@@ -20,6 +20,7 @@ export default function PaymentForm({ task }: OwnProps) {
       const response = await Axios.post('/api/stripe/secret', { task });
       const { client_secret: clientSecret } = response.data;
       setClientSecret(clientSecret);
+      console.log('received client secret', clientSecret);
     })();
   }, []);
 
@@ -31,7 +32,7 @@ export default function PaymentForm({ task }: OwnProps) {
     <>
       {clientSecret && (
         <Elements stripe={stripePromise} options={options}>
-          <CheckoutForm />
+          <SetupForm clientSecret={clientSecret} />
         </Elements>
       )}
     </>
