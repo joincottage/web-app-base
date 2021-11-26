@@ -4,18 +4,12 @@ import {
   useElements,
   PaymentElement,
 } from '@stripe/react-stripe-js';
-import { CircularProgress } from '@material-ui/core';
 import PaymentStatus from './PaymentStatus';
+import LoadingSpinner from '../LoadingSpinner';
 
 interface OwnProps {
   clientSecret: string;
 }
-
-const LoadingSpinner = () => (
-  <div>
-    <CircularProgress color="info" style={{ width: '30px', height: '30px' }} />
-  </div>
-);
 
 const SetupForm = ({ clientSecret }: OwnProps) => {
   const stripe = useStripe();

@@ -14,6 +14,7 @@ import { AppDataContext } from 'src/contexts/AppContext';
 import moment from 'moment';
 import PaymentForm from './Stripe/PaymentForm';
 import Axios from 'axios';
+import LoadingSpinner from './LoadingSpinner';
 
 interface OwnProps {
   task: Task;
@@ -214,7 +215,15 @@ export default function TaskCard({
               onClick={submitPayment}
               className="ml-3 mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
             >
-              Accept and Pay
+              {requestStatus === RequestStatus.IDLE ? (
+                'Accept and Pay'
+              ) : requestStatus === RequestStatus.PENDING ? (
+                <LoadingSpinner />
+              ) : requestStatus === RequestStatus.FAILED ? (
+                'Failed. Click to retry'
+              ) : (
+                'Accept and Pay'
+              )}
             </button>
           )}
         </div>
