@@ -148,6 +148,16 @@ export default function TaskCard({
       setRequestStatus(RequestStatus.FAILED);
       throw e;
     }
+
+    try {
+      await Axios.post('/api/discord/notify-task-complete', {
+        discordChannelId: task.discordChannelId,
+        task,
+      });
+    } catch (e) {
+      // TODO: roll back payment if this fails, since it will still appear in the "review" column.
+      throw e;
+    }
   };
 
   return (
@@ -187,14 +197,15 @@ export default function TaskCard({
       </div>
       <div className="flex mx-3 mb-4 justify-between">
         <div className="flex space-x-2 mr-3 my-1">
-          {task.skills?.split(',').map((skill) => (
-            <div
-              className="text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full"
-              key={skill}
-            >
-              {skill}
-            </div>
-          ))}
+          {!showAcceptButton &&
+            task.skills?.split(',').map((skill) => (
+              <div
+                className="text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full"
+                key={skill}
+              >
+                {skill}
+              </div>
+            ))}
         </div>
         {mode === 'freelancer' && (
           <div className="ml-auto">
@@ -209,22 +220,30 @@ export default function TaskCard({
             </Button>
           </div>
         )}
-        <div className="">
+        <div style={{ display: 'flex' }}>
           {showAcceptButton && (
-            <button
-              onClick={submitPayment}
-              className="ml-3 mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
-            >
-              {requestStatus === RequestStatus.IDLE ? (
-                'Accept and Pay'
-              ) : requestStatus === RequestStatus.PENDING ? (
-                <LoadingSpinner />
-              ) : requestStatus === RequestStatus.FAILED ? (
-                'Failed. Click to retry'
-              ) : (
-                'Accept and Pay'
-              )}
-            </button>
+            <>
+              <button
+                onClick={() => {}}
+                className="ml-3 mb-2 mr-2 px-3 py-2 bg-white-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-white-700 text-blue-800 uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
+              >
+                View pull-request
+              </button>
+              <button
+                onClick={submitPayment}
+                className="ml-3 mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
+              >
+                {requestStatus === RequestStatus.IDLE ? (
+                  'Accept and Pay'
+                ) : requestStatus === RequestStatus.PENDING ? (
+                  <LoadingSpinner />
+                ) : requestStatus === RequestStatus.FAILED ? (
+                  'Failed. Click to retry'
+                ) : (
+                  'Accept and Pay'
+                )}
+              </button>
+            </>
           )}
         </div>
       </div>

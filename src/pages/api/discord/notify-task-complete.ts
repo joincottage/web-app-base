@@ -6,28 +6,23 @@ import {
 } from 'src/apiService/discord/channel';
 import { prisma } from 'src/database/prisma';
 import { getSession } from '@auth0/nextjs-auth0';
-import { IN_PROGRESS } from 'src/constants/task-stages';
+import { DONE, IN_PROGRESS } from 'src/constants/task-stages';
 
-interface NotifyTaskInterestRequest extends NextApiRequest {
+interface NotifyTaskCompleteRequest extends NextApiRequest {
   body: {
-    name: string;
     discordChannelId: string;
-    discordUserId: string;
     task: Task;
-    userEmail: string;
   };
 }
-const formatInfo = (name: string) =>
-  `A freelancer has picked up your task! Please welcome ${name} to the channel. ${name}, please request any additional details you need to commence work on this task.`;
+const formatInfo = () =>
+  `Congratulations! This task has been accepted as complete.`;
 
 export default async function (
-  req: NotifyTaskInterestRequest,
+  req: NotifyTaskCompleteRequest,
   res: NextApiResponse
 ) {
   const { body, method } = req;
-  const name = body.name;
   const discordChannelId = body.discordChannelId;
-  const discordUserId = body.discordUserId;
   const task = body.task;
 
   if (method !== 'POST') {
@@ -51,14 +46,11 @@ export default async function (
         id: task.id,
       },
       data: {
-        status: IN_PROGRESS,
-        userId: userInfo.email,
-        userImgUrl: userInfo.picture,
+        status: DONE,
       },
     });
     console.log('Task successfully updated in DB');
-    await postMessageToChannel(discordChannelId, formatInfo(name));
-    await addUserToChannel(discordChannelId, discordUserId);
+    await postMessageToChannel(discordChannelId, formatInfo());
     res.status(200).json({ message: 'success' });
   } catch (error) {
     console.error(`Failed posting info to discord`, error);
