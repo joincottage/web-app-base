@@ -12,7 +12,6 @@ import IllDoIt from './IllDoIt';
 import { UserProfile, useUser } from '@auth0/nextjs-auth0';
 import { AppDataContext } from 'src/contexts/AppContext';
 import moment from 'moment';
-import PaymentForm from './Stripe/PaymentForm';
 import Axios from 'axios';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -133,7 +132,8 @@ export default function TaskCard({
         onClick={handleClosePaymentForm}
         className={classes.closeIcon}
       />
-      <PaymentForm task={task} />
+      {/* TODO: create task for client payment onboarding */}
+      {/* <PaymentForm task={task} /> */}
     </div>
   );
 
