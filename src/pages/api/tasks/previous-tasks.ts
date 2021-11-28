@@ -16,7 +16,7 @@ export default async function (
       res.status(404).end();
       break;
 
-    case 'GET':
+    case 'GET': {
       const session = getSession(req, res);
       const userInfo = session?.user;
       if (userInfo == null) {
@@ -40,7 +40,7 @@ export default async function (
       if (user !== null) {
         const tasks = await prisma.task.findMany({
           where: {
-            userId: userInfo.email,
+            userId: user.id,
             status: 'approved',
           },
         });
@@ -49,6 +49,7 @@ export default async function (
         res.json({ message: 'no task' });
       }
       break;
+    }
     default: {
       console.error(
         `Unsupported method type ${req.method} made to endpoint ${req.url}`

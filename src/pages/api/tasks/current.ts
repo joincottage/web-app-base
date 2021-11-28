@@ -29,7 +29,7 @@ export default async function (
       break;
     }
     //NOTE: Change current task to in_review
-    case 'PUT':
+    case 'PUT': {
       await prisma.task.update({
         where: {
           id: req.body.task.id,
@@ -43,6 +43,7 @@ export default async function (
       await postMessageToChannel(discordChannelId, reviewMessage);
       res.send('OK');
       break;
+    }
     case 'GET':
       {
         const session = await getSession(req, res);
@@ -68,7 +69,7 @@ export default async function (
         if (user !== null) {
           const tasks = await prisma.task.findMany({
             where: {
-              userId: userInfo.email,
+              userId: user.id,
               status: IN_PROGRESS,
             },
           });
