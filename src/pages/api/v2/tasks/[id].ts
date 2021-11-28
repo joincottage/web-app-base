@@ -18,23 +18,38 @@ const taskHandler: NextApiHandler = async (req, res) => {
         res.status(400).send('invalid task id');
       }
 
-      const task = await prisma.task.findUnique({
-        select: {
-          name: true,
-          status: true,
-          datePosted: true,
-          skills: true,
-          shortDesc: true,
-          longDesc: true,
-          price: true,
-          discordChannelId: true,
-        },
-        where: {
-          id: Number(taskId),
-        },
-      });
+      try {
+        const task = await prisma.task.findUnique({
+          select: {
+            name: true,
+            status: true,
+            datePosted: true,
+            skills: true,
+            shortDesc: true,
+            longDesc: true,
+            price: true,
+            discordChannelId: true,
+            client: {
+              select: {
+                id: true,
+                name: true,
+                logoUrl: true,
+              },
+            },
+          },
+          where: {
+            id: Number(taskId),
+          },
+        });
 
-      res.json(task);
+        res.json(task);
+      } catch (e) {
+        console.error(
+          `Failed to execute prisma query for task with id: ${taskId}`,
+          e.message
+        );
+        res.status(500).end();
+      }
 
       break;
     }

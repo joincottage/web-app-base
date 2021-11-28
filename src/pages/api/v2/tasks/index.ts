@@ -45,32 +45,46 @@ const taskHandler: NextApiHandler = async (req, res) => {
         typeof status === 'string' ? status.split(',') : undefined;
       const clientId = client ? Number(client) : undefined;
       const userId = user ? Number(user) : undefined;
-
-      const tasks = await prisma.task.findMany({
-        select: {
-          id: true,
-          name: true,
-          status: true,
-          datePosted: true,
-          skills: true,
-          shortDesc: true,
-          longDesc: true,
-          price: true,
-          discordChannelId: true,
-        },
-        where: {
-          datePosted: {
-            not: null,
+      try {
+        const tasks = await prisma.task.findMany({
+          select: {
+            id: true,
+            name: true,
+            status: true,
+            datePosted: true,
+            skills: true,
+            shortDesc: true,
+            longDesc: true,
+            price: true,
+            discordChannelId: true,
+            client: {
+              select: {
+                id: true,
+                name: true,
+                logoUrl: true,
+              },
+            },
           },
-          status: {
-            in: statuses,
+          where: {
+            datePosted: {
+              not: null,
+            },
+            status: {
+              in: statuses,
+            },
+            clientId,
+            userId,
           },
-          clientId,
-          userId,
-        },
-      });
+        });
 
-      res.json(tasks);
+        res.json(tasks);
+      } catch (e) {
+        console.error(
+          `Failed to execute prisma query for tasks with inputs status: ${status}, client: ${client}, user: ${user}`,
+          e.message
+        );
+        res.status(500).end();
+      }
 
       break;
     }
