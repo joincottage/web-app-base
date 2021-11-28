@@ -28,6 +28,7 @@ model User {
   // Encrypted, needs to be decrypted to be used
   stripeAccountId  String?
   stripeCustomerId String?
+  tasks            Task[]
 }
 
 model Task {
@@ -45,7 +46,10 @@ model Task {
   datePosted       String?
   status           String?
   price            Int?
-	userId           String?
+  freelancer       User?    @relation(fields: [userId], references: [id])
+  userId           Int?
+  client           Client   @relation(fields: [clientId], references: [id])
+  clientId         Int
   userImgUrl       String?
   discordChannelId String?
 }
@@ -58,5 +62,5 @@ model Client {
   logoUrl           String?
   userEmailOfOwner  String
   discordCategoryId String?
+  tasks             Task[]
 }
-
