@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import SetupForm from 'src/components/Stripe/SetupForm';
+import SetupForm from 'src/components/stripe/SetupForm';
 
 interface OwnProps {
   task: Task;
