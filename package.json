@@ -16,7 +16,8 @@
     "prisma-format": "prisma format",
     "prettier-check": "prettier --check ./src",
     "prettier-format": "prettier --write ./src",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.5.0",
