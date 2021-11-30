@@ -24,7 +24,14 @@ export default function Index() {
     <Container maxWidth="lg">
       <Box my={4}>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div>
+          <div
+            className="w-64"
+            style={{
+              display: 'flex',
+              flexDirection: 'row-reverse',
+              marginRight: '25px',
+            }}
+          >
             <ClientTabs clients={clients} />
           </div>
           <div

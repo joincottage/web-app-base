@@ -55,7 +55,7 @@ export default function BasicTabs({ clients }: OwnProps) {
 
   if (clients.length == 0) return <ClientColumnLoadingState />;
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '120px' }}>
       <Box>
         <Tabs
           orientation="vertical"
