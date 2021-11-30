@@ -4,16 +4,16 @@
 @tailwind screens;
 
 .button-primary {
-  @apply bg-blue-900 hover:bg-blue-700 font-medium transform ease-in-out duration-500 text-white px-3 py-2 rounded;
+  @apply bg-primary-500 hover:bg-primary-700 font-medium transform ease-in-out duration-500 text-white px-3 py-2 rounded;
 }
 
 .button-secondary {
-  @apply px-3 py-1 disabled:opacity-20 disabled:cursor-default rounded bg-white border-2 border-blue-500 text-blue-700 hover:text-blue-900 hover:bg-blue-50;
+  @apply px-3 py-1 disabled:opacity-20 disabled:cursor-default rounded bg-white border-2 border-primary-500 text-primary-700 hover:text-primary-900;
 }
 
 .button-primary-destructive {
-  @apply bg-red-700 hover:bg-red-600 font-medium transform ease-in-out duration-500 text-white px-3 py-2 rounded;
+  @apply bg-destructive-700 hover:bg-destructive-600 font-medium transform ease-in-out duration-500 text-white px-3 py-2 rounded;
 }
 .button-secondary-destructive {
-  @apply px-3 py-1 rounded-md bg-white disabled:opacity-20 disabled:cursor-default border-2 border-red-500 text-red-700 hover:text-red-900 hover:bg-red-50 transition ease-in-out duration-500;
+  @apply px-3 py-1 rounded-md bg-white disabled:opacity-20 disabled:cursor-default border-2 border-destructive-500 text-destructive-700 hover:text-destructive-900 hover:bg-destructive-50 transition ease-in-out duration-500;
 }
