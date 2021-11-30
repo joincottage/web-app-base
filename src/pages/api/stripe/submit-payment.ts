@@ -20,10 +20,10 @@ const stripe = new Stripe(
   }
 );
 
-const getPayeeUser = async (userId: string) => {
+const getPayeeUser = async (userId: number) => {
   let error = null;
   const payeeUser = await prisma.user.findFirst({
-    where: { email: userId },
+    where: { id: userId },
   });
 
   if (!payeeUser || !payeeUser.stripeAccountId) {
@@ -45,9 +45,20 @@ export default async function (
       try {
         const { task } = req.body;
 
+        const taskUserId = (task as Task).userId;
+        if (!taskUserId) {
+          console.error(
+            `Attempting to accept task ${task.id} with no assigned user`
+          );
+          res.status(400).end();
+
+          return;
+        }
+
         const { payeeUser, error: payeeUserError } = await getPayeeUser(
-          (task as Task).userId as string
+          taskUserId
         );
+
         if (payeeUserError) {
           // TODO: throw errors to Sentry for monitoring
           console.error(payeeUserError.message);

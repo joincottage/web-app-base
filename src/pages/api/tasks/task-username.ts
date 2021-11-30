@@ -1,6 +1,5 @@
-import { prisma } from './../../../database/prisma';
+import { prisma } from '../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from '@auth0/nextjs-auth0';
 //import { IN_ATTENTION } from 'src/constants/task-stages';
 
 export default async function (
@@ -25,7 +24,7 @@ export default async function (
 
       if (task !== null && task.userId !== null) {
         const user = await prisma.user.findFirst({
-          where: { email: task.userId },
+          where: { id: task.userId },
         });
         if (user !== null && user.name !== null) {
           res.json({ name: user.name });
