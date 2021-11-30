@@ -34,14 +34,7 @@ export default function Index() {
           >
             <ClientTabs clients={clients} />
           </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              minWidth: '600px',
-              maxWidth: '600px',
-            }}
-          >
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div
               style={{
                 display: 'flex',
@@ -64,7 +57,18 @@ export default function Index() {
                 {state.selectedClient.name}
               </Typography>
             </div>
-            <TaskList />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                minWidth: '600px',
+                maxWidth: '600px',
+                maxHeight: '82vh',
+                overflow: 'scroll',
+              }}
+            >
+              <TaskList />
+            </div>
           </div>
           <div className="w-64">
             {!isLoading && user ? (
