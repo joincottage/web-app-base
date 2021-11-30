@@ -16,26 +16,28 @@ export default async function (
       break;
 
     case 'GET':
-			try {
-      const task = await prisma.task.findFirst({
-        where: {
-          id: 66,
-        },
-      });
-
-      if (task !== null && task.userId !== null) {
-        const user = await prisma.user.findFirst({
-          where: { id: task.userId },
+      try {
+        const task = await prisma.task.findFirst({
+          where: {
+            id: 66,
+          },
         });
-        if (user !== null && user.name !== null) {
-          res.json({ name: user.name });
+
+        if (task !== null && task.userId !== null) {
+          const user = await prisma.user.findFirst({
+            where: { id: task.userId },
+          });
+          if (user !== null && user.name !== null) {
+            res.json({ name: user.name });
+          } else {
+            res.json({ message: 'no user' });
+          }
         } else {
-          res.json({ message: 'no user' });
+          res.json({ message: 'no task' });
         }
-      } else {
-        res.json({ message: 'no task' });
+      } catch (err) {
+        console.error(err);
       }
-		} catch(err) {console.error(err)}
       break;
     default: {
       console.error(
