@@ -23,7 +23,7 @@ export default function PreviousTasks({ tasks }: OwnProps) {
             className="bg-gray-50 shadow overflow-hidden rounded-md px-3 py-3"
           >
             <p className="">{task.name}</p>
-            <p className="text-sm text-blue-800 opacity-60">
+            <p className="text-sm text-primary-800 opacity-60">
               {task.clientName}
             </p>
           </li>

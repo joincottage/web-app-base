@@ -22,7 +22,7 @@ export default function KanbanTaskCard({
   const { username, loading, error } = useTasksUsername();
 
   return (
-    <div className="border-2 border-blue-500 rounded-lg my-3 mx-3">
+    <div className="border-2 border-primary-500 rounded-lg my-3 mx-3">
       <div className="text-left px-3 py-2">
         <div className="flex justify-between">
           <h3>{task.name}</h3>

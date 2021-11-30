@@ -121,7 +121,7 @@ export default function CurrentTask({ task }: OwnProps) {
                 </button>
                 <button
                   disabled={true}
-                  className="ml-3 button-secondary disabled:hover:bg-white disabled:hover:border-blue-500 disabled:hover:text-blue-700"
+                  className="ml-3 button-secondary disabled:hover:bg-white disabled:hover:border-primary-500 disabled:hover:text-primary-700"
                 >
                   Request Help
                 </button>
@@ -131,7 +131,7 @@ export default function CurrentTask({ task }: OwnProps) {
         ) : (
           <></>
         )}
-        <div className="bg-blue-100 text-blue-900 shadow p-4 rounded-md max-w-[15rem]">
+        <div className="bg-blue-100 text-primary-900 shadow p-4 rounded-md max-w-[15rem]">
           <div className="text-left">
             <div className="flex justify-between items-start">
               <h3 className="text-lg capitalize">{task.name}</h3>
@@ -152,7 +152,7 @@ export default function CurrentTask({ task }: OwnProps) {
                 </svg>
               </button>
             </div>
-            <p className="mb-4 text-green-800">${task.price}</p>
+            <p className="mb-4 text-confirmation-100">${task.price}</p>
             <button className="mb-3 button-primary w-full" onClick={openLinks}>
               Open IDE
             </button>

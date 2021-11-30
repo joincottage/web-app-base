@@ -53,7 +53,7 @@ export default function TasksInAttention({ task }: OwnProps) {
 								*/}
                 <button
                   disabled={true}
-                  className="ml-3 button-secondary disabled:hover:bg-white disabled:hover:border-blue-500 disabled:hover:text-blue-700"
+                  className="ml-3 button-secondary disabled:hover:bg-white disabled:hover:border-primary-500 disabled:hover:text-primary-700"
                 >
                   Request Help
                 </button>
@@ -63,14 +63,14 @@ export default function TasksInAttention({ task }: OwnProps) {
         ) : (
           <></>
         )}
-        <div className="border-2 border-red-500 bg-red-50 text-blue-900 shadow p-4 rounded-md max-w-[15rem]">
+        <div className="border-2 border-red-500 bg-red-50 text-primary-900 shadow p-4 rounded-md max-w-[15rem]">
           <div className="text-left">
             <div className="flex justify-between items-start">
               <h3 className="text-lg capitalize">{task.name}</h3>
               <button onClick={toggleMenu}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-gray-400"
+                  className="h-6 w-6 text-confirmation-100"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -84,7 +84,7 @@ export default function TasksInAttention({ task }: OwnProps) {
                 </svg>
               </button>
             </div>
-            <p className="mb-4 text-green-800">${task.price}</p>
+            <p className="mb-4 text-confirmation-100">${task.price}</p>
 
             <div className="mb-3">
               <span className="relative w-full inline-flex rounded-md shadow-sm mt-3">

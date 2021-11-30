@@ -19,7 +19,7 @@ export default function TasksInReview({ tasks }: OwnProps) {
   return (
     <div className="">
       {tasks.map((task) => (
-        <div className="my-3 px-3 py-2 rounded bg-blue-50 shadow max-w-[15rem]">
+        <div className="my-3 px-3 py-2 rounded bg-primary-50 shadow max-w-[15rem]">
           <div className="flex justify-between my-1">
             <div className="text-left">
               <p className="mb-1">{task.name}</p>
