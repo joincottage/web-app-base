@@ -16,6 +16,7 @@ export default async function (
       break;
 
     case 'GET':
+			try {
       const task = await prisma.task.findFirst({
         where: {
           id: 66,
@@ -34,6 +35,7 @@ export default async function (
       } else {
         res.json({ message: 'no task' });
       }
+		} catch(err) {console.error(err)}
       break;
     default: {
       console.error(
