@@ -17,6 +17,7 @@ import setSelectedClient from 'src/actions/setSelectedClient';
 export const getServerSideProps = withPageAuthRequired();
 
 export default function Index() {
+  console.log('test');
   const { user, isLoading } = useUser();
   const { state, dispatch } = useContext(AppDataContext);
   const { clients, loading: clientsLoading } = useClients({
