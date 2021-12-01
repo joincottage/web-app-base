@@ -12,9 +12,12 @@ import { usePreviousTasks } from './../hooks/usePreviousTasks';
 import { useAttentionTasks } from './../hooks/useAttentionTasks';
 import { Task } from '.prisma/client';
 import { AppDataContext } from 'src/contexts/AppContext';
+import { Fade } from '@material-ui/core';
+
+const ANIMATION_TIMEOUT_MILLIS = 500;
 
 interface OwnProps {
-  user: UserProfile;
+  user?: UserProfile;
 }
 
 export default function UserTaskColumn({ user }: OwnProps) {
@@ -36,44 +39,55 @@ export default function UserTaskColumn({ user }: OwnProps) {
     }
   }, [data]);
 
-  if (loading) return <TaskColumnEmptyState />;
   return (
-    <div className="flex mt-2">
-      <div>
-        <div className="text-left">
-          {/* @ts-ignore */}
-          {attentionTasks !== null && attentionTasks.length !== 0 ? (
-            <div>
-              <p className="my-3 font-semibold text-gray-400">
-                Attention Tasks
-              </p>
-              <AttentionTasksContainer tasks={attentionTasks as Task[]} />
-            </div>
-          ) : (
-            <div></div>
-          )}
-          <p className="my-3 font-semibold text-gray-400">Current Task</p>
-          {/* @ts-ignore */}
-          {data !== null && data.length !== 0 ? (
-            <div>
-              <CurrentTaskContainer task={data as Task[]} />
-            </div>
-          ) : (
-            <div>
-              <TaskEmptyState />
-            </div>
-          )}
-
-          <p className="mt-6 mb-3 font-semibold text-gray-400">
-            Tasks In Review
-          </p>
-          <TasksInReview tasks={reviewTasks as Task[]} />
-          <p className="mt-6 mb-3 font-semibold text-gray-400">
-            Previous Tasks
-          </p>
-          <PreviousTasks tasks={previousTasks as Task[]} />
+    <div style={{ position: 'relative' }}>
+      <Fade in={loading || !user} timeout={ANIMATION_TIMEOUT_MILLIS}>
+        <div>
+          <TaskColumnEmptyState />
         </div>
-      </div>
+      </Fade>
+      <Fade in={!loading} timeout={ANIMATION_TIMEOUT_MILLIS}>
+        <div
+          className="flex mt-2"
+          style={{ position: 'absolute', top: '-8px' }}
+        >
+          <div>
+            <div className="text-left">
+              {/* @ts-ignore */}
+              {attentionTasks !== null && attentionTasks.length !== 0 ? (
+                <div>
+                  <p className="my-3 font-semibold text-gray-400">
+                    Attention Tasks
+                  </p>
+                  <AttentionTasksContainer tasks={attentionTasks as Task[]} />
+                </div>
+              ) : (
+                <div></div>
+              )}
+              <p className="my-3 font-semibold text-gray-400">Current Task</p>
+              {/* @ts-ignore */}
+              {data !== null && data.length !== 0 ? (
+                <div>
+                  <CurrentTaskContainer task={data as Task[]} />
+                </div>
+              ) : (
+                <div>
+                  <TaskEmptyState />
+                </div>
+              )}
+
+              <p className="mt-6 mb-3 font-semibold text-gray-400">
+                Tasks In Review
+              </p>
+              <TasksInReview tasks={reviewTasks as Task[]} />
+              <p className="mt-6 mb-3 font-semibold text-gray-400">
+                Previous Tasks
+              </p>
+              <PreviousTasks tasks={previousTasks as Task[]} />
+            </div>
+          </div>
+        </div>
+      </Fade>
     </div>
   );
 }

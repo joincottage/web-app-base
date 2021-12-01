@@ -4,7 +4,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import { AppDataContext } from '../contexts/AppContext';
 import setSelectedClient from 'src/actions/setSelectedClient';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Fade } from '@material-ui/core';
 import { Client } from '@prisma/client';
 import ClientColumnLoadingState from './emptystates/ClientColumnLoadingState';
 interface OwnProps {
@@ -53,29 +53,37 @@ export default function BasicTabs({ clients }: OwnProps) {
     original: c,
   }));
 
-  if (clients.length == 0) return <ClientColumnLoadingState />;
   return (
-    <Box sx={{ width: '120px' }}>
-      <Box>
-        <Tabs
-          orientation="vertical"
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          {renderableClients.map((client, index) => (
-            <Tab
-              key={index}
-              onClick={() => {
-                dispatch(setSelectedClient(client.original));
-              }}
-              icon={client.logo}
-              label={client.name}
-              {...a11yProps(index)}
-            />
-          ))}
-        </Tabs>
-      </Box>
+    <Box sx={{ width: '120px' }} style={{ position: 'relative' }}>
+      <Fade in={clients.length === 0}>
+        <Box style={{ position: 'absolute', top: 0 }}>
+          <ClientColumnLoadingState />
+        </Box>
+      </Fade>
+      <Fade in={clients.length > 0} timeout={500}>
+        <Box style={{ position: 'absolute', top: 0 }}>
+          <Tabs
+            orientation="vertical"
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            {renderableClients.map((client, index) => (
+              <Fade in={true} timeout={(index + 1) * 500}>
+                <Tab
+                  key={index}
+                  onClick={() => {
+                    dispatch(setSelectedClient(client.original));
+                  }}
+                  icon={client.logo}
+                  label={client.name}
+                  {...a11yProps(index)}
+                />
+              </Fade>
+            ))}
+          </Tabs>
+        </Box>
+      </Fade>
     </Box>
   );
 }

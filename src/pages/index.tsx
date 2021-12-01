@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import NextLink from 'next/link';
 import Copyright from '../Copyright';
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { Avatar, Button } from '@material-ui/core';
+import { Avatar, Button, Fade } from '@material-ui/core';
 import ClientTabs from 'src/components/ClientTabs';
 import UserTasksColumn from 'src/components/UserTasksColumn';
 import { AppDataContext } from '../contexts/AppContext';
@@ -18,51 +18,62 @@ export const getServerSideProps = withPageAuthRequired();
 export default function Index() {
   const { user, isLoading } = useUser();
   const { state } = useContext(AppDataContext);
-  const { clients } = useClients({ shouldFetchAll: true });
+  const { clients, loading: clientsLoading } = useClients({
+    shouldFetchAll: true,
+  });
 
   return (
-    <Container maxWidth="lg">
-      <Box my={4}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div
-            className="w-64"
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-              marginRight: '25px',
-            }}
-          >
-            <ClientTabs clients={clients} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <Fade in={true}>
+      <Container maxWidth="lg">
+        <Box my={4}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div
+              className="w-64"
               style={{
                 display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginBottom: '15px',
+                flexDirection: 'row-reverse',
+                marginRight: '25px',
               }}
             >
-              <span style={{ marginRight: '15px' }}>
-                {(state.selectedClient as Client).logoUrl && (
-                  <Avatar
-                    sx={{ width: 80, height: 80 }}
-                    alt="Company logo"
-                    src={(state.selectedClient as Client).logoUrl as string}
-                    aria-haspopup="true"
-                  />
-                )}
-              </span>
-              <Typography variant="h6" style={{ paddingRight: '30px' }}>
-                {state.selectedClient.name}
-              </Typography>
+              <ClientTabs clients={clients} />
             </div>
-            <div className="flex flex-col min-w-[600px] max-w-[600px] max-h-[84vh] overflow-y-scroll no-scrollbar">
-              <TaskList />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: '15px',
+                }}
+              >
+                <span style={{ marginRight: '15px' }}>
+                  {(state.selectedClient as Client).logoUrl && (
+                    <Avatar
+                      sx={{ width: 80, height: 80 }}
+                      alt="Company logo"
+                      src={(state.selectedClient as Client).logoUrl as string}
+                      aria-haspopup="true"
+                    />
+                  )}
+                </span>
+                <Typography variant="h6" style={{ paddingRight: '30px' }}>
+                  {state.selectedClient.name}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  minWidth: '600px',
+                  maxWidth: '600px',
+                  maxHeight: '82vh',
+                  overflow: 'scroll',
+                }}
+              >
+                <TaskList />
+              </div>
             </div>
-          </div>
-          <div className="w-64">
-            {!isLoading && user ? (
+            <div className="w-64">
               <div
                 style={{
                   display: 'flex',
@@ -74,17 +85,11 @@ export default function Index() {
               >
                 <UserTasksColumn user={user} />
               </div>
-            ) : (
-              !isLoading && (
-                <NextLink href="/api/auth/login" passHref={true}>
-                  <Button color="inherit">Login</Button>
-                </NextLink>
-              )
-            )}
+            </div>
           </div>
-        </div>
-        <Copyright />
-      </Box>
-    </Container>
+          <Copyright />
+        </Box>
+      </Container>
+    </Fade>
   );
 }

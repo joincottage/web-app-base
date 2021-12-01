@@ -6,10 +6,26 @@ import Divider from '@material-ui/core/Divider';
 import { Task } from '@prisma/client';
 import useTasks from 'src/hooks/useTasks';
 import { TASK_QUEUED } from 'src/constants/task-stages';
+import { Fade } from '@material-ui/core';
 
 interface OwnProps {
   //DESTRUCTUREDPROP: [];
 }
+
+const TaskListItemContainer = ({
+  task,
+  index,
+}: {
+  task: Task;
+  index: number;
+}) => (
+  <Fade in={true} timeout={(index + 1) * 500}>
+    <div>
+      <Divider />
+      <TaskCard key={task.id} task={task} mode="freelancer" />
+    </div>
+  </Fade>
+);
 
 export default function TaskList({}: OwnProps) {
   const { loading, error, data } = useTasks();
@@ -33,11 +49,8 @@ export default function TaskList({}: OwnProps) {
             (task: Task) => task.status === TASK_QUEUED && task.price !== null
           )
           .reverse()
-          .map((task: Task) => (
-            <>
-              <Divider />
-              <TaskCard key={task.id} task={task} mode="freelancer" />
-            </>
+          .map((task: Task, i) => (
+            <TaskListItemContainer task={task} index={i} />
           ))
       ) : (
         data
@@ -47,11 +60,8 @@ export default function TaskList({}: OwnProps) {
               task.status === TASK_QUEUED &&
               task.price !== null
           )
-          .map((task: Task) => (
-            <>
-              <Divider />
-              <TaskCard key={task.id} task={task} mode="freelancer" />
-            </>
+          .map((task: Task, i) => (
+            <TaskListItemContainer task={task} index={i} />
           ))
       )}
     </div>

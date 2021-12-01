@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Task } from '.prisma/client';
 import axios from 'axios';
 import { useUser } from '@auth0/nextjs-auth0';
+import { Button } from '@material-ui/core';
 
 interface OwnProps {
   task: Task;
@@ -13,15 +14,16 @@ export default function CurrentTask({ task }: OwnProps) {
   const [isShowingAbandon, setIsShowingAbandon] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState('');
   const confirmDeleteCheck = `${task.clientName}/${task.name}`;
-  const ideLink = 'https://www.duckduckgo.com';
-  const devServerLink = 'https://www.xkcd.com';
+  const ideLink = 'https://cloudcoder.network/ws/571429178330112/ide/';
+  const devServerLink =
+    'https://ws-571429178330112-port-3000.proxy.cloudcoder.network/';
 
   useEffect(() => {
     //console.log('Current Task:', task);
   }, []);
 
   function openLinks() {
-    window.open(devServerLink, '_blank');
+    //window.open(devServerLink, '_blank');
     window.open(ideLink, '_blank');
   }
 
@@ -152,16 +154,21 @@ export default function CurrentTask({ task }: OwnProps) {
                 </svg>
               </button>
             </div>
-            <p className="mb-4 text-confirmation-100">${task.price}</p>
-            <button className="mb-3 button-primary w-full" onClick={openLinks}>
+            <p className="mb-4 text-green-800">${task.price}</p>
+            <Button
+              className="mb-3 w-full"
+              variant="contained"
+              onClick={openLinks}
+            >
               Open IDE
-            </button>
-            <button
-              className="button-secondary w-full leading-7"
+            </Button>
+            <Button
+              className="w-full leading-7 bg-white"
+              variant="outlined"
               onClick={handleSubmit}
             >
               Submit For Review
-            </button>
+            </Button>
           </div>
         </div>
       </div>
