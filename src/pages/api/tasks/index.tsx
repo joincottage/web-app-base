@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { createTextChannel } from 'src/apiService/discord/channel';
 import { Task } from '@prisma/client';
 import { TASK_QUEUED } from 'src/constants/task-stages';
+import { getUserAuthId } from 'src/apiService/auth/helpers';
 
 const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
@@ -36,6 +37,62 @@ export default async function (
         console.error('Failed trying to create a task', err);
         res.status(500).end();
       }
+      break;
+    }
+    case 'PUT': {
+      const userInfo = getUserAuthId(req, res);
+      console.log('heloo', userInfo);
+      try {
+        const test = await prisma.task.findMany({
+          where: {
+            id: req.body.params.id,
+          },
+          include: {
+            client: {
+              include: {
+                users: {
+                  where: { auth_id: userInfo },
+                },
+              },
+            },
+          },
+        });
+        console.log('test', test);
+
+        /*
+								{
+									where: { auth_id: userInfo },
+								},
+								*/
+        /*
+				await prisma.task.update({
+					where: {
+						id: req.body.params.id,
+					},
+					include: {
+						client: {
+							include: {
+								users: {
+									where: { auth_id: userInfo },
+								},
+							},
+						},
+					},
+					data: {
+						name: req.body.params.name,
+						shortDesc: req.body.params.shortDesc,
+						longDesc: req.body.params.longDesc,
+						skills: req.body.params.skills,
+						price: req.body.params.price,
+					},
+				});
+				*/
+        res.send('OK');
+      } catch (err) {
+        console.error('Failed trying to update a task', err);
+        res.status(500).end();
+      }
+
       break;
     }
     case 'GET': {

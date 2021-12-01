@@ -1,13 +1,26 @@
+import {
+  Backdrop,
+  Box,
+  Button,
+  Divider,
+  Fade,
+  Modal,
+  Theme,
+} from '@material-ui/core';
+import { useState, useContext } from 'react';
 import { Tooltip } from '@material-ui/core';
+import { Client } from '.prisma/client';
 import { Task } from '.prisma/client';
 import useTasksUsername from './../../hooks/useTaskUsername';
 import Avatar from '@material-ui/core/Avatar';
-import { useContext, useState } from 'react';
 import { AppDataContext } from 'src/contexts/AppContext';
 import { RequestStatus } from 'src/constants/request-status';
 import LoadingSpinner from 'src/components/LoadingSpinner';
-import { Button } from '@material-ui/core';
 import Axios from 'axios';
+import { useRouter } from 'next/router';
+import CloseIcon from '@material-ui/icons/Close';
+import UpdateATask from './../UpdateATask';
+import { TASK_QUEUED } from 'src/constants/task-stages';
 
 interface OwnProps {
   task: Task;
@@ -17,6 +30,7 @@ interface OwnProps {
   showCompanyLogo?: boolean;
   styles?: any;
 }
+
 export default function KanbanTaskCard({
   task,
   mode,
@@ -26,7 +40,21 @@ export default function KanbanTaskCard({
   styles = {},
 }: OwnProps) {
   const { username, loading, error } = useTasksUsername();
+  const router = useRouter();
+  const [isCreateATaskOpen, setIsCreateATaskOpen] = useState(
+    router.query.showCreateTask === 'true'
+  );
+
   const { state, dispatch } = useContext(AppDataContext);
+  const handleClickCreateATask = () => {
+    if (task.status == TASK_QUEUED) {
+      setIsCreateATaskOpen(true);
+    }
+    // sa_event('click_IllDoIt');
+  };
+  const handleCloseCreateATask = () => {
+    setIsCreateATaskOpen(false);
+  };
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
@@ -70,7 +98,7 @@ export default function KanbanTaskCard({
               src={task.userImgUrl || ''}
             />
           )}
-          <h3>{task.name}</h3>
+          <h3 onClick={handleClickCreateATask}>{task.name}</h3>
 
           <Tooltip title={`${task.shortDesc} - $${task.price}`}>
             <svg
@@ -125,6 +153,32 @@ export default function KanbanTaskCard({
             </div>
           )}
         </div>
+      </div>
+      <div>
+        <Modal
+          open={isCreateATaskOpen}
+          onClose={handleCloseCreateATask}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          closeAfterTransition
+          BackdropProps={{
+            timeout: 500,
+          }}
+          className="rounded-2xl"
+        >
+          <div className="w-[600px] bg-white border-2 border-white mx-auto mt-44 rounded-lg ">
+            <CloseIcon
+              onClick={handleCloseCreateATask}
+              className="w-6 h-6 float-right m-4"
+            />
+            <div className="my-12">
+              <UpdateATask
+                client={state.selectedClient as Client}
+                task={task}
+              />
+            </div>
+          </div>
+        </Modal>
       </div>
     </div>
   );

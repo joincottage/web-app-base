@@ -1,38 +1,38 @@
 [
-  {
-    "id": 1,
-    "createdAt": "2021-11-04T11:59:41.796Z",
-    "updatedAt": "2021-11-04T11:59:41.796Z",
-    "name": "Piggybank",
-    "logoUrl": "https://www.piggybank.dev/logo.svg",
-    "userEmailOfOwner": "hchodnett@gmail.com",
-    "discordCategoryId": "898644576678584381"
-  },
-  {
-    "id": 2,
-    "createdAt": "2021-11-04T11:59:41.796Z",
-    "updatedAt": "2021-11-04T11:59:41.796Z",
-    "name": "Cottage",
-    "logoUrl": "https://media-exp1.licdn.com/dms/image/C4E0BAQF3nI3dMkialQ/company-logo_100_100/0/1625689480587?e=1642032000&v=beta&t=pVqZQLKd1l4XS3m5RHxT8avXdekg4v0EeZOeAnmC9uM",
-    "userEmailOfOwner": "hchodnett@gmail.com",
-    "discordCategoryId": "898644724364230677"
-  },
-  {
-    "id": 3,
-    "createdAt": "2021-11-04T11:59:41.796Z",
-    "updatedAt": "2021-11-04T11:59:41.796Z",
-    "name": "Tabella",
-    "logoUrl": "https://media-exp1.licdn.com/dms/image/C560BAQGUPVCJF9P8bQ/company-logo_200_200/0/1596512454209?e=1642636800&v=beta&t=_0_PDajX31ItoSZ5Zn1G4Ow2gfPTS8TmKdjdx9KmyJw",
-    "userEmailOfOwner": "hchodnett@gmail.com",
-    "discordCategoryId": "898641944316633150"
-  },
-  {
-    "id": 5,
-    "createdAt": "2021-11-23T16:13:03.995Z",
-    "updatedAt": "2021-11-23T16:09:03.142Z",
-    "name": "Beltrami LLC",
-    "logoUrl": null,
-    "userEmailOfOwner": "contact@brentonbeltrami.com",
-    "discordCategoryId": "912737079711129630"
-  }
+	{
+		"id": 1,
+		"createdAt": "2021-11-04T11:59:41.796Z",
+		"updatedAt": "2021-11-04T11:59:41.796Z",
+		"name": "Piggybank",
+		"logoUrl": "https://www.piggybank.dev/logo.svg",
+		"userEmailOfOwner": "hchodnett@gmail.com",
+		"discordCategoryId": "898644576678584381"
+	},
+	{
+		"id": 2,
+		"createdAt": "2021-11-04T11:59:41.796Z",
+		"updatedAt": "2021-11-04T11:59:41.796Z",
+		"name": "Cottage",
+		"logoUrl": "https://media-exp1.licdn.com/dms/image/C4E0BAQF3nI3dMkialQ/company-logo_100_100/0/1625689480587?e=1642032000&v=beta&t=pVqZQLKd1l4XS3m5RHxT8avXdekg4v0EeZOeAnmC9uM",
+		"userEmailOfOwner": "hchodnett@gmail.com",
+		"discordCategoryId": "898644724364230677"
+	},
+	{
+		"id": 3,
+		"createdAt": "2021-11-04T11:59:41.796Z",
+		"updatedAt": "2021-11-04T11:59:41.796Z",
+		"name": "Tabella",
+		"logoUrl": "https://media-exp1.licdn.com/dms/image/C560BAQGUPVCJF9P8bQ/company-logo_200_200/0/1596512454209?e=1642636800&v=beta&t=_0_PDajX31ItoSZ5Zn1G4Ow2gfPTS8TmKdjdx9KmyJw",
+		"userEmailOfOwner": "hchodnett@gmail.com",
+		"discordCategoryId": "898641944316633150"
+	},
+	{
+		"id": 5,
+		"createdAt": "2021-11-23T16:13:03.995Z",
+		"updatedAt": "2021-11-23T16:09:03.142Z",
+		"name": "Beltrami LLC",
+		"logoUrl": null,
+		"userEmailOfOwner": "contact@brentonbeltrami.com",
+		"discordCategoryId": "912737079711129630"
+	}
 ]
