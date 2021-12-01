@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -12,15 +12,20 @@ import { AppDataContext } from '../contexts/AppContext';
 import useClients from 'src/hooks/useClients';
 import TaskList from 'src/components/TaskList';
 import { Client } from '.prisma/client';
+import setSelectedClient from 'src/actions/setSelectedClient';
 
 export const getServerSideProps = withPageAuthRequired();
 
 export default function Index() {
   const { user, isLoading } = useUser();
-  const { state } = useContext(AppDataContext);
+  const { state, dispatch } = useContext(AppDataContext);
   const { clients, loading: clientsLoading } = useClients({
     shouldFetchAll: true,
   });
+
+  useEffect(() => {
+    dispatch(setSelectedClient({ name: 'All' }));
+  }, []);
 
   return (
     <Fade in={true}>

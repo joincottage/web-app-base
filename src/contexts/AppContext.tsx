@@ -1,8 +1,10 @@
 import { Client } from '@prisma/client';
 import React, { Dispatch } from 'react';
 import { SavedUserState } from 'src/actions/setUser';
+
+export type AllClients = { name: 'All' };
 export interface AppState {
-  selectedClient: Client | { name: 'All' };
+  selectedClient: Client | AllClients;
   user: SavedUserState;
 }
 export interface AppAction {
