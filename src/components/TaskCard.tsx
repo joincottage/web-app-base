@@ -16,7 +16,7 @@ import Axios from 'axios';
 import LoadingSpinner from './LoadingSpinner';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
 import CubeTransparentOutlineIcon from './icons/CubeTransparentOutlineIcon';
-
+import { RequestStatus } from 'src/constants/request-status';
 interface OwnProps {
   task: Task;
   mode: 'freelancer' | 'client';
@@ -78,13 +78,6 @@ function getModalStyle() {
   };
 }
 
-enum RequestStatus {
-  IDLE = 'idle',
-  PENDING = 'pending',
-  FAILED = 'failed',
-  SUCCEEDED = 'succeeded',
-}
-
 export default function TaskCard({
   task,
   mode,
@@ -100,9 +93,6 @@ export default function TaskCard({
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [modalStyle] = React.useState(getModalStyle);
   const { state, dispatch } = useContext(AppDataContext);
-  const [requestStatus, setRequestStatus] = useState<RequestStatus>(
-    RequestStatus.IDLE
-  );
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -138,29 +128,6 @@ export default function TaskCard({
       {/* <PaymentForm task={task} /> */}
     </div>
   );
-
-  const submitPayment = async () => {
-    setRequestStatus(RequestStatus.PENDING);
-    try {
-      await Axios.post('/api/stripe/submit-payment', {
-        task,
-      });
-      setRequestStatus(RequestStatus.SUCCEEDED);
-    } catch (e) {
-      setRequestStatus(RequestStatus.FAILED);
-      throw e;
-    }
-
-    try {
-      await Axios.post('/api/discord/notify-task-complete', {
-        discordChannelId: task.discordChannelId,
-        task,
-      });
-    } catch (e) {
-      // TODO: roll back payment if this fails, since it will still appear in the "review" column.
-      throw e;
-    }
-  };
 
   return (
     <Card className={classes.root} style={styles}>
@@ -232,32 +199,6 @@ export default function TaskCard({
             </Button>
           </div>
         )}
-        <div style={{ display: 'flex' }}>
-          {showAcceptButton && (
-            <>
-              <button
-                onClick={() => {}}
-                className="ml-3 mb-2 mr-2 px-3 py-2 bg-white-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-white-700 text-blue-800 uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
-              >
-                View pull-request
-              </button>
-              <button
-                onClick={submitPayment}
-                className="ml-3 mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
-              >
-                {requestStatus === RequestStatus.IDLE ? (
-                  'Accept and Pay'
-                ) : requestStatus === RequestStatus.PENDING ? (
-                  <LoadingSpinner />
-                ) : requestStatus === RequestStatus.FAILED ? (
-                  'Failed. Click to retry'
-                ) : (
-                  'Accept and Pay'
-                )}
-              </button>
-            </>
-          )}
-        </div>
       </div>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <div className="my-6 mx-4 prose-sm text-gray-500">

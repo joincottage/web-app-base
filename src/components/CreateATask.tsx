@@ -93,6 +93,7 @@ export default function CreateATask({ client }: OwnProps) {
         longDesc,
         skills: requiredSkills,
         datePosted: new Date().toString(),
+        clientId: client?.id,
       });
       setRequestStatus(RequestStatus.SUCCEEDED);
       setShowSuccess(true);
