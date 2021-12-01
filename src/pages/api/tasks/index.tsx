@@ -33,7 +33,8 @@ export default async function (
 
         res.send('OK');
       } catch (err) {
-        console.error(err);
+        console.error('Failed trying to create a task', err);
+        res.status(500).end();
       }
       break;
     }
@@ -42,7 +43,8 @@ export default async function (
         const tasks = await prisma.task.findMany();
         res.json(tasks);
       } catch (err) {
-        console.error(err);
+        console.error('Failed trying to fetch all tasks', err);
+        res.status(500).end();
       }
       break;
     }

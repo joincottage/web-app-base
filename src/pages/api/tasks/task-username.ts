@@ -36,7 +36,8 @@ export default async function (
           res.json({ message: 'no task' });
         }
       } catch (err) {
-        console.error(err);
+        console.error('failed trying to fetch the username for a task', err);
+        res.status(500).end();
       }
       break;
     default: {

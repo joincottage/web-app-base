@@ -47,7 +47,8 @@ export default async function (
         });
         await removeUserFromChannel(discordChannelId, discordUserId);
       } catch (err) {
-        console.error(err);
+        console.error('Failed attempting to abandon task', err);
+        res.status(500).end();
       }
 
       res.send('OK');

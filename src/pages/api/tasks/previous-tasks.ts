@@ -1,6 +1,6 @@
 import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from '@auth0/nextjs-auth0';
+import { getUserAuthId } from 'src/apiService/auth/helpers';
 //import { IN_ATTENTION } from 'src/constants/task-stages';
 
 export default async function (
@@ -17,8 +17,7 @@ export default async function (
       break;
 
     case 'GET': {
-      const session = getSession(req, res);
-      const userInfo = session?.user;
+      const userInfo = getUserAuthId(req, res);
       if (userInfo == null) {
         res.status(401).end();
         return;
@@ -26,18 +25,19 @@ export default async function (
 
       try {
         const user = await prisma.user.findFirst({
-          where: { auth_id: userInfo.sub },
+          where: { auth_id: userInfo },
         });
 
         if (user === null) {
           await prisma.user.create({
             data: {
-              auth_id: userInfo.sub,
+              auth_id: userInfo,
               email: userInfo.email,
             },
           });
         }
 
+        //FIXME: This needs to be moved to an onboarding flow.
         if (user !== null) {
           const tasks = await prisma.task.findMany({
             where: {
@@ -50,7 +50,8 @@ export default async function (
           res.json({ message: 'no task' });
         }
       } catch (err) {
-        console.error(err);
+        console.error('Failed trying to fetch completed tasks for user', err);
+        res.status(500).end();
       }
       break;
     }

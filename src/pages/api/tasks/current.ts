@@ -52,7 +52,6 @@ export default async function (
     case 'GET':
       {
         const userInfo = getUserAuthId(req, res);
-        console.log(userInfo);
         if (userInfo == null) {
           res.status(401).end();
           return;
