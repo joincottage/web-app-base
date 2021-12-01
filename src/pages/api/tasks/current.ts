@@ -1,9 +1,9 @@
 //https://www.prisma.io/docs/concepts/components/prisma-client/crud
 import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from '@auth0/nextjs-auth0';
 import { postMessageToChannel } from 'src/apiService/discord/channel';
 import { IN_PROGRESS, IN_REVIEW } from 'src/constants/task-stages';
+import { getUserAuthId } from 'src/apiService/auth/helpers';
 
 export default async function (
   req: NextApiRequest,
@@ -30,24 +30,29 @@ export default async function (
     }
     //NOTE: Change current task to in_review
     case 'PUT': {
-      await prisma.task.update({
-        where: {
-          id: req.body.task.id,
-        },
-        data: {
-          status: IN_REVIEW,
-        },
-      });
+      try {
+        await prisma.task.update({
+          where: {
+            id: req.body.task.id,
+          },
+          data: {
+            status: IN_REVIEW,
+          },
+        });
 
-      const reviewMessage = `${name} has submitted this task for review. Please take a look at the task as soon as you can.`;
-      await postMessageToChannel(discordChannelId, reviewMessage);
-      res.send('OK');
+        const reviewMessage = `${name} has submitted this task for review. Please take a look at the task as soon as you can.`;
+        await postMessageToChannel(discordChannelId, reviewMessage);
+        res.send('OK');
+      } catch (err) {
+        console.error('Failed trying to submit task to review', err);
+        res.status(500).end();
+      }
       break;
     }
     case 'GET':
       {
-        const session = getSession(req, res);
-        const userInfo = session?.user;
+        const userInfo = getUserAuthId(req, res);
+        console.log(userInfo);
         if (userInfo == null) {
           res.status(401).end();
           return;
@@ -55,9 +60,10 @@ export default async function (
 
         try {
           const user = await prisma.user.findFirst({
-            where: { auth_id: userInfo.sub },
+            where: { auth_id: userInfo },
           });
 
+          //FIXME: This needs to be moved to an onboarding flow.
           if (user === null) {
             await prisma.user.create({
               data: {
@@ -79,7 +85,8 @@ export default async function (
             res.json({ message: 'no task' });
           }
         } catch (err) {
-          console.error(err);
+          console.error('Failed trying to fetch current task for user', err);
+          res.status(500).end();
         }
         break;
       }
