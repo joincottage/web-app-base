@@ -108,60 +108,80 @@ const KanbanBoard = () => {
               >
                 Create a task
               </Button>
-              <TaskColumn
-                title="Task Queue"
-                tasks={tasks
-                  ?.filter(
-                    (task: Task) =>
-                      task.clientName === state.selectedClient?.name
-                  )
-                  .filter(
-                    (task: Task) => task.status === TASK_QUEUED || !task.status
-                  )}
-                loading={loading}
-                error={error}
-                showCompanyLogos={false}
-                style={{ marginLeft: '15px' }}
-              />
+              <Fade in={true} timeout={500}>
+                <div>
+                  <TaskColumn
+                    title="Task Queue"
+                    tasks={tasks
+                      ?.filter(
+                        (task: Task) =>
+                          task.clientName === state.selectedClient?.name
+                      )
+                      .filter(
+                        (task: Task) =>
+                          task.status === TASK_QUEUED || !task.status
+                      )}
+                    loading={loading}
+                    error={error}
+                    showCompanyLogos={false}
+                    style={{ marginLeft: '15px' }}
+                  />
+                </div>
+              </Fade>
             </div>
-            <TaskColumn
-              title="In Progress"
-              tasks={tasks
-                ?.filter(
-                  (task: Task) => task.clientName === state.selectedClient?.name
-                )
-                .filter((task: Task) => task.status === IN_PROGRESS)}
-              loading={loading}
-              error={error}
-              showCompanyLogos={false}
-              showUserImgs={true}
-            />
-            <TaskColumn
-              title="In Review"
-              tasks={tasks
-                ?.filter(
-                  (task: Task) => task.clientName === state.selectedClient?.name
-                )
-                .filter((task: Task) => task.status === IN_REVIEW)}
-              loading={loading}
-              error={error}
-              showCompanyLogos={false}
-              showUserImgs={true}
-              showAcceptButtons={true}
-            />
-            <TaskColumn
-              title="Done"
-              tasks={tasks
-                ?.filter(
-                  (task: Task) => task.clientName === state.selectedClient?.name
-                )
-                .filter((task: Task) => task.status === DONE)}
-              loading={loading}
-              error={error}
-              showCompanyLogos={false}
-              showUserImgs={true}
-              style={{ marginRight: '0' }}
-            />
+            <Fade in={true} timeout={1000}>
+              <div>
+                <TaskColumn
+                  title="In Progress"
+                  tasks={tasks
+                    ?.filter(
+                      (task: Task) =>
+                        task.clientName === state.selectedClient?.name
+                    )
+                    .filter((task: Task) => task.status === IN_PROGRESS)}
+                  loading={loading}
+                  error={error}
+                  showCompanyLogos={false}
+                  showUserImgs={true}
+                />
+              </div>
+            </Fade>
+            <Fade in={true} timeout={1500}>
+              <div>
+                <TaskColumn
+                  title="In Review"
+                  tasks={tasks
+                    ?.filter(
+                      (task: Task) =>
+                        task.clientName === state.selectedClient?.name
+                    )
+                    .filter((task: Task) => task.status === IN_REVIEW)}
+                  loading={loading}
+                  error={error}
+                  showCompanyLogos={false}
+                  showUserImgs={true}
+                  showAcceptButtons={true}
+                />
+              </div>
+            </Fade>
+            <Fade in={true} timeout={2000}>
+              <div>
+                <TaskColumn
+                  title="Done"
+                  tasks={tasks
+                    ?.filter(
+                      (task: Task) =>
+                        task.clientName === state.selectedClient?.name
+                    )
+                    .filter((task: Task) => task.status === DONE)}
+                  loading={loading}
+                  error={error}
+                  showCompanyLogos={false}
+                  showUserImgs={true}
+                  style={{ marginRight: '0' }}
+                />
+              </div>
+            </Fade>
           </div>
           <div>
             <Modal

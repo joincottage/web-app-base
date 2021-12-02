@@ -1,4 +1,5 @@
 import { App } from 'sendbird-uikit';
+import { Fade } from '@material-ui/core';
 
 // https://sendbird.com/docs/uikit/v1/react/guides/themes
 const cottageColorSet = {
@@ -10,11 +11,13 @@ const cottageColorSet = {
 };
 
 export default () => (
-  <div style={{ height: '95vh' }}>
-    <App
-      appId={'2A5E06C4-BADB-4F01-96A3-12045939B3CE'}
-      userId={'hunterhod'}
-      colorSet={cottageColorSet}
-    />
-  </div>
+  <Fade in={true} timeout={500}>
+    <div style={{ height: '95vh' }}>
+      <App
+        appId={'2A5E06C4-BADB-4F01-96A3-12045939B3CE'}
+        userId={'hunterhod'}
+        colorSet={cottageColorSet}
+      />
+    </div>
+  </Fade>
 );
