@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import Divider from '@material-ui/core/Divider';
 import { useRouter } from 'next/router';
 import HelpMenu from './HelpMenu';
+import ChatIcon from '@material-ui/icons/Chat';
 
 const Div = styled(MuiLink)(({ theme }) => ({
   ...theme.typography.h6,
@@ -39,6 +40,10 @@ const inactiveStyles = {
 export const Navbar = (): JSX.Element => {
   const { user, isLoading } = useClient();
   const router = useRouter();
+
+  const handleRouteToChat = () => {
+    router.push('/chat');
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -105,7 +110,10 @@ export const Navbar = (): JSX.Element => {
             </div>
             <HelpMenu />
             <IconButton style={{ color: 'white' }}>
-              <NotificationsNoneIcon style={{ cursor: 'pointer' }} />
+              <ChatIcon
+                onClick={handleRouteToChat}
+                style={{ cursor: 'pointer' }}
+              />
             </IconButton>
             {!isLoading && user ? (
               <>

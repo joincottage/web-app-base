@@ -44,6 +44,7 @@
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "sendbird-uikit": "^2.5.0",
     "stripe": "^8.191.0"
   },
   "devDependencies": {

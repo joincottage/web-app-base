@@ -21,6 +21,12 @@
     "jsx": "preserve",
     "baseUrl": "."
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/first-time-user.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/pages/first-time-user.tsx",
+    "src/pages/chat.jsx"
+  ],
   "exclude": ["node_modules"]
 }
