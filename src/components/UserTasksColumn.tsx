@@ -17,7 +17,7 @@ import { Fade } from '@material-ui/core';
 const ANIMATION_TIMEOUT_MILLIS = 500;
 
 interface OwnProps {
-  user?: UserProfile;
+  user: UserProfile | undefined;
 }
 
 export default function UserTaskColumn({ user }: OwnProps) {
