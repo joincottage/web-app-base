@@ -94,6 +94,7 @@ export default function CreateATask({ client }: OwnProps) {
         skills: requiredSkills,
         datePosted: new Date().toString(),
         clientId: client?.id,
+        price: Number(price),
       });
       setRequestStatus(RequestStatus.SUCCEEDED);
       setShowSuccess(true);
@@ -157,6 +158,7 @@ export default function CreateATask({ client }: OwnProps) {
           <TextField
             className={classes.textField}
             value={price}
+            type="number"
             label="Price"
             variant="outlined"
             onChange={(e) => setPrice(e.target.value)}
