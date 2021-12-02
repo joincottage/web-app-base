@@ -9,6 +9,8 @@ import {
   Typography,
   TextField,
   Button,
+  ToggleButton,
+  ToggleButtonGroup,
   Snackbar,
   Alert,
 } from '@material-ui/core';
@@ -80,6 +82,8 @@ export default function CreateATask({ client }: OwnProps) {
   );
   const [showSuccess, setShowSuccess] = useState(false);
   const [price, setPrice] = useState(0);
+  const [bug, setBug] = useState(false);
+  const [typeOfTask, setTypeOfTask] = useState('bug');
 
   const handleSubmit = async () => {
     setRequestStatus(RequestStatus.PENDING);
@@ -91,6 +95,7 @@ export default function CreateATask({ client }: OwnProps) {
         name: title,
         shortDesc,
         longDesc,
+        type: typeOfTask,
         skills: requiredSkills,
         datePosted: new Date().toString(),
         clientId: client?.id,
@@ -114,6 +119,15 @@ export default function CreateATask({ client }: OwnProps) {
     setShowSuccess(false);
   };
 
+  const handleType = () => {
+    setBug(!bug);
+    if (bug) {
+      setTypeOfTask('bug');
+    } else {
+      setTypeOfTask('feature');
+    }
+  };
+
   return (
     <Box m={4}>
       <div className={classes.root}>
@@ -122,7 +136,7 @@ export default function CreateATask({ client }: OwnProps) {
         </Typography>
         <form className={classes.form} noValidate autoComplete="off">
           <TextField
-            className={classes.textField}
+            className={classes.tefalsextField}
             value={title}
             label="Title"
             variant="outlined"
@@ -164,6 +178,35 @@ export default function CreateATask({ client }: OwnProps) {
             onChange={(e) => setPrice(e.target.value)}
             required
           />
+
+          <ToggleButtonGroup
+            value={bug}
+            exclusive
+            onChange={handleType}
+            aria-label="text alignment"
+            className="mr-6"
+          >
+            <ToggleButton
+              value="check"
+              className="w-full"
+              selected={bug}
+              onChange={() => {
+                setBug(!bug);
+              }}
+            >
+              Bug
+            </ToggleButton>
+            <ToggleButton
+              value="check"
+              className="w-full"
+              selected={!bug}
+              onChange={() => {
+                setBug(!bug);
+              }}
+            >
+              Feature
+            </ToggleButton>
+          </ToggleButtonGroup>
         </form>
         <Button
           className={classes.submitButton}
