@@ -79,7 +79,6 @@ export default function ProgressBar({ tasks, client }: OwnProps) {
     setCurrentClientTasks(
       (tasks || [])?.filter((task: Task) => task.clientName === client?.name)
     );
-    console.log(`currentClientTasks length: ${currentClientTasks.length}`);
   }, [tasks, client]);
 
   return (
