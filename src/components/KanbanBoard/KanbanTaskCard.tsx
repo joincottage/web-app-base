@@ -98,7 +98,7 @@ export default function KanbanTaskCard({
           }}
         >
           {showAcceptButton && (
-            <>
+            <div style={{ marginTop: '15px' }}>
               <Button
                 variant="contained"
                 color="secondary"
@@ -122,7 +122,7 @@ export default function KanbanTaskCard({
                   'Accept and Pay'
                 )}
               </Button>
-            </>
+            </div>
           )}
         </div>
       </div>
