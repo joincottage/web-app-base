@@ -4,23 +4,9 @@ import { prisma } from '../../../../database/prisma';
 
 const taskHandler: NextApiHandler = async (req, res) => {
   switch (req.method) {
-    // case 'POST': {
-    //   await prisma.user.create({
-    //     data: {
-    //       ...req.body,
-    //     },
-    //   });
-    //   res.send('OK');
-    //   break;
-    // }
-    /*
-
-     */
     case 'GET': {
       try {
-        const jobPostings = await prisma.jobPost.findMany({
-          //select: {},
-        });
+        const jobPostings = await prisma.jobPost.findMany({});
 
         res.json(jobPostings);
       } catch (e) {
