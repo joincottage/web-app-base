@@ -5,3 +5,5 @@ package-lock.json
 public
 out
 schema.prisma
+*.sql
+.prettierignore
