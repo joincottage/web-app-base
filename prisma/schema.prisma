@@ -79,4 +79,5 @@ model JobPost {
   sourceUrl        String?
   sourceLogoUrl    String?
   createdBy        String
+  category         String?
 }
