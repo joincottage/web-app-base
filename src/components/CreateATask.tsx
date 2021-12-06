@@ -136,7 +136,7 @@ export default function CreateATask({ client }: OwnProps) {
         </Typography>
         <form className={classes.form} noValidate autoComplete="off">
           <TextField
-            className={classes.tefalsextField}
+            className={classes.textField}
             value={title}
             label="Title"
             variant="outlined"
