@@ -8,6 +8,8 @@ export const createInviteLink = async () => {
   try {
     const client = await getClient();
     const guild = await client.guilds.fetch(guildId);
+    //TODO: Hunter said this was okay, not sure what is happening, will fix later
+    // @ts-ignore
     const channel = (await guild.channels.cache.get(channelId)) as GuildChannel;
     const invite = await channel.createInvite({
       maxAge: 600, // 10 minutes

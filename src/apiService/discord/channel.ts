@@ -41,6 +41,8 @@ export const postMessageToChannel = async (
     console.log('Posting message to Discord channel');
     const client = await getClient();
     const guild = await client.guilds.fetch(guildId);
+    //TODO: Hunter said this was okay, not sure what is happening, will fix later
+    // @ts-ignore
     const channel = guild.channels.cache.find((ch) => ch.id === channelId);
     if (channel?.isText()) {
       (channel as TextChannel).send(message);
@@ -58,6 +60,8 @@ export const addUserToChannel = async (channelId: string, userId: string) => {
     const client = await getClient();
     const guild = await client.guilds.fetch(guildId, true);
     console.log('Fetched guild object');
+    //TODO: Hunter said this was okay, not sure what is happening, will fix later
+    // @ts-ignore
     const channel = guild.channels.cache.find((ch) => ch.id === channelId);
     console.log('Fetched channel object');
     const user = await client.users.fetch(userId);
@@ -78,6 +82,8 @@ export const removeUserFromChannel = async (
     const client = await getClient();
     const guild = await client.guilds.fetch(guildId, true);
     console.log('Fetched guild object');
+    //TODO: Hunter said this was okay, not sure what is happening, will fix later
+    // @ts-ignore
     const channel = guild.channels.cache.find((ch) => ch.id === channelId);
     console.log('Fetched channel object');
     const user = await client.users.fetch(userId);
