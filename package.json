@@ -16,7 +16,7 @@
     "prisma-format": "prisma format",
     "prettier-check": "prettier --check ./src ./prisma",
     "prettier-format": "prettier --write ./src ./prisma",
-    "lint-staged": "lint-staged",
+    "lint-staged": "lint-staged --allow-empty",
     "prisma-db-push": "prisma db push",
     "prisma-status": "prisma migrate status",
     "prisma-migrate": "prisma migrate dev",
@@ -67,6 +67,6 @@
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
+    "*.{js,css,md,ts,tsx,json}": "prettier --write"
   }
 }
