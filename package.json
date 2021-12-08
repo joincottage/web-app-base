@@ -14,14 +14,14 @@
     "prisma-generate": "prisma generate",
     "prisma-studio": "prisma studio",
     "prisma-format": "prisma format",
-    "prettier-check": "prettier --check ./src",
-    "prettier-format": "prettier --write ./src",
-    "prepare": "husky install",
+    "prettier-check": "prettier --check ./src ./prisma",
+    "prettier-format": "prettier --write ./src ./prisma",
     "lint-staged": "lint-staged",
     "prisma-db-push": "prisma db push",
     "prisma-status": "prisma migrate status",
     "prisma-migrate": "prisma migrate dev",
-    "prisma": "prisma"
+    "prisma": "prisma",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.5.0",
@@ -64,5 +64,9 @@
     "tailwindcss": "^2.2.19",
     "ts-node": "^10.2.1",
     "typescript": "^4.3.5"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }
