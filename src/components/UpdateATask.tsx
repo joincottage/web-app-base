@@ -13,6 +13,7 @@ import {
   Snackbar,
   Alert,
 } from '@material-ui/core';
+import { RequestStatus } from '../constants/request-status';
 
 interface OwnProps {
   client: Client | null;
@@ -63,13 +64,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-enum RequestStatus {
-  IDLE = 'idle',
-  PENDING = 'pending',
-  FAILED = 'failed',
-  SUCCEEDED = 'succeeded',
-}
 
 export default function UpdateATask({ client, task }: OwnProps) {
   const classes = useStyles();
