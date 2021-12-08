@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { postMessageToChannel } from 'src/apiService/discord/channel';
 import { IN_PROGRESS, IN_REVIEW } from 'src/constants/task-stages';
 import { getUserAuthId } from 'src/apiService/auth/helpers';
+import { getUserAuthEmail } from 'src/apiService/auth/email';
 
 export default async function (
   req: NextApiRequest,
@@ -51,23 +52,25 @@ export default async function (
     }
     case 'GET':
       {
-        const userInfo = getUserAuthId(req, res);
-        if (userInfo == null) {
+        const userAuthId = getUserAuthId(req, res);
+        const userEmail = getUserAuthEmail(req, res);
+        if (userAuthId == null) {
           res.status(401).end();
           return;
         }
 
         try {
           const user = await prisma.user.findFirst({
-            where: { auth_id: userInfo },
+            where: { auth_id: userAuthId },
           });
 
           //FIXME: This needs to be moved to an onboarding flow.
+          //BUG: userInfo doesn't provide email
           if (user === null) {
             await prisma.user.create({
               data: {
-                auth_id: userInfo.sub,
-                email: userInfo.email,
+                auth_id: userAuthId,
+                email: userEmail,
               },
             });
           }

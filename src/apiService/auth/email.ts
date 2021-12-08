@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from '@auth0/nextjs-auth0';
 
-export const getUserAuthId = (
+export const getUserAuthEmail = (
   req: NextApiRequest,
   res: NextApiResponse
 ): string => {
@@ -10,5 +10,5 @@ export const getUserAuthId = (
     return '';
   }
 
-  return session.user.sub;
+  return session.user.email;
 };

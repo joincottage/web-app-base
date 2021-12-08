@@ -2,6 +2,7 @@ import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { IN_REVIEW } from 'src/constants/task-stages';
 import { getUserAuthId } from 'src/apiService/auth/helpers';
+import { getUserAuthEmail } from 'src/apiService/auth/email';
 
 //const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
@@ -17,23 +18,24 @@ export default async function (
       res.status(404).end();
       break;
     case 'GET': {
-      const userInfo = getUserAuthId(req, res);
-      if (userInfo == null) {
+      const userAuthId = getUserAuthId(req, res);
+      const userEmail = getUserAuthEmail(req, res);
+      if (userAuthId == null) {
         res.status(401).end();
         return;
       }
 
       try {
         const user = await prisma.user.findFirst({
-          where: { auth_id: userInfo },
+          where: { auth_id: userAuthId },
         });
 
         //FIXME: This needs to be moved to an onboarding flow.
         if (user === null) {
           await prisma.user.create({
             data: {
-              auth_id: userInfo,
-              email: userInfo.email,
+              auth_id: userAuthId,
+              email: userEmail,
             },
           });
         }

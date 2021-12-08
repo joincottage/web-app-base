@@ -40,54 +40,47 @@ export default async function (
       break;
     }
     case 'PUT': {
-      const userInfo = getUserAuthId(req, res);
-      console.log('heloo', userInfo);
+      const userAuthId = getUserAuthId(req, res);
       try {
-        const test = await prisma.task.findMany({
+        const userClientId = await prisma.user.findUnique({
           where: {
-            id: req.body.params.id,
+            auth_id: userAuthId,
           },
-          include: {
-            client: {
-              include: {
-                users: {
-                  where: { auth_id: userInfo },
-                },
-              },
-            },
+          select: {
+            clientId: true,
           },
         });
-        console.log('test', test);
 
-        /*
-								{
-									where: { auth_id: userInfo },
-								},
-								*/
-        /*
-				await prisma.task.update({
-					where: {
-						id: req.body.params.id,
-					},
-					include: {
-						client: {
-							include: {
-								users: {
-									where: { auth_id: userInfo },
-								},
-							},
-						},
-					},
-					data: {
-						name: req.body.params.name,
-						shortDesc: req.body.params.shortDesc,
-						longDesc: req.body.params.longDesc,
-						skills: req.body.params.skills,
-						price: req.body.params.price,
-					},
-				});
-				*/
-        res.send('OK');
+        const taskClientId = await prisma.task.findUnique({
+          where: { id: req.body.params.id },
+          select: {
+            clientId: true,
+          },
+        });
+
+        if (taskClientId?.clientId === userClientId?.clientId) {
+          try {
+            await prisma.task.update({
+              where: {
+                id: req.body.params.id,
+              },
+              data: {
+                name: req.body.params.name,
+                shortDesc: req.body.params.shortDesc,
+                longDesc: req.body.params.longDesc,
+                skills: req.body.params.skills,
+                price: req.body.params.price,
+              },
+            });
+            res.send('OK');
+          } catch (err) {
+            console.error(err);
+            res.status(500).end();
+          }
+        } else {
+          console.log('user does not belong to client who owns the task');
+          res.status(403).end();
+        }
       } catch (err) {
         console.error('Failed trying to update a task', err);
         res.status(500).end();
