@@ -16,7 +16,7 @@
     "prisma-format": "prisma format",
     "prettier-check": "prettier --check ./src ./prisma",
     "prettier-format": "prettier --write ./src ./prisma",
-    "lint-staged": "lint-staged --allow-empty",
+    "lint-staged": "lint-staged",
     "prisma-db-push": "prisma db push",
     "prisma-status": "prisma migrate status",
     "prisma-migrate": "prisma migrate dev",
