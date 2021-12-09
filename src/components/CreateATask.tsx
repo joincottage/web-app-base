@@ -14,6 +14,7 @@ import {
   Snackbar,
   Alert,
 } from '@material-ui/core';
+import { RequestStatus } from '../constants/request-status';
 
 interface OwnProps {
   client: Client | null;
@@ -64,13 +65,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-enum RequestStatus {
-  IDLE = 'idle',
-  PENDING = 'pending',
-  FAILED = 'failed',
-  SUCCEEDED = 'succeeded',
-}
-
 export default function CreateATask({ client }: OwnProps) {
   const classes = useStyles();
   const [title, setTitle] = useState('');
@@ -82,8 +76,7 @@ export default function CreateATask({ client }: OwnProps) {
   );
   const [showSuccess, setShowSuccess] = useState(false);
   const [price, setPrice] = useState(0);
-  const [bug, setBug] = useState(false);
-  const [typeOfTask, setTypeOfTask] = useState('bug');
+  const [bug, setBug] = useState(true);
 
   const handleSubmit = async () => {
     setRequestStatus(RequestStatus.PENDING);
@@ -95,7 +88,7 @@ export default function CreateATask({ client }: OwnProps) {
         name: title,
         shortDesc,
         longDesc,
-        type: typeOfTask,
+        type: bug ? 'bug' : 'feature',
         skills: requiredSkills,
         datePosted: new Date().toString(),
         clientId: client?.id,
@@ -117,15 +110,6 @@ export default function CreateATask({ client }: OwnProps) {
   };
   const handleCloseShowSuccess = (event: SyntheticEvent<Element, Event>) => {
     setShowSuccess(false);
-  };
-
-  const handleType = () => {
-    setBug(!bug);
-    if (bug) {
-      setTypeOfTask('bug');
-    } else {
-      setTypeOfTask('feature');
-    }
   };
 
   return (
@@ -182,28 +166,16 @@ export default function CreateATask({ client }: OwnProps) {
           <ToggleButtonGroup
             value={bug}
             exclusive
-            onChange={handleType}
+            onChange={() => {
+              setBug(!bug);
+            }}
             aria-label="text alignment"
             className="mr-6"
           >
-            <ToggleButton
-              value="check"
-              className="w-full"
-              selected={bug}
-              onChange={() => {
-                setBug(!bug);
-              }}
-            >
+            <ToggleButton value="check" className="w-full" selected={bug}>
               Bug
             </ToggleButton>
-            <ToggleButton
-              value="check"
-              className="w-full"
-              selected={!bug}
-              onChange={() => {
-                setBug(!bug);
-              }}
-            >
+            <ToggleButton value="check" className="w-full" selected={!bug}>
               Feature
             </ToggleButton>
           </ToggleButtonGroup>
