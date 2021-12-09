@@ -98,12 +98,14 @@ export default function KanbanTaskCard({
               src={task.userImgUrl || ''}
             />
           )}
-          <h3 onClick={handleClickCreateATask}>{task.name}</h3>
+          <h3 className="cursor-pointer" onClick={handleClickCreateATask}>
+            {task.name}
+          </h3>
 
           <Tooltip title={`${task.shortDesc} - $${task.price}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-gray-400"
+              className="h-6 w-6 text-gray-400 cursor-pointer"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
