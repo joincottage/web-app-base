@@ -11,7 +11,6 @@ import {
 
 interface OwnProps {
   tasks: Task[] | null;
-  client: Client | null;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -46,40 +45,26 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function ProgressBar({ tasks, client }: OwnProps) {
+export default function ProgressBar({ tasks }: OwnProps) {
   const classes = useStyles();
 
   const [tasksQueued, setTasksQueued] = useState<Task[]>([]);
   const [tasksInProgress, setTasksInProgress] = useState<Task[]>([]);
   const [tasksInReview, setTasksInReview] = useState<Task[]>([]);
   const [tasksDone, setTasksDone] = useState<Task[]>([]);
-  const [currentClientTasks, setCurrentClientTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     setTasksQueued(
-      (tasks || [])
-        ?.filter((task: Task) => task.clientName === client?.name)
-        .filter((task: Task) => task.status === TASK_QUEUED)
+      (tasks || []).filter((task: Task) => task.status === TASK_QUEUED)
     );
     setTasksInProgress(
-      (tasks || [])
-        ?.filter((task: Task) => task.clientName === client?.name)
-        .filter((task: Task) => task.status === IN_PROGRESS)
+      (tasks || []).filter((task: Task) => task.status === IN_PROGRESS)
     );
     setTasksInReview(
-      (tasks || [])
-        ?.filter((task: Task) => task.clientName === client?.name)
-        .filter((task: Task) => task.status === IN_REVIEW)
+      (tasks || []).filter((task: Task) => task.status === IN_REVIEW)
     );
-    setTasksDone(
-      (tasks || [])
-        ?.filter((task: Task) => task.clientName === client?.name)
-        .filter((task: Task) => task.status === DONE)
-    );
-    setCurrentClientTasks(
-      (tasks || [])?.filter((task: Task) => task.clientName === client?.name)
-    );
-  }, [tasks, client]);
+    setTasksDone((tasks || []).filter((task: Task) => task.status === DONE));
+  }, [tasks]);
 
   return (
     <div style={{ width: '150px', margin: '25px' }}>
@@ -94,9 +79,7 @@ export default function ProgressBar({ tasks, client }: OwnProps) {
               className={classes.miniBarProgress}
               style={{
                 left: 0,
-                width: `${
-                  (tasksDone.length / currentClientTasks.length) * 100
-                }%`,
+                width: `${(tasksDone.length / tasks.length) * 100}%`,
                 backgroundColor: 'rgb(45, 164, 78)',
               }}
             ></div>
@@ -105,12 +88,10 @@ export default function ProgressBar({ tasks, client }: OwnProps) {
             <div
               className={classes.miniBarProgress}
               style={{
-                left: `${
-                  (tasksDone.length / currentClientTasks.length) * 100
-                }%`,
+                left: `${(tasksDone.length / tasks.length) * 100}%`,
                 width: `${
                   ((tasksInProgress.length + tasksInReview.length) /
-                    currentClientTasks.length) *
+                    tasks.length) *
                   100
                 }%`,
                 backgroundColor: 'rgb(130, 80, 223)',

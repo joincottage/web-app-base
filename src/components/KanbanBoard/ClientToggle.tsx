@@ -7,14 +7,17 @@ import useLocalStorage from 'src/hooks/useLocalStorage';
 import setSelectedClientAction from 'src/actions/setSelectedClient';
 import useClients from 'src/hooks/useClients';
 
-export default function ClientToggle() {
+interface OwnProps {
+  clients: Client[] | null;
+}
+
+export default function ClientToggle({ clients }: OwnProps) {
   const router = useRouter();
   const [selectedClient, setSelectedClient] = useLocalStorage(
     'selectedClient',
     ''
   );
   const { dispatch } = useContext(AppDataContext);
-  const { clients, user, isLoading } = useClients();
 
   useEffect(() => {
     const selectedClientFromRouterQuery =

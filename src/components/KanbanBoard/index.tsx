@@ -26,6 +26,7 @@ import ProgressBar from './ProgressBar';
 import { AppDataContext } from 'src/contexts/AppContext';
 import ClientToggle from './ClientToggle';
 import TaskColumn from './TaskColumn';
+import useUserOwnedClient from 'src/hooks/useUserOwnedClient';
 
 function getModalStyle() {
   return {
@@ -54,7 +55,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const KanbanBoard = () => {
   const router = useRouter();
-  const { loading, error, data: tasks } = useTasks();
+  const {
+    loading,
+    error,
+    data: { client },
+  } = useUserOwnedClient();
   const [isCreateATaskOpen, setIsCreateATaskOpen] = useState(
     router.query.showCreateTask === 'true'
   );
@@ -74,7 +79,9 @@ const KanbanBoard = () => {
 
   return (
     <>
-      <ClientToggle />
+      <div style={{ height: '87px' }}>
+        {client && <ClientToggle clients={[client]} />}
+      </div>
       <div style={{ display: 'flex' }}>
         <Box m={1}>
           <div
@@ -83,10 +90,7 @@ const KanbanBoard = () => {
               justifyContent: 'center',
             }}
           >
-            <ProgressBar
-              tasks={tasks}
-              client={state.selectedClient as Client}
-            />
+            <ProgressBar tasks={client?.tasks} />
           </div>
           <div
             style={{
@@ -112,15 +116,10 @@ const KanbanBoard = () => {
                 <div>
                   <TaskColumn
                     title="Task Queue"
-                    tasks={tasks
-                      ?.filter(
-                        (task: Task) =>
-                          task.clientName === state.selectedClient?.name
-                      )
-                      .filter(
-                        (task: Task) =>
-                          task.status === TASK_QUEUED || !task.status
-                      )}
+                    tasks={client?.tasks?.filter(
+                      (task: Task) =>
+                        task.status === TASK_QUEUED || !task.status
+                    )}
                     loading={loading}
                     error={error}
                     showCompanyLogos={false}
@@ -133,12 +132,9 @@ const KanbanBoard = () => {
               <div>
                 <TaskColumn
                   title="In Progress"
-                  tasks={tasks
-                    ?.filter(
-                      (task: Task) =>
-                        task.clientName === state.selectedClient?.name
-                    )
-                    .filter((task: Task) => task.status === IN_PROGRESS)}
+                  tasks={client?.tasks?.filter(
+                    (task: Task) => task.status === IN_PROGRESS
+                  )}
                   loading={loading}
                   error={error}
                   showCompanyLogos={false}
@@ -150,12 +146,9 @@ const KanbanBoard = () => {
               <div>
                 <TaskColumn
                   title="In Review"
-                  tasks={tasks
-                    ?.filter(
-                      (task: Task) =>
-                        task.clientName === state.selectedClient?.name
-                    )
-                    .filter((task: Task) => task.status === IN_REVIEW)}
+                  tasks={client?.tasks?.filter(
+                    (task: Task) => task.status === IN_REVIEW
+                  )}
                   loading={loading}
                   error={error}
                   showCompanyLogos={false}
@@ -168,12 +161,9 @@ const KanbanBoard = () => {
               <div>
                 <TaskColumn
                   title="Done"
-                  tasks={tasks
-                    ?.filter(
-                      (task: Task) =>
-                        task.clientName === state.selectedClient?.name
-                    )
-                    .filter((task: Task) => task.status === DONE)}
+                  tasks={client?.tasks?.filter(
+                    (task: Task) => task.status === DONE
+                  )}
                   loading={loading}
                   error={error}
                   showCompanyLogos={false}
