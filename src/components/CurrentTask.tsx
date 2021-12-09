@@ -65,7 +65,7 @@ export default function CurrentTask({ task }: OwnProps) {
     <>
       {isShowingAbandon ? (
         //TODO: this needs to cover the full screen even if scrollable
-        <div className="absolute top-0 left-0 z-50 bg-black bg-opacity-90 grid place-content-center w-screen h-screen">
+        <div className="fixed top-0 left-0 z-50 bg-black bg-opacity-90 grid place-content-center w-screen h-screen">
           <div className="bg-gray-200 p-6 rounded-lg max-w-lg text-center">
             <p className="my-3 text-red-700 font-semibold text-2xl">
               Are you sure?
