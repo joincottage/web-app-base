@@ -84,7 +84,7 @@ const userHandler: NextApiHandler = async (req, res) => {
     }
     default: {
       console.error(
-        `/api/v2/users called with invalid http method ${req.method}`
+        `/api/v2/clients called with invalid http method ${req.method}`
       );
       res.status(404).end();
     }
