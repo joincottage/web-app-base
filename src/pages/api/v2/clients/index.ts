@@ -5,6 +5,7 @@ import {
   DONE,
   IN_ATTENTION,
   IN_PROGRESS,
+  IN_REVIEW,
   TASK_QUEUED,
 } from '../../../../constants/task-stages';
 import { getUserAuthId } from '../../../../apiService/auth/helpers';
@@ -52,7 +53,13 @@ const userHandler: NextApiHandler = async (req, res) => {
                   },
                   where: {
                     status: {
-                      in: [TASK_QUEUED, IN_PROGRESS, IN_ATTENTION, DONE],
+                      in: [
+                        TASK_QUEUED,
+                        IN_PROGRESS,
+                        IN_ATTENTION,
+                        IN_REVIEW,
+                        DONE,
+                      ],
                     },
                   },
                 },
