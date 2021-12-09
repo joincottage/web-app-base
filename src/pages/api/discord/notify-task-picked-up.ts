@@ -7,6 +7,7 @@ import {
 import { prisma } from 'src/database/prisma';
 import { getSession } from '@auth0/nextjs-auth0';
 import { IN_PROGRESS } from 'src/constants/task-stages';
+import { getUserAuthId } from 'src/apiService/auth/helpers';
 
 interface NotifyTaskInterestRequest extends NextApiRequest {
   body: {
@@ -46,13 +47,27 @@ export default async function (
       return;
     }
 
+    const userAuthId = getUserAuthId(req, res);
+    const user = await prisma.user.findUnique({
+      where: {
+        auth_id: userAuthId,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (user == null) {
+      res.status(500).end();
+      return;
+    }
+
     await prisma.task.update({
       where: {
         id: task.id,
       },
       data: {
         status: IN_PROGRESS,
-        userId: userInfo.email,
+        userId: user.id,
         userImgUrl: userInfo.picture,
       },
     });
