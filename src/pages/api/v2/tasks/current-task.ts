@@ -1,18 +1,13 @@
 //https://www.prisma.io/docs/concepts/components/prisma-client/crud
 import { prisma } from './../../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { postMessageToChannel } from 'src/apiService/discord/channel';
-import { IN_PROGRESS, IN_REVIEW } from 'src/constants/task-stages';
+import { IN_PROGRESS } from 'src/constants/task-stages';
 import { getUserAuthId } from 'src/apiService/auth/helpers';
-import { getUserAuthEmail } from 'src/apiService/auth/email';
 
 export default async function (
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
-  const { body } = req;
-  const name = body.name;
-  const discordChannelId = body.discordChannelId;
   switch (req.method) {
     //NOTE: Change current task to in_review
     case 'GET': {
@@ -54,8 +49,12 @@ export default async function (
             auth_id: userAuthId,
           },
         });
-        console.log(currentTasks);
-        res.json(currentTasks);
+
+        res.json(
+          currentTasks !== null && currentTasks.tasks[0] !== undefined
+            ? currentTasks.tasks[0]
+            : []
+        );
       } catch (err) {
         console.error('Failed trying to fetch current task for user', err);
         res.status(500).end();
