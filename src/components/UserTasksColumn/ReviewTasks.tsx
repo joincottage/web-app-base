@@ -6,7 +6,7 @@ interface OwnProps {
   tasks: Task[];
 }
 
-export default function TasksInReview({ tasks }: OwnProps) {
+export default function ReviewTasks({ tasks }: OwnProps) {
   if (tasks === null || tasks.length === 0) {
     return (
       <div>

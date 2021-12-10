@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserProfile } from '@auth0/nextjs-auth0';
-import TaskEmptyState from './TaskEmptyState';
+import TaskEmptyState from '../emptystates/TaskEmptyState';
 import CurrentTaskContainer from './CurrentTaskContainer';
-import TaskColumnEmptyState from './TaskColumnEmptyState';
-import TasksInReview from './TasksInReview';
+import TaskColumnEmptyState from '../emptystates/TaskColumnEmptyState';
+import ReviewTasks from './ReviewTasks';
 import AttentionTasksContainer from './AttentionTasksContainer';
 import PreviousTasks from './PreviousTasks';
-import { useCurrentTask } from '../hooks/useCurrentTask';
-import { useReviewTasks } from './../hooks/useReviewTasks';
-import { usePreviousTasks } from './../hooks/usePreviousTasks';
-import { useAttentionTasks } from './../hooks/useAttentionTasks';
+import { useCurrentTask } from '../../hooks/useCurrentTask';
+import { useReviewTasks } from '../../hooks/useReviewTasks';
+import { usePreviousTasks } from '../../hooks/usePreviousTasks';
+import { useAttentionTasks } from '../../hooks/useAttentionTasks';
 import { Task } from '.prisma/client';
 import { AppDataContext } from 'src/contexts/AppContext';
 import { Fade, Tooltip } from '@material-ui/core';
@@ -138,7 +138,7 @@ export default function UserTaskColumn({ user }: OwnProps) {
               <p className="mt-6 mb-3 font-semibold text-gray-400">
                 Tasks In Review
               </p>
-              <TasksInReview tasks={state.tasksInReview as Task[]} />
+              <ReviewTasks tasks={state.tasksInReview as Task[]} />
               <p className="mt-6 mb-3 font-semibold text-gray-400">
                 Previous Tasks
               </p>

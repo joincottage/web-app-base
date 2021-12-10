@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { AppDataContext } from '../contexts/AppContext';
-import TaskCardSkeleton from 'src/components/TaskCardSkeleton';
+import TaskCardSkeleton from 'src/components/emptystates/TaskCardEmptyState';
 import TaskCard from '../components/TaskCard';
 import Divider from '@material-ui/core/Divider';
 import { Task } from '@prisma/client';

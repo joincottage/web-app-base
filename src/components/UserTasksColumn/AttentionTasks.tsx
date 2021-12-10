@@ -6,7 +6,7 @@ import axios from 'axios';
 interface OwnProps {
   task: Task;
 }
-export default function TasksInAttention({ task }: OwnProps) {
+export default function AttentionTasks({ task }: OwnProps) {
   const { user } = useUser();
   const ideLink = 'https://www.duckduckgo.com';
   const devServerLink = 'https://www.xkcd.com';

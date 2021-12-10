@@ -1,6 +1,6 @@
 //import { useState, useEffect } from 'react';
 import { Task } from '.prisma/client';
-import TasksInAttention from './TasksInAttention';
+import AttentionTasks from './AttentionTasks';
 
 interface OwnProps {
   tasks: Task[];
@@ -11,7 +11,7 @@ export default function AttentionTasksContainer({ tasks }: OwnProps) {
     <div>
       {tasks.map((item) => (
         <div className="mb-2">
-          <TasksInAttention task={item} />
+          <AttentionTasks task={item} />
         </div>
       ))}
     </div>

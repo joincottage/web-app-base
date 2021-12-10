@@ -1,4 +1,4 @@
-export default function TaskCardSkeleton() {
+export default function TaskCardEmptyState() {
   return (
     <div className="px-4 py-4 w-full animate-pulse">
       <div className="flex justify-between">

@@ -1,6 +1,6 @@
-import PreviousTaskEmptyState from './emptystates/PreviousTaskEmptyState';
-import ReviewTaskEmptyState from './emptystates/ReviewTaskEmptyState';
-import CurrentTaskLoadingState from './emptystates/CurrentTaskLoadingState';
+import PreviousTaskEmptyState from './PreviousTaskEmptyState';
+import ReviewTaskEmptyState from './ReviewTaskEmptyState';
+import CurrentTaskLoadingState from './CurrentTaskLoadingState';
 
 export default function TaskColumnEmptyState() {
   return (
