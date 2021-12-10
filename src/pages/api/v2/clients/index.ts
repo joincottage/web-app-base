@@ -71,8 +71,6 @@ const userHandler: NextApiHandler = async (req, res) => {
           },
         });
 
-        console.log(JSON.stringify(user, null, 2));
-
         res.json(user);
       } catch (e) {
         console.error('Failed to execute prisma query for user ', e.message);

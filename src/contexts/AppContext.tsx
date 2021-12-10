@@ -1,11 +1,13 @@
-import { Client } from '@prisma/client';
+import { Client, Task } from '@prisma/client';
 import React, { Dispatch } from 'react';
-import { SavedUserState } from 'src/actions/setUser';
 
 export type AllClients = { name: 'All' };
 export interface AppState {
   selectedClient: Client | AllClients;
-  user: SavedUserState;
+  currentTask: Task | null;
+  tasksInReview: Task[];
+  previousTasks: Task[];
+  tasksInQueue: Task[];
 }
 export interface AppAction {
   type: string;
@@ -20,9 +22,10 @@ export const initialState: AppState = {
   selectedClient: {
     name: 'All',
   },
-  user: {
-    hasCurrentTask: false,
-  },
+  currentTask: null,
+  tasksInReview: [],
+  previousTasks: [],
+  tasksInQueue: [],
 };
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const AppDataContext = React.createContext<AppContext>({

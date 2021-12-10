@@ -6,13 +6,17 @@ import TaskColumnEmptyState from './TaskColumnEmptyState';
 import TasksInReview from './TasksInReview';
 import AttentionTasksContainer from './AttentionTasksContainer';
 import PreviousTasks from './PreviousTasks';
-import { useSingleTask } from './../hooks/useSingleTask';
+import { useCurrentTask } from '../hooks/useCurrentTask';
 import { useReviewTasks } from './../hooks/useReviewTasks';
 import { usePreviousTasks } from './../hooks/usePreviousTasks';
 import { useAttentionTasks } from './../hooks/useAttentionTasks';
 import { Task } from '.prisma/client';
 import { AppDataContext } from 'src/contexts/AppContext';
-import { Fade } from '@material-ui/core';
+import { Fade, Tooltip } from '@material-ui/core';
+import setTasksInReview from 'src/actions/setTasksInReview';
+import setPreviousTasks from 'src/actions/setPreviousTasks';
+import setCurrentTask from 'src/actions/setCurrentTask';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 const ANIMATION_TIMEOUT_MILLIS = 500;
 
@@ -21,23 +25,44 @@ interface OwnProps {
 }
 
 export default function UserTaskColumn({ user }: OwnProps) {
-  const { data, loading, error } = useSingleTask();
-  const { reviewTasks, reviewLoading, reviewError } = useReviewTasks();
-  const { previousTasks, previousLoading, previousError } = usePreviousTasks();
-  const { attentionTasks, attentionLoading, attentionError } =
-    useAttentionTasks();
-  const { state, dispatch } = useContext(AppDataContext);
-  //TODO: Import attention tasks hook
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { currentTask, currentTaskLoading, currentTaskError } =
+    useCurrentTask();
+  const { reviewTasks, reviewTasksLoading, reviewTasksError } =
+    useReviewTasks();
+  const { previousTasks, previousTasksLoading, previousTasksError } =
+    usePreviousTasks();
+  const { attentionTasks } = useAttentionTasks();
 
+  const { state, dispatch } = useContext(AppDataContext);
+
+  // TODO: load and dispatch all state data in a single place that isn't a component
   useEffect(() => {
-    //console.log(data);
-    if (data !== null && (data as Task[]).length > 0) {
-      dispatch({
-        type: 'SET_USER',
-        payload: { user: { hasCurrentTask: true } },
-      });
+    if (!currentTaskLoading && !reviewTasksLoading && !previousTasksLoading) {
+      setLoading(false);
+      dispatch(setCurrentTask(currentTask));
+      dispatch(setTasksInReview(reviewTasks as Task[]));
+      dispatch(setPreviousTasks(previousTasks as Task[]));
     }
-  }, [data]);
+    if (currentTaskError || reviewTasksError || previousTasksError) {
+      setLoading(false);
+      setError(
+        JSON.stringify(
+          { currentTaskError, reviewTasksError, previousTasksError },
+          null,
+          2
+        )
+      );
+    }
+  }, [
+    currentTaskLoading,
+    reviewTasksLoading,
+    previousTasksLoading,
+    currentTaskError,
+    reviewTasksError,
+    previousTasksError,
+  ]);
 
   return (
     <div style={{ position: 'relative' }}>
@@ -46,7 +71,41 @@ export default function UserTaskColumn({ user }: OwnProps) {
           <TaskColumnEmptyState />
         </div>
       </Fade>
-      <Fade in={!loading} timeout={ANIMATION_TIMEOUT_MILLIS}>
+      <Fade in={!!error} timeout={ANIMATION_TIMEOUT_MILLIS}>
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
+        >
+          <div style={{ opacity: 0.5 }}>
+            <TaskColumnEmptyState />
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Tooltip title={error as string}>
+              <ErrorOutlineIcon
+                color="primary"
+                style={{ width: '80px', height: '80px' }}
+              />
+            </Tooltip>
+          </div>
+        </div>
+      </Fade>
+      <Fade in={!loading && !error} timeout={ANIMATION_TIMEOUT_MILLIS}>
         <div
           className="flex mt-2"
           style={{ position: 'absolute', top: '-8px' }}
@@ -66,9 +125,9 @@ export default function UserTaskColumn({ user }: OwnProps) {
               )}
               <p className="my-3 font-semibold text-gray-400">Current Task</p>
               {/* @ts-ignore */}
-              {data !== null && data.length !== 0 ? (
+              {state.currentTask !== null ? (
                 <div>
-                  <CurrentTaskContainer task={data as Task[]} />
+                  <CurrentTaskContainer task={state.currentTask as Task} />
                 </div>
               ) : (
                 <div>
@@ -79,11 +138,11 @@ export default function UserTaskColumn({ user }: OwnProps) {
               <p className="mt-6 mb-3 font-semibold text-gray-400">
                 Tasks In Review
               </p>
-              <TasksInReview tasks={reviewTasks as Task[]} />
+              <TasksInReview tasks={state.tasksInReview as Task[]} />
               <p className="mt-6 mb-3 font-semibold text-gray-400">
                 Previous Tasks
               </p>
-              <PreviousTasks tasks={previousTasks as Task[]} />
+              <PreviousTasks tasks={state.previousTasks as Task[]} />
             </div>
           </div>
         </div>

@@ -28,7 +28,7 @@ export default function TasksInReview({ tasks }: OwnProps) {
           <div className="mt-2">
             {task.status == IN_REVIEW ? (
               <p className="bg-gray-50 rounded-md py-1 px-3 text-sm text-center text-yellow-500">
-                Waiting&nbsp;Approval
+                Awaiting&nbsp;Approval
               </p>
             ) : (
               <></>

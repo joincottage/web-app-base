@@ -2,26 +2,24 @@ import { Task } from '@prisma/client';
 import { useState, useEffect } from 'react';
 
 export const usePreviousTasks = () => {
-  const [previousLoading, setLoading] = useState(true);
-  const [previousError, setError] = useState(null);
-  const [previousTasks, setData] = useState<
-    Task[] | { message: string } | null
-  >(null);
+  const [previousTasksLoading, setPreviousTasksLoading] = useState(true);
+  const [previousTasksError, setPreviousTasksError] = useState(null);
+  const [previousTasks, setPreviousTasks] = useState<Task[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('/api/tasks/previous-tasks');
         const data = await response.json();
-        setData(data);
-        setLoading(false);
+        setPreviousTasks(data);
+        setPreviousTasksLoading(false);
       } catch (err) {
-        setError(err);
+        setPreviousTasksError(err);
       }
     };
 
     fetchData();
   }, []);
 
-  return { previousLoading, previousError, previousTasks };
+  return { previousTasksLoading, previousTasksError, previousTasks };
 };

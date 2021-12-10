@@ -207,7 +207,7 @@ export default function TaskCard({
         <div className="float-right">
           <div className={classes.primaryActionsContainer}>
             <button
-              disabled={state.user.hasCurrentTask}
+              disabled={!!state.currentTask}
               onClick={handleClickIllDoIt}
               className="mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
             >

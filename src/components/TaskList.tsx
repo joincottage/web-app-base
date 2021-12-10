@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppDataContext } from '../contexts/AppContext';
 import TaskCardSkeleton from 'src/components/TaskCardSkeleton';
 import TaskCard from '../components/TaskCard';
@@ -7,6 +7,7 @@ import { Task } from '@prisma/client';
 import useTasks from 'src/hooks/useTasks';
 import { TASK_QUEUED } from 'src/constants/task-stages';
 import { Fade } from '@material-ui/core';
+import setTasksInQueue from 'src/actions/setTasksInQueue';
 
 interface OwnProps {
   //DESTRUCTUREDPROP: [];
@@ -29,7 +30,19 @@ const TaskListItemContainer = ({
 
 export default function TaskList({}: OwnProps) {
   const { loading, error, data } = useTasks();
-  const { state } = useContext(AppDataContext);
+  const { state, dispatch } = useContext(AppDataContext);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(
+        setTasksInQueue(
+          data.filter(
+            (task: Task) => task.status === TASK_QUEUED && task.price !== null
+          )
+        )
+      );
+    }
+  }, [data]);
 
   return (
     <div>
@@ -42,24 +55,19 @@ export default function TaskList({}: OwnProps) {
           <TaskCardSkeleton />
         </div>
       ) : error ? (
-        JSON.stringify(error)
+        <div className="text-red">
+          Oops! We have experienced an unrecoverable error. All errors are
+          monitored and our team is on it!
+        </div>
       ) : state.selectedClient.name === 'All' ? (
-        data
-          ?.filter(
-            (task: Task) => task.status === TASK_QUEUED && task.price !== null
-          )
+        state.tasksInQueue
           .reverse()
           .map((task: Task, i) => (
             <TaskListItemContainer task={task} index={i} />
           ))
       ) : (
-        data
-          ?.filter(
-            (task: Task) =>
-              task.clientName === state.selectedClient.name &&
-              task.status === TASK_QUEUED &&
-              task.price !== null
-          )
+        state.tasksInQueue
+          .filter((task: Task) => task.clientName === state.selectedClient.name)
           .map((task: Task, i) => (
             <TaskListItemContainer task={task} index={i} />
           ))

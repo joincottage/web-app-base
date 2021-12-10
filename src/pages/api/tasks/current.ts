@@ -76,13 +76,13 @@ export default async function (
           }
 
           if (user !== null) {
-            const tasks = await prisma.task.findMany({
+            const task = await prisma.task.findFirst({
               where: {
                 userId: user.id,
                 status: IN_PROGRESS,
               },
             });
-            res.json(tasks);
+            res.json(task || {});
           } else {
             res.json({ message: 'no task' });
           }

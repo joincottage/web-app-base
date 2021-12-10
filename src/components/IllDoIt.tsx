@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/styles';
 import { Button, Typography, Theme } from '@material-ui/core';
 import Axios from 'axios';
 import { Task } from '.prisma/client';
 import { UserProfile } from '@auth0/nextjs-auth0';
+import setCurrentTask from 'src/actions/setCurrentTask';
+import { AppDataContext } from 'src/contexts/AppContext';
 
 interface OwnProps {
   user: UserProfile;
@@ -53,6 +55,7 @@ export default function IllDoIt({ user, task }: OwnProps) {
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
+  const { dispatch } = useContext(AppDataContext);
 
   const handleRequestAccess = async () => {
     setRequestStatus(RequestStatus.PENDING);
@@ -64,6 +67,7 @@ export default function IllDoIt({ user, task }: OwnProps) {
         task,
       });
       setRequestStatus(RequestStatus.SUCCEEDED);
+      dispatch(setCurrentTask(task));
     } catch (e) {
       setRequestStatus(RequestStatus.FAILED);
       throw e;

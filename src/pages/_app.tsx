@@ -15,7 +15,10 @@ import {
 } from '../contexts/AppContext';
 import './../styles/theme.css';
 import { SET_SELECTED_CLIENT } from 'src/actions/setSelectedClient';
-import { SET_USER } from 'src/actions/setUser';
+import { SET_CURRENT_TASK } from 'src/actions/setCurrentTask';
+import { SET_TASKS_IN_REVIEW } from 'src/actions/setTasksInReview';
+import { SET_PREVIOUS_TASKS } from 'src/actions/setPreviousTasks';
+import { SET_TASKS_IN_QUEUE } from 'src/actions/setTasksInQueue';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
@@ -24,10 +27,25 @@ function appReducer(state: AppState, action: AppAction) {
         ...state,
         selectedClient: action.payload.selectedClient,
       };
-    case SET_USER:
+    case SET_CURRENT_TASK:
       return {
         ...state,
-        user: action.payload.user,
+        currentTask: action.payload.currentTask,
+      };
+    case SET_TASKS_IN_REVIEW:
+      return {
+        ...state,
+        tasksInReview: action.payload.tasksInReview,
+      };
+    case SET_PREVIOUS_TASKS:
+      return {
+        ...state,
+        previousTasks: action.payload.previousTasks,
+      };
+    case SET_TASKS_IN_QUEUE:
+      return {
+        ...state,
+        tasksInQueue: action.payload.tasksInQueue,
       };
     default:
       // TODO: report unknown action types as an error

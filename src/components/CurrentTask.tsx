@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Task } from '.prisma/client';
 import axios from 'axios';
 import { useUser } from '@auth0/nextjs-auth0';
 import { Button } from '@material-ui/core';
+import { AppDataContext } from 'src/contexts/AppContext';
+import setCurrentTask from 'src/actions/setCurrentTask';
+import setTasksInReview from 'src/actions/setTasksInReview';
 
 interface OwnProps {
   task: Task;
@@ -18,9 +21,7 @@ export default function CurrentTask({ task }: OwnProps) {
   const devServerLink =
     'https://ws-571429178330112-port-3000.proxy.cloudcoder.network/';
 
-  useEffect(() => {
-    //console.log('Current Task:', task);
-  }, []);
+  const { state, dispatch } = useContext(AppDataContext);
 
   function openLinks() {
     //window.open(devServerLink, '_blank');
@@ -33,32 +34,33 @@ export default function CurrentTask({ task }: OwnProps) {
   function toggleAbandon() {
     setIsShowingAbandon(!isShowingAbandon);
   }
-  function resetAllPops() {
+  function resetAllProps() {
     setIsShowingAbandon(false);
     setIsShowingMenu(false);
     setConfirmDelete('');
   }
 
-  async function handleSubmit() {
-    const response = await axios.put('/api/tasks/current', {
-      task: task,
+  async function handleSubmitForReview() {
+    dispatch(setCurrentTask(null));
+    dispatch(setTasksInReview([task, ...state.tasksInReview]));
+    await axios.put('/api/tasks/current', {
+      task,
       name: user?.name ?? 'Freelancer',
       discordChannelId: task.discordChannelId,
     });
-    console.log(response);
   }
-  async function abandonTask() {
-    resetAllPops();
+  async function handleAbandonTask() {
+    dispatch(setCurrentTask(null));
+    resetAllProps();
     if (user === undefined) {
       console.log('user is undefined');
       return;
     }
-    const response = await axios.put('/api/tasks/abandon-task', {
-      task: task,
+    await axios.put('/api/tasks/abandon-task', {
+      task,
       discordChannelId: task.discordChannelId,
       discordUserId: user.sub?.split('|')[2],
     });
-    console.log(response);
   }
 
   return (
@@ -95,11 +97,11 @@ export default function CurrentTask({ task }: OwnProps) {
               <button
                 className="mx-3 button-secondary-destructive disabled:hover:bg-white"
                 disabled={confirmDelete !== confirmDeleteCheck}
-                onClick={abandonTask}
+                onClick={handleAbandonTask}
               >
                 Yes, Abandon Task
               </button>
-              <button onClick={resetAllPops} className="mx-3 button-primary">
+              <button onClick={resetAllProps} className="mx-3 button-primary">
                 Keep working on task.
               </button>
             </div>
@@ -165,7 +167,7 @@ export default function CurrentTask({ task }: OwnProps) {
             <Button
               className="w-full leading-7 bg-white"
               variant="outlined"
-              onClick={handleSubmit}
+              onClick={handleSubmitForReview}
             >
               Submit For Review
             </Button>
