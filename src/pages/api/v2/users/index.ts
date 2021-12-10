@@ -3,9 +3,36 @@ import { NextApiHandler } from 'next';
 import { prisma } from '../../../../database/prisma';
 import { IN_ATTENTION, IN_PROGRESS } from '../../../../constants/task-stages';
 import { getUserAuthId } from '../../../../apiService/auth/helpers';
+import { getUserAuthEmail } from 'src/apiService/auth/email';
 
 const userHandler: NextApiHandler = async (req, res) => {
   switch (req.method) {
+    case 'POST': {
+      const userAuthId = getUserAuthId(req, res);
+      const userEmail = getUserAuthEmail(req, res);
+      if (userAuthId == null) {
+        res.status(401).end();
+        return;
+      }
+      try {
+        const user = await prisma.user.findFirst({
+          where: { auth_id: userAuthId },
+        });
+
+        if (user === null) {
+          await prisma.user.create({
+            data: {
+              auth_id: userAuthId,
+              email: userEmail,
+            },
+          });
+        }
+        res.send('OK');
+      } catch (err) {
+        console.error('Failed trying to fetch current task for user', err);
+        res.status(500).end();
+      }
+    }
     /*
     Returns information about the currently authenticated user along with any tasks
     that are in progress
