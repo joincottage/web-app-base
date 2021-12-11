@@ -1,18 +1,15 @@
 import React, { useContext, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import NextLink from 'next/link';
 import Copyright from '../Copyright';
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { Avatar, Button, Fade } from '@material-ui/core';
+import { Fade } from '@material-ui/core';
 import ClientTabs from 'src/components/ClientTabs';
 import UserTasksColumn from 'src/components/UserTasksColumn';
 import { AppDataContext } from '../contexts/AppContext';
 import useClients from 'src/hooks/useClients';
-import TaskList from 'src/components/TaskList';
-import { Client } from '.prisma/client';
 import setSelectedClient from 'src/actions/setSelectedClient';
+import TaskListContainer from 'src/components/TaskList/TaskListContainer';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -42,42 +39,7 @@ export default function Index() {
             >
               <ClientTabs clients={clients} />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginBottom: '15px',
-                }}
-              >
-                <span style={{ marginRight: '15px', height: 80 }}>
-                  {(state.selectedClient as Client).logoUrl && (
-                    <Avatar
-                      sx={{ width: 80, height: 80 }}
-                      alt="Company logo"
-                      src={(state.selectedClient as Client).logoUrl as string}
-                      aria-haspopup="true"
-                    />
-                  )}
-                </span>
-                <Typography variant="h5" style={{ paddingRight: '30px' }}>
-                  {state.selectedClient.name}
-                </Typography>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  minWidth: '600px',
-                  maxWidth: '600px',
-                  maxHeight: '82vh',
-                  overflow: 'scroll',
-                }}
-              >
-                <TaskList />
-              </div>
-            </div>
+            <TaskListContainer />
             <div className="w-64">
               <div
                 style={{
