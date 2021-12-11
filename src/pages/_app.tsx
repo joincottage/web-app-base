@@ -14,6 +14,8 @@ import {
   initialState,
 } from '../contexts/AppContext';
 import './../styles/theme.css';
+import './../styles/RichTextEditor.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { SET_SELECTED_CLIENT } from 'src/actions/setSelectedClient';
 import { SET_CURRENT_TASK } from 'src/actions/setCurrentTask';
 import { SET_TASKS_IN_REVIEW } from 'src/actions/setTasksInReview';

@@ -14,7 +14,8 @@ import {
   Snackbar,
   Alert,
 } from '@material-ui/core';
-import { RequestStatus } from '../constants/request-status';
+import { RequestStatus } from '../../constants/request-status';
+import RichTextEditor from './RichTextEditor';
 
 interface OwnProps {
   client: Client | null;
@@ -129,24 +130,6 @@ export default function CreateATask({ client }: OwnProps) {
           />
           <TextField
             className={classes.textField}
-            value={shortDesc}
-            label="Short Description"
-            variant="outlined"
-            onChange={(e) => setShortDesc(e.target.value)}
-            required
-          />
-          <TextField
-            className={classes.textField}
-            label="Long Description"
-            variant="outlined"
-            value={longDesc}
-            onChange={(e) => setLongDesc(e.target.value)}
-            required
-            multiline
-            rows={12}
-          />
-          <TextField
-            className={classes.textField}
             value={requiredSkills}
             label="Required Skills"
             variant="outlined"
@@ -180,6 +163,9 @@ export default function CreateATask({ client }: OwnProps) {
             </ToggleButton>
           </ToggleButtonGroup>
         </form>
+        <div style={{ width: '600px' }}>
+          <RichTextEditor />
+        </div>
         <Button
           className={classes.submitButton}
           variant="contained"
