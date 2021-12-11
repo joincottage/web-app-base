@@ -92,7 +92,9 @@ export default function TaskList({}: OwnProps) {
           .filter((t) =>
             state.activeSearchTerm !== ''
               ? t !== null &&
-                (t.skills as string).indexOf(state.activeSearchTerm) > -1
+                (t.skills as string)
+                  .toLowerCase()
+                  .indexOf(state.activeSearchTerm.toLowerCase()) > -1
               : true
           )
           .reverse()
@@ -109,7 +111,9 @@ export default function TaskList({}: OwnProps) {
           .filter((t) =>
             state.activeSearchTerm !== ''
               ? t !== null &&
-                (t.skills as string).indexOf(state.activeSearchTerm) > -1
+                (t.skills as string)
+                  .toLowerCase()
+                  .indexOf(state.activeSearchTerm.toLowerCase()) > -1
               : true
           )
           .filter((task: Task) => task.clientName === state.selectedClient.name)
