@@ -51,7 +51,7 @@ export default function Index() {
                   marginBottom: '15px',
                 }}
               >
-                <span style={{ marginRight: '15px' }}>
+                <span style={{ marginRight: '15px', height: 80 }}>
                   {(state.selectedClient as Client).logoUrl && (
                     <Avatar
                       sx={{ width: 80, height: 80 }}
@@ -61,7 +61,7 @@ export default function Index() {
                     />
                   )}
                 </span>
-                <Typography variant="h6" style={{ paddingRight: '30px' }}>
+                <Typography variant="h5" style={{ paddingRight: '30px' }}>
                   {state.selectedClient.name}
                 </Typography>
               </div>
