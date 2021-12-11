@@ -8,6 +8,7 @@ import useTasks from 'src/hooks/useTasks';
 import { TASK_QUEUED } from 'src/constants/task-stages';
 import { Fade } from '@material-ui/core';
 import setTasksInQueue from 'src/actions/setTasksInQueue';
+import TaskListContainer from './TaskListContainer';
 
 interface OwnProps {
   //DESTRUCTUREDPROP: [];
@@ -45,59 +46,63 @@ export default function TaskList({}: OwnProps) {
   }, [data]);
 
   return (
-    <div>
-      {loading ? (
-        <div>
-          <TaskCardSkeleton />
-          <TaskCardSkeleton />
-          <TaskCardSkeleton />
-          <TaskCardSkeleton />
-          <TaskCardSkeleton />
-        </div>
-      ) : error ? (
-        <div className="text-red">
-          Oops! We have experienced an unrecoverable error. All errors are
-          monitored and our team is on it!
-        </div>
-      ) : state.selectedClient.name === 'All' ? (
-        state.tasksInQueue
-          .filter(
-            (t) =>
-              state.activeFilters.length === 0 ||
-              state.activeFilters.includes(t.type as string)
-          )
-          .filter((t) =>
-            state.activeSearchTerm !== ''
-              ? t !== null &&
-                (t.skills as string)
-                  .toLowerCase()
-                  .indexOf(state.activeSearchTerm.toLowerCase()) > -1
-              : true
-          )
-          .reverse()
-          .map((task: Task, i) => (
-            <TaskListItemContainer task={task} index={i} />
-          ))
-      ) : (
-        state.tasksInQueue
-          .filter(
-            (t) =>
-              state.activeFilters.length === 0 ||
-              state.activeFilters.includes(t.type as string)
-          )
-          .filter((t) =>
-            state.activeSearchTerm !== ''
-              ? t !== null &&
-                (t.skills as string)
-                  .toLowerCase()
-                  .indexOf(state.activeSearchTerm.toLowerCase()) > -1
-              : true
-          )
-          .filter((task: Task) => task.clientName === state.selectedClient.name)
-          .map((task: Task, i) => (
-            <TaskListItemContainer task={task} index={i} />
-          ))
-      )}
-    </div>
+    <TaskListContainer>
+      <div>
+        {loading ? (
+          <div>
+            <TaskCardSkeleton />
+            <TaskCardSkeleton />
+            <TaskCardSkeleton />
+            <TaskCardSkeleton />
+            <TaskCardSkeleton />
+          </div>
+        ) : error ? (
+          <div className="text-red">
+            Oops! We have experienced an unrecoverable error. All errors are
+            monitored and our team is on it!
+          </div>
+        ) : state.selectedClient.name === 'All' ? (
+          state.tasksInQueue
+            .filter(
+              (t) =>
+                state.activeFilters.length === 0 ||
+                state.activeFilters.includes(t.type as string)
+            )
+            .filter((t) =>
+              state.activeSearchTerm !== ''
+                ? t !== null &&
+                  (t.skills as string)
+                    .toLowerCase()
+                    .indexOf(state.activeSearchTerm.toLowerCase()) > -1
+                : true
+            )
+            .reverse()
+            .map((task: Task, i) => (
+              <TaskListItemContainer task={task} index={i} />
+            ))
+        ) : (
+          state.tasksInQueue
+            .filter(
+              (t) =>
+                state.activeFilters.length === 0 ||
+                state.activeFilters.includes(t.type as string)
+            )
+            .filter((t) =>
+              state.activeSearchTerm !== ''
+                ? t !== null &&
+                  (t.skills as string)
+                    .toLowerCase()
+                    .indexOf(state.activeSearchTerm.toLowerCase()) > -1
+                : true
+            )
+            .filter(
+              (task: Task) => task.clientName === state.selectedClient.name
+            )
+            .map((task: Task, i) => (
+              <TaskListItemContainer task={task} index={i} />
+            ))
+        )}
+      </div>
+    </TaskListContainer>
   );
 }

@@ -9,9 +9,11 @@ import { Input, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import setActiveSearchTerm from 'src/actions/setActiveSearchTerm';
 
-interface OwnProps {}
+interface OwnProps {
+  children: JSX.Element;
+}
 
-export default function TaskListContainer({}: OwnProps) {
+export default function TaskListContainer({ children }: OwnProps) {
   const { state, dispatch } = useContext(AppDataContext);
   const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setActiveSearchTerm(e.target.value));
@@ -65,7 +67,7 @@ export default function TaskListContainer({}: OwnProps) {
           overflow: 'scroll',
         }}
       >
-        <TaskList />
+        {children}
       </div>
     </div>
   );

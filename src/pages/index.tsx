@@ -9,7 +9,7 @@ import UserTasksColumn from 'src/components/UserTasksColumn';
 import { AppDataContext } from '../contexts/AppContext';
 import useClients from 'src/hooks/useClients';
 import setSelectedClient from 'src/actions/setSelectedClient';
-import TaskListContainer from 'src/components/TaskList/TaskListContainer';
+import TaskList from 'src/components/TaskList';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -39,7 +39,7 @@ export default function Index() {
             >
               <ClientTabs clients={clients} />
             </div>
-            <TaskListContainer />
+            <TaskList />
             <div className="w-64">
               <div
                 style={{
