@@ -13,7 +13,7 @@ export const useCurrentTask = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/tasks/current');
+        const response = await fetch('/api/v2/tasks/current-task');
         const data = await response.json();
         setCurrentTask(isEmpty(data) ? null : data);
         setCurrentTaskLoading(false);
