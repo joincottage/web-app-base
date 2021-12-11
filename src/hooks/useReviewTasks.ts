@@ -1,5 +1,7 @@
 import { Task } from '@prisma/client';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { IN_REVIEW } from 'src/constants/task-stages';
 
 export const useReviewTasks = () => {
   const [reviewTasksLoading, setReviewTasksLoading] = useState(true);
@@ -9,8 +11,10 @@ export const useReviewTasks = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/tasks/review-tasks');
-        const data = await response.json();
+        const response = await axios.get('/api/v2/tasks/task-status', {
+          params: { taskStatus: IN_REVIEW },
+        });
+        const data = await response.data.tasks;
         setReviewTasks(data);
         setReviewTasksLoading(false);
       } catch (err) {

@@ -1,5 +1,7 @@
 import { Task } from '@prisma/client';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { IN_PROGRESS } from 'src/constants/task-stages';
 
 function isEmpty(obj: Record<any, any>) {
   return Object.keys(obj).length === 0;
@@ -13,8 +15,11 @@ export const useCurrentTask = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/v2/tasks/current-task');
-        const data = await response.json();
+        const response = await axios.get('/api/v2/tasks/task-status', {
+          params: { taskStatus: IN_PROGRESS },
+        });
+        const data = await response.data.tasks;
+
         setCurrentTask(isEmpty(data) ? null : data);
         setCurrentTaskLoading(false);
       } catch (err) {

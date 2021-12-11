@@ -1,5 +1,7 @@
 import { Task } from '@prisma/client';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { IN_ATTENTION } from 'src/constants/task-stages';
 
 export const useAttentionTasks = () => {
   const [attentionLoading, setLoading] = useState(true);
@@ -11,8 +13,10 @@ export const useAttentionTasks = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/tasks/attention-tasks');
-        const data = await response.json();
+        const response = await axios.get('/api/v2/tasks/task-status', {
+          params: { taskStatus: IN_ATTENTION },
+        });
+        const data = await response.data.tasks;
         setData(data);
         setLoading(false);
       } catch (err) {
