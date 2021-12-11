@@ -49,6 +49,7 @@ const TaskTypeFilter = ({ style }: OwnProps) => {
                 ? 'white'
                 : 'rgb(31,87,184)',
               background: 'none',
+              margin: '0px -5px 0px 8px',
             }}
           />
         }
