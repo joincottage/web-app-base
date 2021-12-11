@@ -1,4 +1,8 @@
-export default function CubeTransparentOutline() {
+interface OwnProps {
+  style?: Record<string, any>;
+}
+
+export default function CubeTransparentOutline({ style }: OwnProps) {
   return (
     <div>
       <svg
@@ -7,6 +11,7 @@ export default function CubeTransparentOutline() {
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
+        style={style}
       >
         <path
           strokeLinecap="round"

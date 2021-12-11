@@ -8,14 +8,14 @@ import { red } from '@material-ui/core/colors';
 import { Backdrop, Button, Fade, Modal } from '@material-ui/core';
 import { Task } from '.prisma/client';
 import CloseIcon from '@material-ui/icons/Close';
-import IllDoIt from './IllDoIt';
+import IllDoIt from '../IllDoIt';
 import { UserProfile, useUser } from '@auth0/nextjs-auth0';
 import { AppDataContext } from 'src/contexts/AppContext';
 import moment from 'moment';
 import Axios from 'axios';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from '../LoadingSpinner';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
-import CubeTransparentOutlineIcon from './icons/CubeTransparentOutlineIcon';
+import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
 import { RequestStatus } from 'src/constants/request-status';
 interface OwnProps {
   task: Task;

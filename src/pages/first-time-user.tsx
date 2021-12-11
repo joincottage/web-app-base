@@ -9,7 +9,7 @@ import {
   useUser,
   withPageAuthRequired,
 } from '@auth0/nextjs-auth0';
-import TaskCard from '../components/TaskCard';
+import TaskCard from '../components/TaskList/TaskCard';
 import useTasks from 'src/hooks/useTasks';
 import { Task } from '@prisma/client';
 import { Avatar, Button } from '@material-ui/core';

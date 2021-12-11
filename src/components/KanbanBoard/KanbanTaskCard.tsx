@@ -19,7 +19,7 @@ import LoadingSpinner from 'src/components/LoadingSpinner';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
 import CloseIcon from '@material-ui/icons/Close';
-import UpdateATask from './../UpdateATask';
+import UpdateATask from './UpdateATask';
 import { TASK_QUEUED } from 'src/constants/task-stages';
 
 interface OwnProps {

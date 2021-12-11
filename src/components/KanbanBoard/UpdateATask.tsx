@@ -13,7 +13,7 @@ import {
   Snackbar,
   Alert,
 } from '@material-ui/core';
-import { RequestStatus } from '../constants/request-status';
+import { RequestStatus } from '../../constants/request-status';
 
 interface OwnProps {
   client: Client | null;

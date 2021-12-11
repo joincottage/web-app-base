@@ -19,6 +19,8 @@ import { SET_CURRENT_TASK } from 'src/actions/setCurrentTask';
 import { SET_TASKS_IN_REVIEW } from 'src/actions/setTasksInReview';
 import { SET_PREVIOUS_TASKS } from 'src/actions/setPreviousTasks';
 import { SET_TASKS_IN_QUEUE } from 'src/actions/setTasksInQueue';
+import { SET_ACTIVE_FILTERS } from 'src/actions/setActiveFilters';
+import { SET_ACTIVE_SEARCH_TERM } from 'src/actions/setActiveSearchTerm';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
@@ -46,6 +48,16 @@ function appReducer(state: AppState, action: AppAction) {
       return {
         ...state,
         tasksInQueue: action.payload.tasksInQueue,
+      };
+    case SET_ACTIVE_FILTERS:
+      return {
+        ...state,
+        activeFilters: action.payload.activeFilters,
+      };
+    case SET_ACTIVE_SEARCH_TERM:
+      return {
+        ...state,
+        activeSearchTerm: action.payload.activeSearchTerm,
       };
     default:
       // TODO: report unknown action types as an error

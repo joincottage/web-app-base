@@ -14,7 +14,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import useTasks from 'src/hooks/useTasks';
 import useClients from 'src/hooks/useClients';
 import CreateATask from '../CreateATask';
-import TaskCard from '../TaskCard';
+import TaskCard from '../TaskList/TaskCard';
 import CloseIcon from '@material-ui/icons/Close';
 import {
   TASK_QUEUED,

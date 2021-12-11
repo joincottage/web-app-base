@@ -14,9 +14,9 @@ const theme = createTheme({
       dark: 'rgb(31,87,184)',
     },
     secondary: {
-      light: 'rgb(31,87,184)',
-      main: 'rgb(31,87,184)',
-      dark: 'rgb(31,87,184)',
+      light: 'rgb(222,233,252)',
+      main: 'rgb(222,233,252)',
+      dark: 'rgb(222,233,252)',
     },
   },
   typography: {

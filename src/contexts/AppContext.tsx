@@ -8,6 +8,8 @@ export interface AppState {
   tasksInReview: Task[];
   previousTasks: Task[];
   tasksInQueue: Task[];
+  activeFilters: string[];
+  activeSearchTerm: string;
 }
 export interface AppAction {
   type: string;
@@ -26,6 +28,8 @@ export const initialState: AppState = {
   tasksInReview: [],
   previousTasks: [],
   tasksInQueue: [],
+  activeFilters: [],
+  activeSearchTerm: '',
 };
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const AppDataContext = React.createContext<AppContext>({
