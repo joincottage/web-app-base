@@ -44,7 +44,7 @@ model Task {
   clientCategoryId String?
   name             String?
   shortDesc        String?
-  longDesc         String?  @db.VarChar(1000)
+  longDesc         String?  @db.VarChar(5000)
   type             String?
   skills           String?
   datePosted       String?
