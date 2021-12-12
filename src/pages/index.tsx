@@ -26,9 +26,15 @@ export default function Index() {
 
   return (
     <Fade in={true}>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Box my={4}>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              maxHeight: '82vh',
+            }}
+          >
             <div
               className="w-64"
               style={{

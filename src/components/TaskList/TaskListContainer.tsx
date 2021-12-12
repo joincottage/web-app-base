@@ -61,8 +61,8 @@ export default function TaskListContainer({ children }: OwnProps) {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          minWidth: '600px',
-          maxWidth: '600px',
+          minWidth: '800px',
+          maxWidth: '800px',
           maxHeight: '82vh',
           overflow: 'scroll',
         }}

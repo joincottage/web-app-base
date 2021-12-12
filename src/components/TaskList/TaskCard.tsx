@@ -206,6 +206,7 @@ export default function TaskCard({
         <div className="my-6 mx-4 prose-sm text-gray-500">
           <p>
             {task.id === 103 ? (
+              // Draft.js serialization: https://github.com/facebook/draft-js/issues/422
               // @ts-ignore
               <Editor
                 editorState={EditorState.createWithContent(
