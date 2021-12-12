@@ -1,6 +1,6 @@
 .App-header {
   background-color: #282c34;
-  min-height: 5vh;
+  min-height: 15vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,4 +9,8 @@
   color: white;
   margin-bottom: 5vh;
   text-align: center;
+}
+
+.editor-class {
+  padding: 0 15px;
 }

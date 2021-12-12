@@ -31,8 +31,20 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       minHeight: '405px',
     },
-    textField: {
-      margin: theme.spacing(1),
+    requiredSkills: {},
+    price: {},
+    richTextEditor: {
+      '&:focus': {
+        border: `1px solid ${theme.palette.primary.light}`,
+      },
+    },
+    richTextEditorContainer: {
+      width: '596px',
+      border: '1px solid rgba(0, 0, 0, 0.1)',
+      borderRadius: '4px',
+      '&:hover': {
+        border: '1px solid rgba(0, 0, 0, 0.87)',
+      },
     },
     form: {
       width: '100%',
@@ -48,15 +60,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     error: {
       color: 'red',
-    },
-    paper: {
-      position: 'absolute',
-      width: '400px',
-      minHeight: '405px',
-      backgroundColor: theme.palette.background.paper,
-      borderRadius: '4px',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
     },
     closeIcon: {
       cursor: 'pointer',
@@ -128,24 +131,6 @@ export default function CreateATask({ client }: OwnProps) {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-          <TextField
-            className={classes.textField}
-            value={requiredSkills}
-            label="Required Skills"
-            variant="outlined"
-            onChange={(e) => setRequiredSkills(e.target.value)}
-            required
-          />
-          <TextField
-            className={classes.textField}
-            value={price}
-            type="number"
-            label="Price"
-            variant="outlined"
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-
           <ToggleButtonGroup
             value={bug}
             exclusive
@@ -162,10 +147,27 @@ export default function CreateATask({ client }: OwnProps) {
               Feature
             </ToggleButton>
           </ToggleButtonGroup>
+          <div className={classes.richTextEditorContainer}>
+            <RichTextEditor className={classes.richTextEditor} />
+          </div>
+          <TextField
+            className={classes.requiredSkills}
+            value={requiredSkills}
+            label="Required Skills"
+            variant="outlined"
+            onChange={(e) => setRequiredSkills(e.target.value)}
+            required
+          />
+          <TextField
+            className={classes.price}
+            value={price}
+            type="number"
+            label="Price"
+            variant="outlined"
+            onChange={(e) => setPrice(e.target.value)}
+            required
+          />
         </form>
-        <div style={{ width: '600px' }}>
-          <RichTextEditor />
-        </div>
         <Button
           className={classes.submitButton}
           variant="contained"

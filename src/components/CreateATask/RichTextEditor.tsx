@@ -6,17 +6,21 @@ import React, { useState } from 'react';
 import { EditorState } from 'draft-js';
 import DOMPurify from 'dompurify';
 
-const Editor = dynamic(() =>
-  import('react-draft-wysiwyg').then((mod) => mod.Editor)
-) as Editor;
+const Editor = dynamic(
+  () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
+  { ssr: false }
+);
 
-const App = () => {
+interface OwnProps {
+  className?: string;
+}
+
+const App = ({ className }: OwnProps) => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
   const handleEditorChange = (state) => {
     setEditorState(state);
-    convertContentToHTML();
   };
   const createMarkup = (html) => {
     return {
@@ -24,8 +28,7 @@ const App = () => {
     };
   };
   return (
-    <div className="App">
-      <header className="App-header">Rich Text Editor Example</header>
+    <div className={`App ${className}`}>
       <Editor
         editorState={editorState}
         onEditorStateChange={handleEditorChange}
