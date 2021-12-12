@@ -17,6 +17,8 @@ import LoadingSpinner from '../LoadingSpinner';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
 import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
 import { RequestStatus } from 'src/constants/request-status';
+import { convertFromRaw, Editor, EditorState } from 'draft-js';
+
 interface OwnProps {
   task: Task;
   mode: 'freelancer' | 'client';
@@ -202,7 +204,19 @@ export default function TaskCard({
       </div>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <div className="my-6 mx-4 prose-sm text-gray-500">
-          <p>{task.longDesc}</p>
+          <p>
+            {task.id === 103 ? (
+              // @ts-ignore
+              <Editor
+                editorState={EditorState.createWithContent(
+                  convertFromRaw(JSON.parse(task.longDesc as string))
+                )}
+                readOnly
+              />
+            ) : (
+              task.longDesc
+            )}
+          </p>
         </div>
         <div className="float-right">
           <div className={classes.primaryActionsContainer}>

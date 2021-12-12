@@ -53,7 +53,10 @@
     "stripe": "^8.191.0"
   },
   "devDependencies": {
+    "@types/dompurify": "^2.3.2",
+    "@types/draft-convert": "^2.1.4",
     "@types/draft-js": "^0.11.7",
+    "@types/react-draft-wysiwyg": "^1.13.3",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
     "autoprefixer": "^10.4.0",

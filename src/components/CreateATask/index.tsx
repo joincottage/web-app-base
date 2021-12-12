@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { makeStyles } from '@material-ui/styles';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import React, { SyntheticEvent, useState } from 'react';
+import React, { SyntheticEvent, useState, useContext } from 'react';
 import { Client } from '.prisma/client';
 import Axios from 'axios';
 import {
@@ -16,6 +16,8 @@ import {
 } from '@material-ui/core';
 import { RequestStatus } from '../../constants/request-status';
 import RichTextEditor from './RichTextEditor';
+import { convertToRaw } from 'draft-js';
+import { AppDataContext } from 'src/contexts/AppContext';
 
 interface OwnProps {
   client: Client | null;
@@ -82,6 +84,8 @@ export default function CreateATask({ client }: OwnProps) {
   const [price, setPrice] = useState(0);
   const [bug, setBug] = useState(true);
 
+  const { state } = useContext(AppDataContext);
+
   const handleSubmit = async () => {
     setRequestStatus(RequestStatus.PENDING);
     try {
@@ -91,7 +95,7 @@ export default function CreateATask({ client }: OwnProps) {
         clientCategoryId: client?.discordCategoryId,
         name: title,
         shortDesc,
-        longDesc,
+        longDesc: state.serializedEditorState,
         type: bug ? 'bug' : 'feature',
         skills: requiredSkills,
         datePosted: new Date().toString(),
@@ -175,8 +179,7 @@ export default function CreateATask({ client }: OwnProps) {
           size="large"
           disabled={
             !title ||
-            !shortDesc ||
-            !longDesc ||
+            !state.serializedEditorState ||
             !requiredSkills ||
             requestStatus === RequestStatus.PENDING
           }

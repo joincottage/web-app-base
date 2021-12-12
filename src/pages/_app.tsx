@@ -23,6 +23,7 @@ import { SET_PREVIOUS_TASKS } from 'src/actions/setPreviousTasks';
 import { SET_TASKS_IN_QUEUE } from 'src/actions/setTasksInQueue';
 import { SET_ACTIVE_FILTERS } from 'src/actions/setActiveFilters';
 import { SET_ACTIVE_SEARCH_TERM } from 'src/actions/setActiveSearchTerm';
+import { SET_CREATE_A_TASK_STATE } from 'src/actions/setCreateATaskState';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
@@ -60,6 +61,11 @@ function appReducer(state: AppState, action: AppAction) {
       return {
         ...state,
         activeSearchTerm: action.payload.activeSearchTerm,
+      };
+    case SET_CREATE_A_TASK_STATE:
+      return {
+        ...state,
+        serializedEditorState: action.payload.serializedEditorState,
       };
     default:
       // TODO: report unknown action types as an error

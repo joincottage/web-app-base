@@ -10,6 +10,7 @@ export interface AppState {
   tasksInQueue: Task[];
   activeFilters: string[];
   activeSearchTerm: string;
+  serializedEditorState: string;
 }
 export interface AppAction {
   type: string;
@@ -30,6 +31,7 @@ export const initialState: AppState = {
   tasksInQueue: [],
   activeFilters: [],
   activeSearchTerm: '',
+  serializedEditorState: '',
 };
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const AppDataContext = React.createContext<AppContext>({
