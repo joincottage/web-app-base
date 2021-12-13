@@ -61,9 +61,16 @@ export default async function (
       return;
     }
 
-    await prisma.task.update({
+    await prisma.task.updateMany({
       where: {
-        id: task.id,
+        AND: [
+          {
+            id: task.id,
+          },
+          {
+            userId: null,
+          },
+        ],
       },
       data: {
         status: IN_PROGRESS,
@@ -71,6 +78,7 @@ export default async function (
         userImgUrl: userInfo.picture,
       },
     });
+
     console.log('Task successfully updated in DB');
     await postMessageToChannel(discordChannelId, formatInfo(name));
     await addUserToChannel(discordChannelId, discordUserId);
