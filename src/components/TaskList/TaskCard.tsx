@@ -80,6 +80,20 @@ function getModalStyle() {
   };
 }
 
+const renderLongDescription = (task: Task) => {
+  let editorState: EditorState;
+  try {
+    editorState = EditorState.createWithContent(
+      convertFromRaw(JSON.parse(task.longDesc as string))
+    );
+  } catch (err) {
+    return task.longDesc;
+  }
+
+  // @ts-ignore
+  return <Editor editorState={editorState} readOnly />;
+};
+
 export default function TaskCard({
   task,
   mode,
@@ -204,20 +218,7 @@ export default function TaskCard({
       </div>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <div className="my-6 mx-4 prose-sm text-gray-500">
-          <p>
-            {task.id === 103 ? (
-              // Draft.js serialization: https://github.com/facebook/draft-js/issues/422
-              // @ts-ignore
-              <Editor
-                editorState={EditorState.createWithContent(
-                  convertFromRaw(JSON.parse(task.longDesc as string))
-                )}
-                readOnly
-              />
-            ) : (
-              task.longDesc
-            )}
-          </p>
+          <p>{renderLongDescription(task)}</p>
         </div>
         <div className="float-right">
           <div className={classes.primaryActionsContainer}>
