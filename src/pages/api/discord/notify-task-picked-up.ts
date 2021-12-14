@@ -61,24 +61,30 @@ export default async function (
       return;
     }
 
-    await prisma.task.updateMany({
-      where: {
-        AND: [
-          {
-            id: task.id,
-          },
-          {
-            userId: null,
-          },
-        ],
-      },
-      data: {
-        status: IN_PROGRESS,
-        userId: user.id,
-        userImgUrl: userInfo.picture,
-      },
-    });
-
+    try {
+      await prisma.task.updateMany({
+        where: {
+          AND: [
+            {
+              id: task.id,
+            },
+            {
+              userId: null,
+            },
+          ],
+        },
+        data: {
+          status: IN_PROGRESS,
+          userId: user.id,
+          userImgUrl: userInfo.picture,
+        },
+      });
+    } catch (err) {
+      console.error(`Failed posting info to discord`, err);
+      res
+        .status(500)
+        .json({ message: 'Error picking up task: Task Unavailable' });
+    }
     console.log('Task successfully updated in DB');
     await postMessageToChannel(discordChannelId, formatInfo(name));
     await addUserToChannel(discordChannelId, discordUserId);
