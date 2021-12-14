@@ -20,7 +20,7 @@ export const useCurrentTask = () => {
         });
         const data = await response.data.tasks;
 
-        setCurrentTask(isEmpty(data) ? null : data);
+        setCurrentTask(isEmpty(data) ? null : data[0]);
         setCurrentTaskLoading(false);
       } catch (err) {
         // FIXME: response.json() fails when a user doesn't have a current task since the response body is empty
