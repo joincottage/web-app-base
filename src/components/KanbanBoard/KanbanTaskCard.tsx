@@ -19,7 +19,7 @@ import LoadingSpinner from 'src/components/LoadingSpinner';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
 import CloseIcon from '@material-ui/icons/Close';
-import UpdateATask from './UpdateATask';
+import CreateATask from './../CreateATask';
 import { TASK_QUEUED } from 'src/constants/task-stages';
 
 interface OwnProps {
@@ -168,13 +168,13 @@ export default function KanbanTaskCard({
           }}
           className="rounded-2xl"
         >
-          <div className="w-[600px] bg-white border-2 border-white mx-auto mt-44 rounded-lg ">
+          <div className="w-[700px] bg-white border-2 border-white mx-auto mt-44 rounded-lg ">
             <CloseIcon
               onClick={handleCloseCreateATask}
               className="w-6 h-6 float-right m-4"
             />
             <div className="my-12">
-              <UpdateATask
+              <CreateATask
                 client={state.selectedClient as Client}
                 task={task}
               />

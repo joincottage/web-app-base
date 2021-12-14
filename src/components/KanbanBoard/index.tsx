@@ -191,7 +191,10 @@ const KanbanBoard = () => {
                     onClick={handleCloseCreateATask}
                     className={classes.closeIcon}
                   />
-                  <CreateATask client={state.selectedClient as Client} />
+                  <CreateATask
+                    client={state.selectedClient as Client}
+                    task={null}
+                  />
                 </div>
               </Fade>
             </Modal>

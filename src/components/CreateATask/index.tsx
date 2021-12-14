@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { makeStyles } from '@material-ui/styles';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import React, { SyntheticEvent, useState, useContext } from 'react';
-import { Client } from '.prisma/client';
+import React, { SyntheticEvent, useState, useEffect, useContext } from 'react';
+import { Client, Task } from '.prisma/client';
 import Axios from 'axios';
 import {
   Box,
@@ -21,6 +21,7 @@ import { AppDataContext } from 'src/contexts/AppContext';
 
 interface OwnProps {
   client: Client | null;
+  task: Task | null;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -71,37 +72,64 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function CreateATask({ client }: OwnProps) {
+export default function CreateATask({ client, task }: OwnProps) {
   const classes = useStyles();
-  const [title, setTitle] = useState('');
-  const [shortDesc, setShortDesc] = useState('');
-  const [longDesc, setLongDesc] = useState('');
-  const [requiredSkills, setRequiredSkills] = useState('');
+  const [title, setTitle] = useState(task === null ? '' : task.name);
+  const [shortDesc, setShortDesc] = useState(
+    task === null ? '' : task.shortDesc
+  );
+  const [longDesc, setLongDesc] = useState(task === null ? '' : task.longDesc);
+  const [requiredSkills, setRequiredSkills] = useState(
+    task === null ? '' : task.skills
+  );
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
   const [showSuccess, setShowSuccess] = useState(false);
-  const [price, setPrice] = useState(0);
-  const [bug, setBug] = useState(true);
+  const [price, setPrice] = useState(task === null ? '' : task.price);
+  const [bug, setBug] = useState(task === null ? '' : task.type);
 
   const { state } = useContext(AppDataContext);
 
+  useEffect(() => {
+    console.log(task);
+    //setTitle(task.name);
+  }, []);
   const handleSubmit = async () => {
     setRequestStatus(RequestStatus.PENDING);
     try {
-      await Axios.post('/api/tasks', {
-        clientName: client?.name,
-        clientImgUrl: client?.logoUrl,
-        clientCategoryId: client?.discordCategoryId,
-        name: title,
-        shortDesc,
-        longDesc: state.serializedEditorState,
-        type: bug ? 'bug' : 'feature',
-        skills: requiredSkills,
-        datePosted: new Date().toString(),
-        clientId: client?.id,
-        price: Number(price),
-      });
+      if (task === null) {
+        await Axios.post('/api/tasks', {
+          clientName: client?.name,
+          clientImgUrl: client?.logoUrl,
+          clientCategoryId: client?.discordCategoryId,
+          name: title,
+          shortDesc,
+          longDesc: state.serializedEditorState,
+          type: bug ? 'bug' : 'feature',
+          skills: requiredSkills,
+          datePosted: new Date().toString(),
+          clientId: client?.id,
+          price: Number(price),
+        });
+      } else {
+        await Axios.put('/api/tasks', {
+          params: {
+            clientName: client?.name,
+            clientImgUrl: client?.logoUrl,
+            clientCategoryId: client?.discordCategoryId,
+            id: task.id,
+            name: title,
+            shortDesc: shortDesc,
+            longDesc: longDesc,
+            type: bug ? 'bug' : 'feature',
+            skills: requiredSkills,
+            price: Number(price),
+            datePosted: new Date().toString(),
+          },
+        });
+      }
+
       setRequestStatus(RequestStatus.SUCCEEDED);
       setShowSuccess(true);
       resetFormState();
@@ -124,7 +152,7 @@ export default function CreateATask({ client }: OwnProps) {
     <Box m={4}>
       <div className={classes.root}>
         <Typography variant="h5" gutterBottom>
-          Create a task
+          {task === null ? 'Create a task' : 'Update a task'}
         </Typography>
         <form className={classes.form} noValidate autoComplete="off">
           <TextField
