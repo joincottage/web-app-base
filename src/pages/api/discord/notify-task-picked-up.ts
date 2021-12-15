@@ -62,7 +62,7 @@ export default async function (
     }
 
     try {
-      await prisma.task.updateMany({
+      const updatedTask = await prisma.task.updateMany({
         where: {
           AND: [
             {
@@ -79,16 +79,23 @@ export default async function (
           userImgUrl: userInfo.picture,
         },
       });
+      if (updatedTask.count === 0) {
+        console.error(`Failed updating task due to it being unavalible`);
+        res
+          .status(500)
+          .json({ message: 'Error picking up task: Task Unavailable' });
+      } else {
+        console.log('Task successfully updated in DB');
+        await postMessageToChannel(discordChannelId, formatInfo(name));
+        await addUserToChannel(discordChannelId, discordUserId);
+        res.status(200).json({ message: 'success' });
+      }
     } catch (err) {
-      console.error(`Failed posting info to discord`, err);
+      console.error(`Failed to update task`, err);
       res
         .status(500)
         .json({ message: 'Error picking up task: Task Unavailable' });
     }
-    console.log('Task successfully updated in DB');
-    await postMessageToChannel(discordChannelId, formatInfo(name));
-    await addUserToChannel(discordChannelId, discordUserId);
-    res.status(200).json({ message: 'success' });
   } catch (error) {
     console.error(`Failed posting info to discord`, error);
     res.status(500).json({ message: 'Failed to post info' });
