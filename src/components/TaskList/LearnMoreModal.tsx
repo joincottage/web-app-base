@@ -56,22 +56,21 @@ export default function LearnMoreModal({ task }: OwnProps) {
           <div className="my-6 mx-4 max-w-prose prose-sm text-gray-700 h-96">
             <p>{task.longDesc}</p>
           </div>
-          <div className="flex">
-            {task.skills?.split(',').map((skill) => (
-              <div
-                className="text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 mx-2 rounded-full"
-                key={skill}
-              >
-                {skill}
-              </div>
-            ))}
-          </div>
-          <div className="pb-16">
-            {/* TODO: update to i'll do it button */}
-
-            <button className="button-primary float-right mr-12">
-              I'll do it!
-            </button>
+          <div className="flex justify-between items-baseline">
+            <div className="flex align-baseline">
+              {task.skills?.split(',').map((skill) => (
+                <div
+                  className="text-sm font-light text-gray-700 bg-gray-200 h-8 py-1 px-2 mx-2 rounded-full"
+                  key={skill}
+                >
+                  {skill}
+                </div>
+              ))}
+            </div>
+            <div className="">
+              {/* TODO: update to i'll do it button */}
+              <button className="button-primary mr-4">I'll do it!</button>
+            </div>
           </div>
         </div>
       </div>
