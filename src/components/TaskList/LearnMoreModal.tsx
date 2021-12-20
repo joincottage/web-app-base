@@ -1,17 +1,22 @@
-import { useState, useEffect } from 'react';
-import CloseIcon from '@material-ui/icons/Close';
+//import CloseIcon from '@material-ui/icons/Close';
 import { Task } from '.prisma/client';
+import IllDoIt from './../IllDoIt';
+import { useUser } from '@auth0/nextjs-auth0';
 
 interface OwnProps {
   task: Task;
 }
 
 export default function LearnMoreModal({ task }: OwnProps) {
+  const { user } = useUser();
   return (
     <div className="bg-white rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-      <div className="float-right pr-6 py-3">
-        <CloseIcon />
-      </div>
+      {/*
+			FIXME: pass in handleClose function from parent
+			<div className="float-right pr-6 py-3">
+				<CloseIcon />
+			</div>
+		*/}
       <div className="flex">
         <div className="border-r-2 border-primary-500 w-72">
           {/* Company info */}
@@ -30,6 +35,7 @@ export default function LearnMoreModal({ task }: OwnProps) {
             </div>
             <div className="">
               <p className="text-sm my-2 px-2 py-1 bg-gray-50 rounded-lg text-gray-700">
+                {/*FIXME: create a client bio in client schema */}
                 Client Bio Lorem expedita doloremque sapiente alias iste
                 expedita! Culpa reprehenderit aliquam quibusdam neque.
               </p>
@@ -39,6 +45,7 @@ export default function LearnMoreModal({ task }: OwnProps) {
                 className="text-center px-2 text-primary-300 hover:underline hover:text-primary-600"
                 href=""
               >
+                {/*FIXME: create a client website in client schema */}
                 View {task.clientName} Website Here!
               </a>
             </div>
@@ -60,6 +67,8 @@ export default function LearnMoreModal({ task }: OwnProps) {
             ))}
           </div>
           <div className="pb-16">
+            {/* TODO: update to i'll do it button */}
+
             <button className="button-primary float-right mr-12">
               I'll do it!
             </button>

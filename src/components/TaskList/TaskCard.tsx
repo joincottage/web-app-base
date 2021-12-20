@@ -124,6 +124,7 @@ export default function TaskCard({
   };
   const modalBody = (
     <div>
+      <CloseIcon onClick={handleClose} className={classes.closeIcon} />
       <LearnMoreModal task={task} />
     </div>
   );
