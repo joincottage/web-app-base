@@ -123,9 +123,9 @@ export default function TaskCard({
     setOpenTaskModal(false);
   };
   const modalBody = (
-    <div>
+    <div className="relative">
       <CloseIcon onClick={handleClose} className={classes.closeIcon} />
-      <LearnMoreModal task={task} />
+      <LearnMoreModal task={task} close={handleClose} />
     </div>
   );
   const handleClosePaymentForm = () => {

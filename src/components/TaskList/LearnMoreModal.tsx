@@ -1,22 +1,25 @@
 //import CloseIcon from '@material-ui/icons/Close';
 import { Task } from '.prisma/client';
-import IllDoIt from './../IllDoIt';
 import { useUser } from '@auth0/nextjs-auth0';
+import CloseIcon from '@material-ui/icons/Close';
 
 interface OwnProps {
   task: Task;
+  close: Function;
 }
 
-export default function LearnMoreModal({ task }: OwnProps) {
+export default function LearnMoreModal({ task, close }: OwnProps) {
   const { user } = useUser();
+
+  function handleClose() {
+    close();
+  }
+
   return (
     <div className="bg-white rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-      {/*
-			FIXME: pass in handleClose function from parent
-			<div className="float-right pr-6 py-3">
-				<CloseIcon />
-			</div>
-		*/}
+      <div className="float-right pr-6 py-3 cursor-pointer">
+        <CloseIcon onClick={handleClose} />
+      </div>
       <div className="flex">
         <div className="border-r-2 border-primary-500 w-72">
           {/* Company info */}
@@ -60,7 +63,7 @@ export default function LearnMoreModal({ task }: OwnProps) {
             <div className="flex align-baseline">
               {task.skills?.split(',').map((skill) => (
                 <div
-                  className="text-sm font-light text-gray-700 bg-gray-200 h-8 py-1 px-2 mx-2 rounded-full"
+                  className="text-sm font-light text-gray-700 bg-gray-200 h-7 py-1 px-2 mx-2 rounded-full"
                   key={skill}
                 >
                   {skill}
@@ -69,7 +72,7 @@ export default function LearnMoreModal({ task }: OwnProps) {
             </div>
             <div className="">
               {/* TODO: update to i'll do it button */}
-              <button className="button-primary mr-4">I'll do it!</button>
+              <button className="button-primary ">I'll do it!</button>
             </div>
           </div>
         </div>
