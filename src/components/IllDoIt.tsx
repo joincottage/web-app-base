@@ -60,7 +60,7 @@ export default function IllDoIt({ user, task }: OwnProps) {
   const handleRequestAccess = async () => {
     setRequestStatus(RequestStatus.PENDING);
     try {
-      await Axios.post('/api/v2/tasks/picked-task', {
+      await Axios.post('/api/v2/tasks/', {
         name: user?.name,
         discordChannelId: task.discordChannelId,
         discordUserId: user.sub?.split('|')[2],
