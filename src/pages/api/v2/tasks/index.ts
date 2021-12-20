@@ -2,21 +2,70 @@ import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import { NextApiHandler } from 'next';
 import { prisma } from '../../../../database/prisma';
 import { getUserAuthId } from '../../../../apiService/auth/helpers';
+import { getSession } from '@auth0/nextjs-auth0';
+import { IN_PROGRESS } from 'src/constants/task-stages';
 
 const taskHandler: NextApiHandler = async (req, res) => {
+  const { body, method } = req;
+  const task = body.task;
   switch (req.method) {
-    // case 'POST': {
-    //   await prisma.user.create({
-    //     data: {
-    //       ...req.body,
-    //     },
-    //   });
-    //   res.send('OK');
-    //   break;
-    // }
-    /*
+    case 'POST': {
+      try {
+        const session = getSession(req, res);
+        const userInfo = session?.user;
+        if (userInfo == null) {
+          console.error(`User is not logged in.`);
+          res.status(401).end();
+          return;
+        }
 
-     */
+        const user = await prisma.user.findUnique({
+          where: {
+            auth_id: userInfo.sub,
+          },
+          select: {
+            id: true,
+          },
+        });
+        if (user == null) {
+          console.error(`Failed to find cottage user`);
+          res.status(401).end();
+          return;
+        }
+
+        const updatedTask = await prisma.task.updateMany({
+          where: {
+            AND: [
+              {
+                id: task.id,
+              },
+              {
+                userId: null,
+              },
+            ],
+          },
+          data: {
+            status: IN_PROGRESS,
+            userId: user.id,
+            userImgUrl: userInfo.picture,
+          },
+        });
+        if (updatedTask.count === 0) {
+          console.error(`Failed updating task due to it being unavalible`);
+          res
+            .status(500)
+            .json({ message: 'Error picking up task: Task Unavailable' });
+        } else {
+          console.log('Task successfully updated in DB');
+          res.status(200).json({ message: 'Task Picked Up' });
+        }
+      } catch (err) {
+        console.error(`Failed to update task`, err);
+        res
+          .status(500)
+          .json({ message: 'Error picking up task: Task Unavailable' });
+      }
+    }
     case 'GET': {
       const authId = getUserAuthId(req, res);
       const { status, client, user } = req.query;
