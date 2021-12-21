@@ -63,7 +63,7 @@ const taskHandler: NextApiHandler = async (req, res) => {
         console.error(`Failed to update task`, err);
         res
           .status(500)
-          .json({ message: 'Error picking up task: Task Unavailable' });
+          .json({ message: 'Cannot find unique cottage user or task.' });
       }
     }
     case 'GET': {
