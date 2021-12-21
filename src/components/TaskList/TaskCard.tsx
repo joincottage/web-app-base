@@ -16,7 +16,7 @@ import Axios from 'axios';
 import LoadingSpinner from '../LoadingSpinner';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
 import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
-import LearnMoreModal from './LearnMoreModal';
+import TaskDetailsModal from './TaskDetailsModal';
 import { RequestStatus } from 'src/constants/request-status';
 import { convertFromRaw, Editor, EditorState } from 'draft-js';
 
@@ -123,9 +123,8 @@ export default function TaskCard({
     setOpenTaskModal(false);
   };
   const modalBody = (
-    <div className="relative">
-      <CloseIcon onClick={handleClose} className={classes.closeIcon} />
-      <LearnMoreModal task={task} close={handleClose} />
+    <div>
+      <TaskDetailsModal task={task} close={handleClose} />
     </div>
   );
   const handleClosePaymentForm = () => {

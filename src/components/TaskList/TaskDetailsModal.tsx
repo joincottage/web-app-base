@@ -1,6 +1,5 @@
 //import CloseIcon from '@material-ui/icons/Close';
 import { Task } from '.prisma/client';
-import { useUser } from '@auth0/nextjs-auth0';
 import CloseIcon from '@material-ui/icons/Close';
 
 interface OwnProps {
@@ -9,16 +8,14 @@ interface OwnProps {
 }
 
 export default function LearnMoreModal({ task, close }: OwnProps) {
-  const { user } = useUser();
-
   function handleClose() {
     close();
   }
 
   return (
     <div className="bg-white rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-      <div className="float-right pr-6 py-3 cursor-pointer">
-        <CloseIcon onClick={handleClose} />
+      <div className="float-right pr-6 py-3">
+        <CloseIcon onClick={handleClose} className="cursor-pointer" />
       </div>
       <div className="flex">
         <div className="border-r-2 border-primary-500 w-72">
