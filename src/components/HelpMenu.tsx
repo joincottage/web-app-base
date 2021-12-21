@@ -42,7 +42,7 @@ export default function HelpMenu({ style }: OwnProps): JSX.Element {
       >
         <a
           target="_blank"
-          href="https://docs.joincottage.com"
+          href="https://stormy-equipment-95d.notion.site/Freelancer-ed8e005142cb475193063738be937175"
           rel="noopener noreferrer"
           style={{
             textDecoration: 'none',
