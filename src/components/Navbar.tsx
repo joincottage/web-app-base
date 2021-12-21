@@ -44,6 +44,12 @@ export const Navbar = (): JSX.Element => {
   const handleRouteToChat = () => {
     router.push('/chat');
   };
+  const handleClickHelp = () => {
+    window.open(
+      'https://stormy-equipment-95d.notion.site/Freelancer-ed8e005142cb475193063738be937175',
+      '_blank'
+    );
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -108,7 +114,15 @@ export const Navbar = (): JSX.Element => {
                 </Button>
               </NextLink>
             </div>
-            <HelpMenu />
+            <IconButton
+              color="inherit"
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClickHelp}
+              style={{ color: 'white' }}
+            >
+              <HelpIcon style={{ cursor: 'pointer' }} />
+            </IconButton>
             <IconButton style={{ color: 'white' }}>
               <ChatIcon
                 onClick={handleRouteToChat}
