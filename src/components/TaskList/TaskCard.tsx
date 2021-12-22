@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       borderRadius: 0,
       boxShadow: 'none',
+      padding: '20px 30px',
+      '&:hover': {
+        cursor: 'pointer',
+        backgroundColor: 'rgba(219, 234, 254, 0.25)',
+      },
     },
     media: {
       height: 0,
@@ -106,25 +111,23 @@ export default function TaskCard({
   const { user } = useUser();
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const [openTaskModal, setOpenTaskModal] = useState(false);
+  const [showTaskModal, setShowTaskModal] = useState(false);
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [modalStyle] = React.useState(getModalStyle);
   const { state, dispatch } = useContext(AppDataContext);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const handleClickIllDoIt = () => {};
 
-  const handleClickIllDoIt = async () => {
-    setOpenTaskModal(true);
+  const handleClickTaskCard = async () => {
+    setShowTaskModal(true);
     // sa_event('click_IllDoIt');
   };
   const handleClose = () => {
-    setOpenTaskModal(false);
+    setShowTaskModal(false);
   };
   const modalBody = (
     <div>
-      <TaskDetailsModal task={task} close={handleClose} />
+      <TaskDetailsModal task={task} handleClose={handleClose} />
     </div>
   );
   const handleClosePaymentForm = () => {
@@ -142,7 +145,7 @@ export default function TaskCard({
   );
 
   return (
-    <Card className={classes.root} style={styles}>
+    <Card className={classes.root} style={styles} onClick={handleClickTaskCard}>
       <div className="my-3 flex justify-between mx-4">
         <div>
           <div className="flex items-center">
@@ -248,7 +251,7 @@ export default function TaskCard({
         </div>
       </Collapse>
       <Modal
-        open={openTaskModal}
+        open={showTaskModal}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -258,7 +261,7 @@ export default function TaskCard({
           timeout: 500,
         }}
       >
-        <Fade in={openTaskModal}>{modalBody}</Fade>
+        <Fade in={showTaskModal}>{modalBody}</Fade>
       </Modal>
       <Modal
         open={openPaymentModal}

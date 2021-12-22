@@ -115,15 +115,13 @@ export default function UserTaskColumn({ user }: OwnProps) {
               {/* @ts-ignore */}
               {attentionTasks !== null && attentionTasks.length !== 0 ? (
                 <div>
-                  <p className="my-3 font-semibold text-gray-400">
-                    Attention Tasks
-                  </p>
+                  <p className="my-3 font-semibold">Attention Tasks</p>
                   <AttentionTasksContainer tasks={attentionTasks as Task[]} />
                 </div>
               ) : (
                 <div></div>
               )}
-              <p className="my-3 font-semibold text-gray-400">Current Task</p>
+              <p className="my-3 font-semibold">Current Task</p>
               {/* @ts-ignore */}
               {state.currentTask !== null ? (
                 <div>
@@ -135,13 +133,9 @@ export default function UserTaskColumn({ user }: OwnProps) {
                 </div>
               )}
 
-              <p className="mt-6 mb-3 font-semibold text-gray-400">
-                Tasks In Review
-              </p>
+              <p className="mt-6 mb-3 font-semibold">Tasks In Review</p>
               <ReviewTasks tasks={state.tasksInReview as Task[]} />
-              <p className="mt-6 mb-3 font-semibold text-gray-400">
-                Previous Tasks
-              </p>
+              <p className="mt-6 mb-3 font-semibold">Completed Tasks</p>
               <PreviousTasks tasks={state.previousTasks as Task[]} />
             </div>
           </div>

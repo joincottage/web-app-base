@@ -4,7 +4,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import { AppDataContext } from '../contexts/AppContext';
 import setSelectedClient from 'src/actions/setSelectedClient';
-import { Avatar, Fade } from '@material-ui/core';
+import { Avatar, Divider, Fade } from '@material-ui/core';
 import { Client } from '@prisma/client';
 import ClientColumnLoadingState from './emptystates/ClientColumnLoadingState';
 interface OwnProps {
@@ -61,7 +61,15 @@ export default function BasicTabs({ clients }: OwnProps) {
         </Box>
       </Fade>
       <Fade in={clients.length > 0} timeout={500}>
-        <Box style={{ position: 'absolute', top: 0 }}>
+        <Box
+          style={{
+            position: 'absolute',
+            top: 0,
+            backgroundColor: 'white',
+            borderRadius: '6px',
+            border: '1px solid rgb(224, 224, 224)',
+          }}
+        >
           <Tabs
             orientation="vertical"
             value={value}
@@ -77,6 +85,12 @@ export default function BasicTabs({ clients }: OwnProps) {
                   }}
                   icon={client.logo}
                   label={client.name}
+                  style={{
+                    borderBottom:
+                      index < renderableClients.length - 1
+                        ? '1px solid rgb(224, 224, 224)'
+                        : 'none',
+                  }}
                   {...a11yProps(index)}
                 />
               </Fade>

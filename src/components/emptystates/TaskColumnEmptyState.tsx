@@ -7,18 +7,14 @@ export default function TaskColumnEmptyState() {
     <div>
       <div className="text-left">
         <div>
-          <p className="my-3 font-semibold text-gray-400">Current Task</p>
+          <p className="my-3 font-semibold">Current Task</p>
           <CurrentTaskLoadingState />
         </div>
         <div>
-          <p className="mt-6 mb-3 font-semibold text-gray-400">
-            Tasks In Review
-          </p>
+          <p className="mt-6 mb-3 font-semibold">Tasks In Review</p>
           <ReviewTaskEmptyState />
           <ReviewTaskEmptyState />
-          <p className="mt-6 mb-3 font-semibold text-gray-400">
-            Previous Tasks
-          </p>
+          <p className="mt-6 mb-3 font-semibold">Completed Tasks</p>
           <PreviousTaskEmptyState />
           <PreviousTaskEmptyState />
           <PreviousTaskEmptyState />

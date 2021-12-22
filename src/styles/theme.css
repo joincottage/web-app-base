@@ -3,6 +3,10 @@
 @tailwind utilities;
 @tailwind screens;
 
+body {
+  background-color: rgb(241, 242, 244);
+}
+
 .button-primary {
   @apply bg-primary-500 hover:bg-primary-700 font-medium transform ease-in-out duration-500 text-white px-3 py-2 rounded;
 }

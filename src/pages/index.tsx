@@ -32,17 +32,18 @@ export default function Index() {
             style={{
               display: 'flex',
               justifyContent: 'center',
-              maxHeight: '82vh',
             }}
           >
             <div
               className="w-64"
               style={{
                 display: 'flex',
-                flexDirection: 'row-reverse',
+                flexDirection: 'column',
                 marginRight: '25px',
+                width: '95px',
               }}
             >
+              <p className="my-3 font-semibold flex justify-center">Clients</p>
               <ClientTabs clients={clients} />
             </div>
             <TaskList />

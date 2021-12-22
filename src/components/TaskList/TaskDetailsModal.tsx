@@ -4,14 +4,10 @@ import CloseIcon from '@material-ui/icons/Close';
 
 interface OwnProps {
   task: Task;
-  close: Function;
+  handleClose: () => void;
 }
 
-export default function LearnMoreModal({ task, close }: OwnProps) {
-  function handleClose() {
-    close();
-  }
-
+export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
   return (
     <div className="bg-white rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div className="float-right pr-6 py-3">
@@ -36,7 +32,7 @@ export default function LearnMoreModal({ task, close }: OwnProps) {
             <div className="">
               <p className="text-sm my-2 px-2 py-1 bg-gray-50 rounded-lg text-gray-700">
                 {/*FIXME: create a client bio in client schema */}
-                Client Bio Lorem expedita doloremque sapiente alias iste
+                Client bio lorem expedita doloremque sapiente alias iste
                 expedita! Culpa reprehenderit aliquam quibusdam neque.
               </p>
             </div>

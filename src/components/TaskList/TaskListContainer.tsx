@@ -19,13 +19,20 @@ export default function TaskListContainer({ children }: OwnProps) {
     dispatch(setActiveSearchTerm(e.target.value));
   };
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{
+        backgroundColor: 'white',
+        border: '1px solid rgb(224, 224, 224)',
+        borderRadius: '6px',
+      }}
+    >
       <div
         style={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           marginBottom: '15px',
+          paddingTop: '20px',
         }}
       >
         <span style={{ marginRight: '15px', height: 80 }}>
@@ -42,7 +49,15 @@ export default function TaskListContainer({ children }: OwnProps) {
           {state.selectedClient.name}
         </Typography>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          paddingLeft: '40px',
+          paddingRight: '40px',
+          paddingBottom: '10px',
+        }}
+      >
         <Input
           placeholder="Search skills"
           className=" text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full"
@@ -63,7 +78,6 @@ export default function TaskListContainer({ children }: OwnProps) {
           flexDirection: 'column',
           minWidth: '800px',
           maxWidth: '800px',
-          maxHeight: '82vh',
           overflow: 'scroll',
         }}
       >
