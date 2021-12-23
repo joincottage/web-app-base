@@ -13,7 +13,7 @@ import TaskCard from '../components/TaskList/TaskCard';
 import useTasks from 'src/hooks/useTasks';
 import { Task } from '@prisma/client';
 import { Avatar, Button } from '@material-ui/core';
-import { AccountIconMenu } from 'src/components/AccountIconMenu';
+import { AccountIconMenu } from 'src/components/menus/AccountIconMenu';
 import ClientTabs from 'src/components/ClientTabs';
 import { AppDataContext } from '../contexts/AppContext';
 import Divider from '@material-ui/core/Divider';

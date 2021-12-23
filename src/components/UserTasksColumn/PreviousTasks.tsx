@@ -20,9 +20,19 @@ export default function PreviousTasks({ tasks }: OwnProps) {
         {tasks.map((task) => (
           <li
             key={task.id}
-            className="bg-gray-50 shadow overflow-hidden rounded-md px-3 py-3"
+            className="bg-gray-50 shadow overflow-hidden rounded-md px-3 py-3 text-gray-500"
           >
-            <p className="">{task.name}</p>
+            <p
+              className=""
+              style={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                maxWidth: '216px',
+              }}
+            >
+              {task.name}
+            </p>
             <p className="text-sm text-primary-800 opacity-60">
               {task.clientName}
             </p>

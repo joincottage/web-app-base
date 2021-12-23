@@ -22,11 +22,21 @@ export default function ReviewTasks({ tasks }: OwnProps) {
         <div className="my-3 px-3 py-2 rounded bg-blue-100 shadow max-w-[15rem]">
           <div className="flex justify-between my-1">
             <div className="text-left">
-              <p className="mb-1">{task.name}</p>
+              <p
+                className="mb-1 text-gray-500"
+                style={{
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                  maxWidth: '216px',
+                }}
+              >
+                {task.name}
+              </p>
             </div>
           </div>
           <div className="mt-2">
-            <p className="bg-gray-50 rounded-md py-1 px-3 text-sm text-center text-yellow-500">
+            <p className="bg-gray-50 rounded-md py-1 px-3 text-sm text-center text-gray-500">
               Awaiting&nbsp;Approval
             </p>
           </div>

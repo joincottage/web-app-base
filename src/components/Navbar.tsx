@@ -7,7 +7,7 @@ import NextLink from 'next/link';
 import MuiLink from '@material-ui/core/Link';
 import { useUser } from '@auth0/nextjs-auth0';
 import { styled } from '@material-ui/core/styles';
-import { AccountIconMenu } from './AccountIconMenu';
+import { AccountIconMenu } from './menus/AccountIconMenu';
 import Container from '@material-ui/core/Container';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import HelpIcon from '@material-ui/icons/Help';
@@ -16,7 +16,7 @@ import { Avatar } from '@material-ui/core';
 import { useEffect } from 'react';
 import Divider from '@material-ui/core/Divider';
 import { useRouter } from 'next/router';
-import HelpMenu from './HelpMenu';
+import HelpMenu from './menus/HelpMenu';
 import ChatIcon from '@material-ui/icons/Chat';
 
 const Div = styled(MuiLink)(({ theme }) => ({

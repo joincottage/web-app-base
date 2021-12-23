@@ -5,7 +5,7 @@ import Card from '@material-ui/core/Card';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import { red } from '@material-ui/core/colors';
-import { Backdrop, Button, Fade, Modal } from '@material-ui/core';
+import { Backdrop, Button, Chip, Fade, Modal } from '@material-ui/core';
 import { Task } from '.prisma/client';
 import CloseIcon from '@material-ui/icons/Close';
 import IllDoIt from '../IllDoIt';
@@ -177,14 +177,6 @@ export default function TaskCard({
         </div>
         <div className="-mt-1 text-right">
           <h6 className="text-green-700 text-xl font-light">${task.price}</h6>
-          {/* TODO: This needs to be added to the database schmea*/}
-          {/* BUG: This ts-ignore needs to be removed!!*/}
-          {/* @ts-ignore */}
-          {task.type === 'bug' ? (
-            <BugReportOutlinedIcon style={{ fill: '#E00004' }} />
-          ) : (
-            <CubeTransparentOutlineIcon />
-          )}
         </div>
       </div>
       <div className="my-6 mx-4 prose-sm text-gray-500">
@@ -204,15 +196,42 @@ export default function TaskCard({
         </div>
         {mode === 'freelancer' && (
           <div className="ml-auto">
-            <Button
-              className={classes.ctaButton}
-              variant="outlined"
-              color="primary"
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-            >
-              Learn more
-            </Button>
+            {/* TODO: This needs to be added to the database schmea*/}
+            {/* BUG: This ts-ignore needs to be removed!!*/}
+            {/* @ts-ignore */}
+            {task.type === 'bug' ? (
+              <Chip
+                avatar={
+                  <BugReportOutlinedIcon
+                    style={{
+                      fill: '#E00004',
+                      background: 'none',
+                    }}
+                  />
+                }
+                label="Bug"
+                color="primary"
+                clickable
+                style={{ marginRight: '10px', border: 'none' }}
+                variant="outlined"
+              />
+            ) : (
+              <Chip
+                avatar={
+                  <CubeTransparentOutlineIcon
+                    style={{
+                      color: 'rgb(31,87,184)',
+                      background: 'none',
+                      margin: '0px -5px 0px 8px',
+                    }}
+                  />
+                }
+                label="Feature"
+                color="primary"
+                variant="outlined"
+                style={{ border: 'none' }}
+              />
+            )}
           </div>
         )}
       </div>
