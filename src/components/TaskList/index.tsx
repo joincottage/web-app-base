@@ -32,7 +32,10 @@ const EmptyTaskList = () => (
         height={128}
       />
     </div>
-    <Typography variant="h6" className="flex justify-center text-gray-400">
+    <Typography
+      variant="h6"
+      className="flex justify-center text-gray-400 font-bold"
+    >
       No tasks available
     </Typography>
   </div>

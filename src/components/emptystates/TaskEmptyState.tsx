@@ -1,5 +1,6 @@
 //import { useState, useEffect } from "react";
 import Link from 'next/link';
+import Typography from '@material-ui/core/Typography';
 
 export default function TaskEmptyState() {
   //TODO: allow for h3 & p to be passed in to make this component reuseable
@@ -23,10 +24,15 @@ export default function TaskEmptyState() {
             />
           </svg>
         </Link>
-        <h3 className="mt-2 text-sm font-medium text-gray-900">
+        <Typography
+          variant="subtitle2"
+          className="mt-2 text-sm font-bold text-gray-900"
+        >
           No Current Tasks
-        </h3>
-        <p className="mt-1 text-xs text-gray-500">Get started on a new task.</p>
+        </Typography>
+        <Typography variant="caption" className="mt-1 text-xs text-gray-500">
+          Get started on a new task.
+        </Typography>
       </div>
     </div>
   );

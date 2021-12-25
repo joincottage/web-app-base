@@ -172,7 +172,9 @@ export default function TaskCard({
                 {task.clientName}
               </span>
               <span className="ml-2 mr-2">{' - '}</span>
-              <span className="text-green-700 font-light">${task.price}</span>
+              <Typography variant="body2" className="text-green-700 font-light">
+                ${task.price}
+              </Typography>
               <span className="ml-2 mr-2">{' - '}</span>
               <span>
                 {/* TODO: This needs to be added to the database schmea*/}
