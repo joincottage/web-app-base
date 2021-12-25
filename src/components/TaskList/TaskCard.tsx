@@ -149,9 +149,9 @@ export default function TaskCard({
   return (
     <Card className={classes.root} style={styles}>
       <div className={classes.container} onClick={handleClickTaskCard}>
-        <div className="my-3 flex justify-between mx-4">
+        <div className="flex justify-between mx-4">
           <div className="ml-1">
-            <h5 className="font-bold text-lg">{task.name}</h5>
+            <h5 className="mb-1 font-bold text-lg">{task.name}</h5>
             <h6 className="text-sm text-gray-500 flex items-center">
               <Avatar
                 className="h-6 w-6"
@@ -211,10 +211,10 @@ export default function TaskCard({
             </h6>
           </div>
         </div>
-        <div className="my-6 mx-4 prose-sm text-gray-500">
+        <div className="mx-4 mb-1 prose-sm text-gray-500">
           <p>{task.shortDesc}</p>
         </div>
-        <div className="flex mx-3 mb-4 justify-between">
+        <div className="flex mx-3 justify-between">
           <div className="flex space-x-2 mr-3 my-1">
             {!showAcceptButton &&
               task.skills?.split(',').map((skill) => (
