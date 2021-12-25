@@ -19,69 +19,72 @@ export default function TaskListContainer({ children }: OwnProps) {
     dispatch(setActiveSearchTerm(e.target.value));
   };
   return (
-    <div
-      style={{
-        backgroundColor: 'white',
-        border: '1px solid rgb(224, 224, 224)',
-        borderRadius: '6px',
-      }}
-    >
+    <div>
+      <p className="my-3 font-semibold flex justify-center">Available Tasks</p>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom: '15px',
-          paddingTop: '20px',
+          backgroundColor: 'white',
+          border: '1px solid rgb(224, 224, 224)',
+          borderRadius: '6px',
         }}
       >
-        <span style={{ marginRight: '15px', height: 80 }}>
-          {(state.selectedClient as Client).logoUrl && (
-            <Avatar
-              sx={{ width: 80, height: 80 }}
-              alt="Company logo"
-              src={(state.selectedClient as Client).logoUrl as string}
-              aria-haspopup="true"
-            />
-          )}
-        </span>
-        <Typography variant="h5" style={{ paddingRight: '30px' }}>
-          {state.selectedClient.name}
-        </Typography>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          paddingLeft: '40px',
-          paddingRight: '40px',
-          paddingBottom: '10px',
-        }}
-      >
-        <Input
-          placeholder="Search skills"
-          className=" text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full"
-          style={{ height: '32px', width: '200px' }}
-          disableUnderline
-          startAdornment={
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          }
-          onChange={handleSearchTermChange}
-        />
-        <TaskTypeFilter />
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          minWidth: '800px',
-          maxWidth: '800px',
-          overflow: 'scroll',
-        }}
-      >
-        {children}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '15px',
+            paddingTop: '20px',
+          }}
+        >
+          <span style={{ marginRight: '15px', height: 80 }}>
+            {(state.selectedClient as Client).logoUrl && (
+              <Avatar
+                sx={{ width: 80, height: 80 }}
+                alt="Company logo"
+                src={(state.selectedClient as Client).logoUrl as string}
+                aria-haspopup="true"
+              />
+            )}
+          </span>
+          <Typography variant="h5" style={{ paddingRight: '30px' }}>
+            {state.selectedClient.name}
+          </Typography>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            paddingLeft: '40px',
+            paddingRight: '40px',
+            paddingBottom: '10px',
+          }}
+        >
+          <Input
+            placeholder="Search skills"
+            className=" text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full"
+            style={{ height: '32px', flexGrow: 1, marginRight: '10px' }}
+            disableUnderline
+            startAdornment={
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            }
+            onChange={handleSearchTermChange}
+          />
+          <TaskTypeFilter />
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            minWidth: '800px',
+            maxWidth: '800px',
+            overflow: 'scroll',
+          }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

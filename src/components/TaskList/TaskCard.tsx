@@ -35,11 +35,13 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       borderRadius: 0,
       boxShadow: 'none',
-      padding: '20px 30px',
       '&:hover': {
         cursor: 'pointer',
         backgroundColor: 'rgba(219, 234, 254, 0.25)',
       },
+    },
+    container: {
+      padding: '20px 30px',
     },
     media: {
       height: 0,
@@ -145,111 +147,102 @@ export default function TaskCard({
   );
 
   return (
-    <Card className={classes.root} style={styles} onClick={handleClickTaskCard}>
-      <div className="my-3 flex justify-between mx-4">
-        <div>
-          <div className="flex items-center">
-            {showUserImg && (
-              <Avatar
-                className="h-6 w-6 ml-1 mr-3"
-                alt="User image"
-                src={task.userImgUrl || ''}
-              />
-            )}
-            {!showUserImg && !showCompanyLogo && (
-              <Avatar className="h-6 w-6 ml-1 mr-3" alt="User image" src={''} />
-            )}
-            {!showUserImg && showCompanyLogo && (
-              <Avatar
-                className="h-6 w-6 ml-1 mr-3"
-                alt="User image"
-                src={task.clientImgUrl || ''}
-              />
-            )}
-            <div className="ml-1">
-              <h5 className="font-light">{task.name}</h5>
-              <h6 className="text-sm text-gray-500">
-                {moment(task.datePosted).format('MMMM Do YYYY')}
-              </h6>
+    <Card className={classes.root} style={styles}>
+      <div className={classes.container} onClick={handleClickTaskCard}>
+        <div className="my-3 flex justify-between mx-4">
+          <div>
+            <div className="flex items-center">
+              {showUserImg && (
+                <Avatar
+                  className="h-6 w-6 ml-1 mr-3"
+                  alt="User image"
+                  src={task.userImgUrl || ''}
+                />
+              )}
+              {!showUserImg && !showCompanyLogo && (
+                <Avatar
+                  className="h-6 w-6 ml-1 mr-3"
+                  alt="User image"
+                  src={''}
+                />
+              )}
+              {!showUserImg && showCompanyLogo && (
+                <Avatar
+                  className="h-6 w-6 ml-1 mr-3"
+                  alt="User image"
+                  src={task.clientImgUrl || ''}
+                />
+              )}
+              <div className="ml-1">
+                <h5 className="font-bold text-lg">{task.name}</h5>
+                <h6 className="text-sm text-gray-500">
+                  <span className="text-green-700 font-light">
+                    ${task.price}
+                  </span>
+                  {' - '}
+                  <span>
+                    {/* TODO: This needs to be added to the database schmea*/}
+                    {/* BUG: This ts-ignore needs to be removed!!*/}
+                    {/* @ts-ignore */}
+                    {task.type === 'bug' ? (
+                      <Chip
+                        avatar={
+                          <BugReportOutlinedIcon
+                            style={{
+                              fill: '#E00004',
+                              background: 'none',
+                            }}
+                          />
+                        }
+                        label="Bug"
+                        color="primary"
+                        clickable
+                        style={{ border: 'none' }}
+                        variant="outlined"
+                      />
+                    ) : (
+                      <Chip
+                        avatar={
+                          <CubeTransparentOutlineIcon
+                            style={{
+                              color: 'rgb(31,87,184)',
+                              background: 'none',
+                              margin: '0px -5px 0px 8px',
+                            }}
+                          />
+                        }
+                        label="Feature"
+                        color="primary"
+                        variant="outlined"
+                        style={{ border: 'none' }}
+                      />
+                    )}
+                  </span>
+                  {' - Posted '}
+                  {moment().diff(moment(task.datePosted), 'days')}
+                  {' days ago'}
+                </h6>
+              </div>
             </div>
           </div>
         </div>
-        <div className="-mt-1 text-right">
-          <h6 className="text-green-700 text-xl font-light">${task.price}</h6>
-        </div>
-      </div>
-      <div className="my-6 mx-4 prose-sm text-gray-500">
-        <p>{task.shortDesc}</p>
-      </div>
-      <div className="flex mx-3 mb-4 justify-between">
-        <div className="flex space-x-2 mr-3 my-1">
-          {!showAcceptButton &&
-            task.skills?.split(',').map((skill) => (
-              <div
-                className="text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full"
-                key={skill}
-              >
-                {skill}
-              </div>
-            ))}
-        </div>
-        {mode === 'freelancer' && (
-          <div className="ml-auto">
-            {/* TODO: This needs to be added to the database schmea*/}
-            {/* BUG: This ts-ignore needs to be removed!!*/}
-            {/* @ts-ignore */}
-            {task.type === 'bug' ? (
-              <Chip
-                avatar={
-                  <BugReportOutlinedIcon
-                    style={{
-                      fill: '#E00004',
-                      background: 'none',
-                    }}
-                  />
-                }
-                label="Bug"
-                color="primary"
-                clickable
-                style={{ marginRight: '10px', border: 'none' }}
-                variant="outlined"
-              />
-            ) : (
-              <Chip
-                avatar={
-                  <CubeTransparentOutlineIcon
-                    style={{
-                      color: 'rgb(31,87,184)',
-                      background: 'none',
-                      margin: '0px -5px 0px 8px',
-                    }}
-                  />
-                }
-                label="Feature"
-                color="primary"
-                variant="outlined"
-                style={{ border: 'none' }}
-              />
-            )}
-          </div>
-        )}
-      </div>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <div className="my-6 mx-4 prose-sm text-gray-500">
-          <p>{renderLongDescription(task)}</p>
+          <p>{task.shortDesc}</p>
         </div>
-        <div className="float-right">
-          <div className={classes.primaryActionsContainer}>
-            <button
-              disabled={!!state.currentTask}
-              onClick={handleClickIllDoIt}
-              className="mb-2 mr-2 px-3 py-2 bg-blue-800 disabled:bg-gray-300 disabled:cursor-default hover:bg-blue-700 text-white uppercase text-sm font-light transform ease-in-out duration-500 rounded shadow hover:shadow-md"
-            >
-              I&apos;ll do it!
-            </button>
+        <div className="flex mx-3 mb-4 justify-between">
+          <div className="flex space-x-2 mr-3 my-1">
+            {!showAcceptButton &&
+              task.skills?.split(',').map((skill) => (
+                <div
+                  className="text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full"
+                  key={skill}
+                >
+                  {skill}
+                </div>
+              ))}
           </div>
         </div>
-      </Collapse>
+      </div>
       <Modal
         open={showTaskModal}
         onClose={handleClose}

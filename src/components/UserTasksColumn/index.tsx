@@ -121,7 +121,7 @@ export default function UserTaskColumn({ user }: OwnProps) {
               ) : (
                 <div></div>
               )}
-              <p className="my-3 font-semibold">Current Task</p>
+              <p className="my-3 font-semibold">Your Current Task</p>
               {/* @ts-ignore */}
               {state.currentTask !== null ? (
                 <div>
@@ -133,9 +133,9 @@ export default function UserTaskColumn({ user }: OwnProps) {
                 </div>
               )}
 
-              <p className="mt-6 mb-3 font-semibold">Tasks In Review</p>
+              <p className="mt-6 mb-3 font-semibold">Your Tasks In Review</p>
               <ReviewTasks tasks={state.tasksInReview as Task[]} />
-              <p className="mt-6 mb-3 font-semibold">Completed Tasks</p>
+              <p className="mt-6 mb-3 font-semibold">Your Completed Tasks</p>
               <PreviousTasks tasks={state.previousTasks as Task[]} />
             </div>
           </div>

@@ -12,7 +12,7 @@ interface OwnProps {
 
 export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
   return (
-    <div className="bg-white rounded-lg fixed h-[80vh] w-[90rem] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div className="bg-white rounded-lg fixed h-[751px] w-[1040px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div className="flex w-full h-full">
         <div className="border-r-2 border-primary-500 w-72">
           {/* Company info */}
