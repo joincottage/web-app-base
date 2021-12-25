@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Task } from '.prisma/client';
 import axios from 'axios';
 import { useUser } from '@auth0/nextjs-auth0';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { AppDataContext } from 'src/contexts/AppContext';
 import setCurrentTask from 'src/actions/setCurrentTask';
 import setTasksInReview from 'src/actions/setTasksInReview';
@@ -38,11 +38,12 @@ export default function CurrentTask({ task }: OwnProps) {
   return (
     <>
       <div className="relative">
-        <div className="bg-blue-100 text-primary-900 shadow p-4 rounded-md max-w-[15rem]">
+        <div className="bg-blue-100 shadow p-3 rounded-md max-w-[15rem]">
           <div className="text-left">
             <div className="flex justify-between items-center pb-2">
-              <h3
-                className="text-lg capitalize"
+              <Typography
+                variant="subtitle2"
+                className="font-bold"
                 style={{
                   overflow: 'hidden',
                   whiteSpace: 'nowrap',
@@ -51,7 +52,7 @@ export default function CurrentTask({ task }: OwnProps) {
                 }}
               >
                 {task.name}
-              </h3>
+              </Typography>
               <CurrentTaskMenu user={user} task={task} />
             </div>
             <Button

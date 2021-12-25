@@ -5,7 +5,14 @@ import Card from '@material-ui/core/Card';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import { red } from '@material-ui/core/colors';
-import { Backdrop, Button, Chip, Fade, Modal } from '@material-ui/core';
+import {
+  Backdrop,
+  Button,
+  Chip,
+  Fade,
+  Modal,
+  Typography,
+} from '@material-ui/core';
 import { Task } from '.prisma/client';
 import CloseIcon from '@material-ui/icons/Close';
 import IllDoIt from '../IllDoIt';
@@ -41,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     container: {
-      padding: '10px 15px',
+      padding: '15px',
     },
     media: {
       height: 0,
@@ -151,8 +158,10 @@ export default function TaskCard({
       <div className={classes.container} onClick={handleClickTaskCard}>
         <div className="flex justify-between mx-4">
           <div className="ml-1">
-            <h5 className="mb-1 font-bold text-lg">{task.name}</h5>
-            <h6 className="text-sm text-gray-500 flex items-center">
+            <Typography variant="subtitle2" className="font-bold" gutterBottom>
+              {task.name}
+            </Typography>
+            <h6 className="my-2 text-sm text-gray-500 flex items-center">
               <Avatar
                 className="h-6 w-6"
                 alt="User image"
@@ -204,15 +213,19 @@ export default function TaskCard({
               </span>
               <span className="mr-2">{' - '}</span>
               <span>
-                {'Posted '}
-                {moment().diff(moment(task.datePosted), 'days')}
-                {' days ago'}
+                <Typography variant="body2">
+                  {'Posted '}
+                  {moment().diff(moment(task.datePosted), 'days')}
+                  {' days ago'}
+                </Typography>
               </span>
             </h6>
           </div>
         </div>
         <div className="mx-4 mb-1 prose-sm text-gray-500">
-          <p>{task.shortDesc}</p>
+          <Typography variant="body2" gutterBottom>
+            {task.shortDesc}
+          </Typography>
         </div>
         <div className="flex mx-3 justify-between">
           <div className="flex space-x-2 mr-3 my-1">

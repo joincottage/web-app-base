@@ -12,7 +12,7 @@ import { usePreviousTasks } from '../../hooks/usePreviousTasks';
 import { useAttentionTasks } from '../../hooks/useAttentionTasks';
 import { Task } from '.prisma/client';
 import { AppDataContext } from 'src/contexts/AppContext';
-import { Fade, Tooltip } from '@material-ui/core';
+import { Fade, Tooltip, Typography } from '@material-ui/core';
 import setTasksInReview from 'src/actions/setTasksInReview';
 import setPreviousTasks from 'src/actions/setPreviousTasks';
 import setCurrentTask from 'src/actions/setCurrentTask';
@@ -121,7 +121,13 @@ export default function UserTaskColumn({ user }: OwnProps) {
               ) : (
                 <div></div>
               )}
-              <p className="my-3 font-semibold">Your Current Task</p>
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                className="font-semibold"
+              >
+                Your Current Task
+              </Typography>
               {/* @ts-ignore */}
               {state.currentTask !== null ? (
                 <div>
@@ -133,9 +139,21 @@ export default function UserTaskColumn({ user }: OwnProps) {
                 </div>
               )}
 
-              <p className="mt-6 mb-3 font-semibold">Your Tasks In Review</p>
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                className="mt-6 font-semibold"
+              >
+                Your Tasks In Review
+              </Typography>
               <ReviewTasks tasks={state.tasksInReview as Task[]} />
-              <p className="mt-6 mb-3 font-semibold">Your Completed Tasks</p>
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                className="mt-6 font-semibold"
+              >
+                Your Completed Tasks
+              </Typography>
               <PreviousTasks tasks={state.previousTasks as Task[]} />
             </div>
           </div>

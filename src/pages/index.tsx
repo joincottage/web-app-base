@@ -3,7 +3,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Copyright from '../Copyright';
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { Fade } from '@material-ui/core';
+import { Fade, Typography } from '@material-ui/core';
 import ClientTabs from 'src/components/ClientTabs';
 import UserTasksColumn from 'src/components/UserTasksColumn';
 import { AppDataContext } from '../contexts/AppContext';
@@ -44,7 +44,13 @@ export default function Index() {
                 width: '95px',
               }}
             >
-              <p className="my-3 font-semibold flex justify-center">Clients</p>
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                className="font-semibold flex justify-center"
+              >
+                Clients
+              </Typography>
               <ClientTabs clients={clients} />
             </div>
             <TaskList />

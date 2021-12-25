@@ -20,7 +20,13 @@ export default function TaskListContainer({ children }: OwnProps) {
   };
   return (
     <div>
-      <p className="my-3 font-semibold flex justify-center">Available Tasks</p>
+      <Typography
+        variant="subtitle1"
+        gutterBottom
+        className="font-semibold flex justify-center"
+      >
+        Available Tasks
+      </Typography>
       <div
         style={{
           backgroundColor: 'white',
