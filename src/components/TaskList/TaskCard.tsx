@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     container: {
-      padding: '20px 30px',
+      padding: '10px 15px',
     },
     media: {
       height: 0,
@@ -150,80 +150,65 @@ export default function TaskCard({
     <Card className={classes.root} style={styles}>
       <div className={classes.container} onClick={handleClickTaskCard}>
         <div className="my-3 flex justify-between mx-4">
-          <div>
-            <div className="flex items-center">
-              {showUserImg && (
-                <Avatar
-                  className="h-6 w-6 ml-1 mr-3"
-                  alt="User image"
-                  src={task.userImgUrl || ''}
-                />
-              )}
-              {!showUserImg && !showCompanyLogo && (
-                <Avatar
-                  className="h-6 w-6 ml-1 mr-3"
-                  alt="User image"
-                  src={''}
-                />
-              )}
-              {!showUserImg && showCompanyLogo && (
-                <Avatar
-                  className="h-6 w-6 ml-1 mr-3"
-                  alt="User image"
-                  src={task.clientImgUrl || ''}
-                />
-              )}
-              <div className="ml-1">
-                <h5 className="font-bold text-lg">{task.name}</h5>
-                <h6 className="text-sm text-gray-500">
-                  <span className="text-green-700 font-light">
-                    ${task.price}
-                  </span>
-                  {' - '}
-                  <span>
-                    {/* TODO: This needs to be added to the database schmea*/}
-                    {/* BUG: This ts-ignore needs to be removed!!*/}
-                    {/* @ts-ignore */}
-                    {task.type === 'bug' ? (
-                      <Chip
-                        avatar={
-                          <BugReportOutlinedIcon
-                            style={{
-                              fill: '#E00004',
-                              background: 'none',
-                            }}
-                          />
-                        }
-                        label="Bug"
-                        color="primary"
-                        clickable
-                        style={{ border: 'none' }}
-                        variant="outlined"
+          <div className="ml-1">
+            <h5 className="font-bold text-lg">{task.name}</h5>
+            <h6 className="text-sm text-gray-500 flex items-center">
+              <Avatar
+                className="h-6 w-6"
+                alt="User image"
+                src={task.clientImgUrl || ''}
+                style={{ display: 'inline-block' }}
+              />
+              <span className="ml-2 font-light uppercase">
+                {task.clientName}
+              </span>
+              <span className="ml-2 mr-2">{' - '}</span>
+              <span className="text-green-700 font-light">${task.price}</span>
+              <span className="ml-2 mr-2">{' - '}</span>
+              <span>
+                {/* TODO: This needs to be added to the database schmea*/}
+                {/* BUG: This ts-ignore needs to be removed!!*/}
+                {/* @ts-ignore */}
+                {task.type === 'bug' ? (
+                  <Chip
+                    avatar={
+                      <BugReportOutlinedIcon
+                        style={{
+                          fill: '#E00004',
+                          background: 'none',
+                        }}
                       />
-                    ) : (
-                      <Chip
-                        avatar={
-                          <CubeTransparentOutlineIcon
-                            style={{
-                              color: 'rgb(31,87,184)',
-                              background: 'none',
-                              margin: '0px -5px 0px 8px',
-                            }}
-                          />
-                        }
-                        label="Feature"
-                        color="primary"
-                        variant="outlined"
-                        style={{ border: 'none' }}
+                    }
+                    label="Bug"
+                    color="primary"
+                    clickable
+                    style={{ border: 'none' }}
+                    variant="outlined"
+                  />
+                ) : (
+                  <Chip
+                    avatar={
+                      <CubeTransparentOutlineIcon
+                        style={{
+                          color: 'rgb(31,87,184)',
+                          background: 'none',
+                        }}
                       />
-                    )}
-                  </span>
-                  {' - Posted '}
-                  {moment().diff(moment(task.datePosted), 'days')}
-                  {' days ago'}
-                </h6>
-              </div>
-            </div>
+                    }
+                    label="Feature"
+                    color="primary"
+                    variant="outlined"
+                    style={{ border: 'none' }}
+                  />
+                )}
+              </span>
+              <span className="mr-2">{' - '}</span>
+              <span>
+                {'Posted '}
+                {moment().diff(moment(task.datePosted), 'days')}
+                {' days ago'}
+              </span>
+            </h6>
           </div>
         </div>
         <div className="my-6 mx-4 prose-sm text-gray-500">
