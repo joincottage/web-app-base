@@ -10,6 +10,7 @@ import { AppDataContext } from '../contexts/AppContext';
 import useClients from 'src/hooks/useClients';
 import setSelectedClient from 'src/actions/setSelectedClient';
 import TaskList from 'src/components/TaskList';
+import IconAttribution from 'src/components/IconAttribution';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -62,6 +63,7 @@ export default function Index() {
             </div>
           </div>
           <Copyright />
+          <IconAttribution />
         </Box>
       </Container>
     </Fade>

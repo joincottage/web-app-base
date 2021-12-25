@@ -6,13 +6,37 @@ import Divider from '@material-ui/core/Divider';
 import { Task } from '@prisma/client';
 import useTasks from 'src/hooks/useTasks';
 import { TASK_QUEUED } from 'src/constants/task-stages';
-import { Fade } from '@material-ui/core';
+import { Fade, Typography } from '@material-ui/core';
 import setTasksInQueue from 'src/actions/setTasksInQueue';
 import TaskListContainer from './TaskListContainer';
+import Image from 'next/image';
 
 interface OwnProps {
   //DESTRUCTUREDPROP: [];
 }
+
+const EmptyTaskList = () => (
+  <div
+    style={{
+      background: 'none',
+      position: 'absolute',
+      top: '150px',
+      width: '100%',
+    }}
+  >
+    <div className="w-[100%] flex justify-center text-gray-400 font-bold ml-4 mb-4">
+      <Image
+        src="/no-task.png"
+        alt="Sleeping clipboard"
+        width={128}
+        height={128}
+      />
+    </div>
+    <Typography variant="h6" className="flex justify-center text-gray-400">
+      No tasks available
+    </Typography>
+  </div>
+);
 
 const TaskListItemContainer = ({
   task,
@@ -102,6 +126,11 @@ export default function TaskList({}: OwnProps) {
               <TaskListItemContainer task={task} index={i} />
             ))
         )}
+        {!loading &&
+          state.selectedClient.name !== 'All' &&
+          state.tasksInQueue.filter(
+            (task: Task) => task.clientName === state.selectedClient.name
+          ).length === 0 && <EmptyTaskList />}
       </div>
     </TaskListContainer>
   );

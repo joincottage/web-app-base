@@ -26,6 +26,7 @@ export default function TaskListContainer({ children }: OwnProps) {
           backgroundColor: 'white',
           border: '1px solid rgb(224, 224, 224)',
           borderRadius: '6px',
+          position: 'relative',
         }}
       >
         <div
