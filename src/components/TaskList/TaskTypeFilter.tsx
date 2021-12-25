@@ -24,7 +24,7 @@ const TaskTypeFilter = ({ style }: OwnProps) => {
   };
 
   return (
-    <div style={{ marginBottom: '10px', ...style }}>
+    <div style={{ ...style }}>
       <Chip
         avatar={
           <BugReportOutlinedIcon

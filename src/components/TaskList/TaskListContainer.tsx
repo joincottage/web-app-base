@@ -31,33 +31,8 @@ export default function TaskListContainer({ children }: OwnProps) {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: '15px',
-            paddingTop: '20px',
-          }}
-        >
-          <span style={{ marginRight: '15px', height: 80 }}>
-            {(state.selectedClient as Client).logoUrl && (
-              <Avatar
-                sx={{ width: 80, height: 80 }}
-                alt="Company logo"
-                src={(state.selectedClient as Client).logoUrl as string}
-                aria-haspopup="true"
-              />
-            )}
-          </span>
-          <Typography variant="h5" style={{ paddingRight: '30px' }}>
-            {state.selectedClient.name}
-          </Typography>
-        </div>
-        <div
-          style={{
-            display: 'flex',
             justifyContent: 'space-between',
-            paddingLeft: '40px',
-            paddingRight: '40px',
-            paddingBottom: '10px',
+            padding: '20px 40px',
           }}
         >
           <Input
