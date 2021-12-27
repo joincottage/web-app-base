@@ -4,6 +4,12 @@ import CloseIcon from '@material-ui/icons/Close';
 import OpenInNew from '@material-ui/icons/OpenInNew';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
 import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
+import { RequestStatus } from './../../constants/request-status';
+import Axios from 'axios';
+import { useContext, useState } from 'react';
+import { useUser } from '@auth0/nextjs-auth0';
+import setCurrentTask from 'src/actions/setCurrentTask';
+import { AppDataContext } from 'src/contexts/AppContext';
 
 interface OwnProps {
   task: Task;
@@ -11,6 +17,30 @@ interface OwnProps {
 }
 
 export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
+  const { user } = useUser();
+  const [requestStatus, setRequestStatus] = useState<RequestStatus>(
+    RequestStatus.IDLE
+  );
+  const { dispatch } = useContext(AppDataContext);
+
+  const handleRequestAccess = async () => {
+    setRequestStatus(RequestStatus.PENDING);
+    try {
+      //FIXME: This needs to switch to v2/tasks/index
+      await Axios.post('/api/discord/notify-task-picked-up', {
+        name: user?.name,
+        discordChannelId: task.discordChannelId,
+        discordUserId: user?.sub?.split('|')[2],
+        task,
+      });
+      setRequestStatus(RequestStatus.SUCCEEDED);
+      dispatch(setCurrentTask(task));
+    } catch (e) {
+      setRequestStatus(RequestStatus.FAILED);
+      throw e;
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg fixed h-[751px] w-[1040px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div className="flex w-full h-full">
@@ -38,7 +68,6 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 expedita! Culpa reprehenderit aliquam quibusdam neque.
               </p>
             </div>
-            {/*FIXME: create a client bio in client schema */}
             <div className="flex justify-center items-center my-4">
               <OpenInNew />
               <a className="ml-1 text-primary-500 text-lg font-medium" href="#">
@@ -92,11 +121,11 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 <span className="text-sm">&nbsp;Needs&nbsp;Info</span>
               </Button>
               <div className="">
-                {/* TODO: update to i'll do it button */}
                 <Button
                   className="mb-2 ml-1"
                   variant="contained"
                   color="primary"
+                  onClick={handleRequestAccess}
                 >
                   <span className="text-xl">👍</span>
                   <span className="ml-1">I'll do it!</span>
