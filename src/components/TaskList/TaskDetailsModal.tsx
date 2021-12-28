@@ -18,6 +18,7 @@ interface OwnProps {
 
 export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
   const { user } = useUser();
+  const { state } = useContext(AppDataContext);
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
@@ -125,6 +126,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                   className="mb-2 ml-1"
                   variant="contained"
                   color="primary"
+                  disabled={!!state.currentTask}
                   onClick={handleRequestAccess}
                 >
                   <span className="text-xl">👍</span>
