@@ -45,33 +45,36 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
   return (
     <div className="bg-white rounded-lg fixed h-[751px] w-[1040px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div className="flex w-full h-full">
-        <div className="border-r-2 border-primary-500 w-72">
+        <div className="border-r-2 border-primary-500">
           {/* Company info */}
-          <div className="w-[17rem]">
+          <div className="w-[246px]">
             <div className="">
-              <div className="mt-4 flex justify-center">
+              <div className="mt-[13px] flex justify-center">
                 <img
-                  className="w-32 aspect-square rounded-full"
+                  className="w-[107px] aspect-square rounded-full"
                   src={task.clientImgUrl || '#'}
                   alt="Client Image"
                 />
               </div>
               <div className="flex justify-center">
-                <h3 className="text-center text-xl my-4 px-3 py-1 font-medium rounded-md">
+                <h3 className="text-center text-xl mt-[22px] font-medium rounded-md">
                   {task.clientName}
                 </h3>
               </div>
             </div>
-            <div className="flex justify-center">
-              <p className="text-sm my-3 mx-8">
+            <div className="mt-[22px] flex justify-center">
+              <p className="text-sm w-[191px]">
                 {/*FIXME: create a client bio in client schema */}
                 Client bio lorem expedita doloremque sapiente alias iste
                 expedita! Culpa reprehenderit aliquam quibusdam neque.
               </p>
             </div>
-            <div className="flex justify-center items-center my-4">
+            <div className="mt-[22px] flex justify-center items-center my-4">
               <OpenInNew />
-              <a className="ml-1 text-primary-500 text-lg font-medium" href="#">
+              <a
+                className="ml-1  text-primary-500 uppercase font-medium"
+                href="#"
+              >
                 Visit Website
               </a>
             </div>
@@ -80,7 +83,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
         <div className="relative w-full flex flex-col justify-between">
           <div>
             <div>
-              <h3 className="pt-6 text-2xl text-center font-bold">
+              <h3 className="mt-[18px] text-xl text-center font-medium">
                 {task.name}
               </h3>
               <div className="my-4 flex justify-center items-center">
@@ -98,7 +101,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
               <div className="mt-3 flex justify-center">
                 {task.skills?.split(',').map((skill) => (
                   <div
-                    className="text-sm font-light text-gray-700 bg-gray-200 h-7 py-1 px-2 mx-2 rounded-full"
+                    className="text-sm font-light text-gray-900 bg-gray-200 py-[6px] px-[12px] mx-[3px] rounded-full"
                     key={skill}
                   >
                     {skill}
@@ -106,11 +109,11 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 ))}
               </div>
             </div>
-            <div className="my-6 mx-4 prose-sm text-gray-700 h-full">
+            <div className="prose-sm text-gray-700 h-[539px] mt-[19px] mx-[19px]">
               <p>{task.longDesc}</p>
             </div>
           </div>
-          <div className="mb-6 mr-4 flex justify-between ">
+          <div className="mb-[16px] mr-[19px] h-[36px]  flex justify-between ">
             <div className="flex align-baseline"></div>
             <div className="flex items-baseline ml-3">
               <Button className="mx-1" variant="outlined" color="primary">
@@ -136,7 +139,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
             </div>
           </div>
         </div>
-        <div className="absolute right-4 top-3">
+        <div className="absolute right-[24px] top-[18px]">
           <CloseIcon onClick={handleClose} className="cursor-pointer" />
         </div>
       </div>
