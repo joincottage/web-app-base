@@ -6,6 +6,7 @@ import {
   Fade,
   Modal,
   Theme,
+  Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Client, Task } from '@prisma/client';
@@ -17,6 +18,7 @@ import CreateATask from '../CreateATask';
 import TaskCard from '../TaskList/TaskCard';
 import CloseIcon from '@material-ui/icons/Close';
 import CreateIcon from '@material-ui/icons/Create';
+import BuildIcon from '@material-ui/icons/Build';
 import {
   TASK_QUEUED,
   IN_PROGRESS,
@@ -186,6 +188,65 @@ const KanbanBoard = () => {
                 </div>
               </Fade>
             </div>
+            {!client && !loading && (
+              <Fade in={!client && !loading} timeout={1000}>
+                <div
+                  style={{
+                    position: 'fixed',
+                    top: '64px',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backdropFilter: 'blur(2px) grayscale(100%)',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      background: 'white',
+                      padding: '50px 0',
+                      borderRadius: '4px',
+                      boxShadow: '0px 0px 40px 40px #FFF',
+                    }}
+                  >
+                    <Typography
+                      variant="h5"
+                      className="flex justify-center"
+                      style={{
+                        width: '400px',
+                        marginBottom: '20px',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Under construction
+                    </Typography>
+                    <BuildIcon
+                      style={{ width: '120px', height: '120px' }}
+                      color="primary"
+                    />
+                    <Typography
+                      variant="subtitle1"
+                      className="flex justify-center"
+                      style={{
+                        width: '300px',
+                        marginTop: '20px',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Reach out to the Cottage team on Discord to start creating
+                      tasks
+                    </Typography>
+                  </div>
+                </div>
+              </Fade>
+            )}
           </div>
           <div>
             <Modal
