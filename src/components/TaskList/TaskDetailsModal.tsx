@@ -7,7 +7,6 @@ import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
 import { RequestStatus } from './../../constants/request-status';
 import Axios from 'axios';
 import { useContext, useState } from 'react';
-import { useUser } from '@auth0/nextjs-auth0';
 import setCurrentTask from 'src/actions/setCurrentTask';
 import { AppDataContext } from 'src/contexts/AppContext';
 
@@ -17,8 +16,8 @@ interface OwnProps {
 }
 
 export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
-  const { user } = useUser();
   const { state } = useContext(AppDataContext);
+
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
@@ -28,10 +27,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
     setRequestStatus(RequestStatus.PENDING);
     try {
       //FIXME: This needs to switch to v2/tasks/index
-      await Axios.post('/api/discord/notify-task-picked-up', {
-        name: user?.name,
-        discordChannelId: task.discordChannelId,
-        discordUserId: user?.sub?.split('|')[2],
+      await Axios.post('/api/v2/tasks', {
         task,
       });
       setRequestStatus(RequestStatus.SUCCEEDED);
