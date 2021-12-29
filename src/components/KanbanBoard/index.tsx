@@ -16,6 +16,7 @@ import useClients from 'src/hooks/useClients';
 import CreateATask from '../CreateATask';
 import TaskCard from '../TaskList/TaskCard';
 import CloseIcon from '@material-ui/icons/Close';
+import CreateIcon from '@material-ui/icons/Create';
 import {
   TASK_QUEUED,
   IN_PROGRESS,
@@ -79,27 +80,35 @@ const KanbanBoard = () => {
 
   return (
     <>
-      <div style={{ height: '87px' }}>
-        {client && <ClientToggle clients={[client]} />}
-      </div>
-      <div style={{ display: 'flex' }}>
-        <Box m={1}>
+      <div style={{ display: 'flex', height: '100%' }}>
+        <Box style={{ height: '100%' }}>
           <div
             style={{
               display: 'flex',
               justifyContent: 'center',
+              width: '100%',
+              height: '100%',
             }}
           >
-            <ProgressBar tasks={client?.tasks} />
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              width: '100vw',
-            }}
-          >
-            <div style={{ marginTop: '-65px' }}>
+            <div
+              style={{
+                width: '200px',
+                height: '100%',
+                background: 'white',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              {client && <ClientToggle clients={[client]} />}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <ProgressBar tasks={client?.tasks} />
+              </div>
               <Button
                 onClick={handleClickCreateATask}
                 variant="outlined"
@@ -110,8 +119,11 @@ const KanbanBoard = () => {
                   marginBottom: '15px',
                 }}
               >
-                Create a task
+                <CreateIcon />
+                New task
               </Button>
+            </div>
+            <div style={{ padding: '24px 0px 0px 36px', display: 'flex' }}>
               <Fade in={true} timeout={500}>
                 <div>
                   <TaskColumn
@@ -123,55 +135,57 @@ const KanbanBoard = () => {
                     loading={loading}
                     error={error}
                     showCompanyLogos={false}
-                    style={{ marginLeft: '15px' }}
+                    style={{ marginRight: '12px' }}
+                  />
+                </div>
+              </Fade>
+              <Fade in={true} timeout={1000}>
+                <div>
+                  <TaskColumn
+                    title="In Progress"
+                    tasks={client?.tasks?.filter(
+                      (task: Task) => task.status === IN_PROGRESS
+                    )}
+                    loading={loading}
+                    error={error}
+                    showCompanyLogos={false}
+                    showUserImgs={true}
+                    style={{ marginRight: '12px' }}
+                  />
+                </div>
+              </Fade>
+              <Fade in={true} timeout={1500}>
+                <div>
+                  <TaskColumn
+                    title="In Review"
+                    tasks={client?.tasks?.filter(
+                      (task: Task) => task.status === IN_REVIEW
+                    )}
+                    loading={loading}
+                    error={error}
+                    showCompanyLogos={false}
+                    showUserImgs={true}
+                    showAcceptButtons={true}
+                    style={{ marginRight: '12px' }}
+                  />
+                </div>
+              </Fade>
+              <Fade in={true} timeout={2000}>
+                <div>
+                  <TaskColumn
+                    title="Done"
+                    tasks={client?.tasks?.filter(
+                      (task: Task) => task.status === DONE
+                    )}
+                    loading={loading}
+                    error={error}
+                    showCompanyLogos={false}
+                    showUserImgs={true}
+                    style={{ marginRight: '0' }}
                   />
                 </div>
               </Fade>
             </div>
-            <Fade in={true} timeout={1000}>
-              <div>
-                <TaskColumn
-                  title="In Progress"
-                  tasks={client?.tasks?.filter(
-                    (task: Task) => task.status === IN_PROGRESS
-                  )}
-                  loading={loading}
-                  error={error}
-                  showCompanyLogos={false}
-                  showUserImgs={true}
-                />
-              </div>
-            </Fade>
-            <Fade in={true} timeout={1500}>
-              <div>
-                <TaskColumn
-                  title="In Review"
-                  tasks={client?.tasks?.filter(
-                    (task: Task) => task.status === IN_REVIEW
-                  )}
-                  loading={loading}
-                  error={error}
-                  showCompanyLogos={false}
-                  showUserImgs={true}
-                  showAcceptButtons={true}
-                />
-              </div>
-            </Fade>
-            <Fade in={true} timeout={2000}>
-              <div>
-                <TaskColumn
-                  title="Done"
-                  tasks={client?.tasks?.filter(
-                    (task: Task) => task.status === DONE
-                  )}
-                  loading={loading}
-                  error={error}
-                  showCompanyLogos={false}
-                  showUserImgs={true}
-                  style={{ marginRight: '0' }}
-                />
-              </div>
-            </Fade>
           </div>
           <div>
             <Modal

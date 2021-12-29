@@ -39,12 +39,9 @@ export default function TaskColumn({
     <Box
       style={{
         ...{
-          backgroundColor: 'rgb(244, 245, 248)',
-          padding: '10px',
-          borderRadius: '7px',
-          border: '1px solid rgb(217, 222, 227)',
+          padding: 0,
           display: 'relative',
-          marginRight: '15px',
+          width: '358px',
         },
         ...style,
       }}
@@ -52,12 +49,10 @@ export default function TaskColumn({
       <div
         style={{
           textAlign: 'left',
-          marginBottom: '10px',
+          paddingBottom: '20px',
+          maxHeight: '100%',
         }}
       >
-        <span className="text-sm font-bold text-gray-700 bg-gray-200 py-1 px-2 mx-2 rounded-full">
-          {tasks?.length}
-        </span>
         <span
           style={{
             fontSize: '14px',
@@ -66,15 +61,18 @@ export default function TaskColumn({
         >
           {title}
         </span>
+        <span className="text-sm text-gray-700 py-1 px-2 mx-2">
+          {tasks?.length}
+        </span>
       </div>
-      <div style={{ overflow: 'scroll', width: '23vw', height: '68vh' }}>
+      <div style={{ overflow: 'scroll', height: 'calc(100vh - 132px)' }}>
         {loading ? (
           <LoadingSpinner />
         ) : error ? (
           JSON.stringify(error)
         ) : (
           tasks?.reverse().map((task: Task) => (
-            <div style={{ marginBottom: '10px' }} key={task.id}>
+            <div style={{ marginBottom: '8px' }} key={task.id}>
               <KanbanTaskCard
                 task={task}
                 mode="client"

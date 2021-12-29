@@ -91,22 +91,24 @@ export default function MyApp(props: AppProps) {
   }, [state, dispatch]) as AppContext;
 
   return (
-    <UserProvider>
-      <AppDataContext.Provider value={contextValue}>
-        <Head>
-          <title>Cottage</title>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
-        </Head>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Navbar />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </AppDataContext.Provider>
-    </UserProvider>
+    <div style={{ width: '100vw' }}>
+      <UserProvider>
+        <AppDataContext.Provider value={contextValue}>
+          <Head>
+            <title>Cottage</title>
+            <meta
+              name="viewport"
+              content="minimum-scale=1, initial-scale=1, width=device-width"
+            />
+          </Head>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Navbar />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </AppDataContext.Provider>
+      </UserProvider>
+    </div>
   );
 }

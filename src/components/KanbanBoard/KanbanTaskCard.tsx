@@ -83,12 +83,7 @@ export default function KanbanTaskCard({
   };
 
   return (
-    <div
-      className="rounded-lg my-3 mx-3 bg-white"
-      style={{
-        border: '1px solid rgb(217, 222, 227)',
-      }}
-    >
+    <div className="bg-white" style={{ borderRadius: '4px' }}>
       <div className="text-left px-3 py-2">
         <div className="flex justify-between">
           {task.userId && (
@@ -135,7 +130,7 @@ export default function KanbanTaskCard({
                 onClick={() => {}}
                 style={{ marginRight: '10px' }}
               >
-                View pull request
+                View PR
               </Button>
               <Button
                 variant="outlined"
@@ -143,7 +138,7 @@ export default function KanbanTaskCard({
                 onClick={submitPayment}
               >
                 {requestStatus === RequestStatus.IDLE ? (
-                  'Accept and Pay'
+                  'Accept'
                 ) : requestStatus === RequestStatus.PENDING ? (
                   <LoadingSpinner />
                 ) : requestStatus === RequestStatus.FAILED ? (
