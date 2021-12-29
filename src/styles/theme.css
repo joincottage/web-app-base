@@ -26,8 +26,10 @@ body {
 }
 
 /* Override MUI gutter to match element padding */
+/* There's a bug where MUI-root is overriding these styles in production */
+/* https://github.com/mui-org/material-ui/issues/29476 */
 .MuiTypography-gutterBottom {
-  margin-bottom: 12px;
+  margin-bottom: 12px !important;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

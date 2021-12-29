@@ -12,17 +12,26 @@ import { usePreviousTasks } from '../../hooks/usePreviousTasks';
 import { useAttentionTasks } from '../../hooks/useAttentionTasks';
 import { Task } from '.prisma/client';
 import { AppDataContext } from 'src/contexts/AppContext';
-import { Fade, Tooltip, Typography } from '@material-ui/core';
+import { Fade, Theme, Tooltip, Typography } from '@material-ui/core';
 import setTasksInReview from 'src/actions/setTasksInReview';
 import setPreviousTasks from 'src/actions/setPreviousTasks';
 import setCurrentTask from 'src/actions/setCurrentTask';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import { createStyles, makeStyles } from '@material-ui/styles';
 
 const ANIMATION_TIMEOUT_MILLIS = 500;
 
 interface OwnProps {
   user: UserProfile | undefined;
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    title: {
+      fontWeight: 600,
+    },
+  })
+);
 
 export default function UserTaskColumn({ user }: OwnProps) {
   const [loading, setLoading] = useState(true);
@@ -34,8 +43,8 @@ export default function UserTaskColumn({ user }: OwnProps) {
   const { previousTasks, previousTasksLoading, previousTasksError } =
     usePreviousTasks();
   const { attentionTasks } = useAttentionTasks();
-
   const { state, dispatch } = useContext(AppDataContext);
+  const classes = useStyles();
 
   // TODO: load and dispatch all state data in a single place that isn't a component
   useEffect(() => {
@@ -124,7 +133,7 @@ export default function UserTaskColumn({ user }: OwnProps) {
               <Typography
                 variant="subtitle1"
                 gutterBottom
-                className="font-semibold"
+                className={classes.title}
               >
                 Your Current Task
               </Typography>
@@ -142,7 +151,8 @@ export default function UserTaskColumn({ user }: OwnProps) {
               <Typography
                 variant="subtitle1"
                 gutterBottom
-                className="mt-6 font-semibold"
+                className={classes.title}
+                style={{ marginTop: '1.5rem' }}
               >
                 Your Tasks In Review
               </Typography>
@@ -150,7 +160,8 @@ export default function UserTaskColumn({ user }: OwnProps) {
               <Typography
                 variant="subtitle1"
                 gutterBottom
-                className="mt-6 font-semibold"
+                className={classes.title}
+                style={{ marginTop: '1.5rem' }}
               >
                 Your Completed Tasks
               </Typography>

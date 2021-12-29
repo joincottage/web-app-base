@@ -158,15 +158,22 @@ export default function TaskCard({
       <div className={classes.container} onClick={handleClickTaskCard}>
         <div className="flex justify-between">
           <div className="ml-1">
-            <Typography variant="subtitle2" className="font-bold" gutterBottom>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 700 }}
+            >
               {task.name}
             </Typography>
             <h6 className="my-2 text-sm text-gray-500 flex items-center">
               <Avatar
-                className="h-6 w-6"
                 alt="User image"
                 src={task.clientImgUrl || ''}
-                style={{ display: 'inline-block' }}
+                style={{
+                  display: 'inline-block',
+                  width: '1.5rem',
+                  height: '1.5rem',
+                }}
               />
               <span className="ml-2 font-light uppercase">
                 {task.clientName}

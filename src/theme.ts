@@ -22,6 +22,18 @@ const theme = createTheme({
   typography: {
     fontFamily: '"Poppins", sans serif',
   },
+  components: {
+    // Name of the component
+    MuiTypography: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // Some CSS
+          margin: 'initial',
+        },
+      },
+    },
+  },
 });
 
 export default theme;

@@ -37,7 +37,7 @@ export default class MyDocument extends Document {
             type="text/javascript"
           />
         </Head>
-        <body>
+        <body style={{ backgroundColor: 'rgb(241, 242, 244)' }}>
           <Main />
           <NextScript />
         </body>

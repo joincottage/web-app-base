@@ -1,6 +1,7 @@
 import React, { useContext, ChangeEvent } from 'react';
 import Typography from '@material-ui/core/Typography';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Theme } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/styles';
 import TaskList from 'src/components/TaskList';
 import { Client } from '.prisma/client';
 import { AppDataContext } from '../../contexts/AppContext';
@@ -13,8 +14,18 @@ interface OwnProps {
   children: JSX.Element;
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    title: {
+      fontWeight: 600,
+    },
+  })
+);
+
 export default function TaskListContainer({ children }: OwnProps) {
   const { state, dispatch } = useContext(AppDataContext);
+  const classes = useStyles();
+
   const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setActiveSearchTerm(e.target.value));
   };
@@ -23,7 +34,7 @@ export default function TaskListContainer({ children }: OwnProps) {
       <Typography
         variant="subtitle1"
         gutterBottom
-        className="font-semibold flex justify-center"
+        className={`${classes.title} flex justify-center`}
       >
         Available Tasks
       </Typography>
@@ -45,7 +56,12 @@ export default function TaskListContainer({ children }: OwnProps) {
           <Input
             placeholder="Search skills"
             className=" text-sm font-light text-gray-700 bg-gray-200 py-1 px-2 rounded-full"
-            style={{ height: '32px', flexGrow: 1, marginRight: '10px' }}
+            style={{
+              height: '32px',
+              flexGrow: 1,
+              marginRight: '10px',
+              fontSize: '13px',
+            }}
             disableUnderline
             startAdornment={
               <InputAdornment position="start">
