@@ -23,7 +23,7 @@ export default function ManageTasks() {
   return (
     <Container
       maxWidth={false}
-      style={{ display: 'flex', flexDirection: 'column' }}
+      style={{ display: 'flex', flexDirection: 'column', background: 'white' }}
     >
       <div className={classes.root}>
         <KanbanBoard />
