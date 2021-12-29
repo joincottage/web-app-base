@@ -6,7 +6,7 @@ export default function TaskEmptyState() {
   //TODO: allow for h3 & p to be passed in to make this component reuseable
 
   return (
-    <div className="border-2 rounded-lg border-dotted">
+    <div className="border-2 rounded-lg border-dotted border-gray-300">
       <div className="text-center py-2 px-2">
         <Link href="#">
           <svg
