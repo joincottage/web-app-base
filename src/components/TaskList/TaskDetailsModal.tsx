@@ -59,7 +59,10 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
               </div>
             </div>
             <div className="mt-[22px] flex justify-center">
-              <p className="text-sm w-[191px]">
+              <p
+                className="text-sm w-[191px]"
+                style={{ fontSize: '12px', textAlign: 'center' }}
+              >
                 {/*FIXME: create a client bio in client schema */}
                 Client bio lorem expedita doloremque sapiente alias iste
                 expedita! Culpa reprehenderit aliquam quibusdam neque.
