@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     container: {
-      padding: '15px',
+      padding: '20px',
     },
     media: {
       height: 0,
@@ -156,7 +156,7 @@ export default function TaskCard({
   return (
     <Card className={classes.root} style={styles}>
       <div className={classes.container} onClick={handleClickTaskCard}>
-        <div className="flex justify-between mx-4">
+        <div className="flex justify-between">
           <div className="ml-1">
             <Typography variant="subtitle2" className="font-bold" gutterBottom>
               {task.name}
@@ -224,12 +224,12 @@ export default function TaskCard({
             </h6>
           </div>
         </div>
-        <div className="mx-4 mb-1 prose-sm text-gray-500">
+        <div className="mb-1 prose-sm text-gray-500">
           <Typography variant="body2" gutterBottom>
             {task.shortDesc}
           </Typography>
         </div>
-        <div className="flex mx-3 justify-between">
+        <div className="flex justify-between">
           <div className="flex space-x-2 mr-3 my-1">
             {!showAcceptButton &&
               task.skills?.split(',').map((skill) => (

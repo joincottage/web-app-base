@@ -16,11 +16,11 @@ export default function PreviousTasks({ tasks }: OwnProps) {
     );
   return (
     <div className="text-left">
-      <ul role="list" className="space-y-4">
+      <ul role="list" className="space-y-3">
         {tasks.map((task) => (
           <li
             key={task.id}
-            className="bg-gray-50 shadow overflow-hidden rounded-md px-3 py-3 text-gray-500"
+            className="bg-gray-50 shadow overflow-hidden rounded-md px-3 py-2 text-gray-500"
           >
             <p
               className=""

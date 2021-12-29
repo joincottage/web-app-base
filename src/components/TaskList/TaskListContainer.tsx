@@ -39,7 +39,7 @@ export default function TaskListContainer({ children }: OwnProps) {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            padding: '20px 40px',
+            padding: '20px',
           }}
         >
           <Input

@@ -68,6 +68,7 @@ export default function BasicTabs({ clients }: OwnProps) {
             backgroundColor: 'white',
             borderRadius: '6px',
             border: '1px solid rgb(224, 224, 224)',
+            width: '100px',
           }}
         >
           <Tabs
