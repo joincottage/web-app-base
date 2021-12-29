@@ -16,6 +16,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { AppDataContext } from 'src/contexts/AppContext';
 import { RequestStatus } from 'src/constants/request-status';
 import LoadingSpinner from 'src/components/LoadingSpinner';
+import AcceptAndPayModal from './AcceptAndPayModal';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
 import CloseIcon from '@material-ui/icons/Close';
@@ -44,8 +45,9 @@ export default function KanbanTaskCard({
   const [isCreateATaskOpen, setIsCreateATaskOpen] = useState(
     router.query.showCreateTask === 'true'
   );
-
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const { state, dispatch } = useContext(AppDataContext);
+
   const handleClickCreateATask = () => {
     if (task.status == TASK_QUEUED) {
       setIsCreateATaskOpen(true);
@@ -58,6 +60,14 @@ export default function KanbanTaskCard({
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
+
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+  };
+
+  const handleClickPayment = () => {
+    setIsPaymentModalOpen(true);
+  };
 
   const submitPayment = async () => {
     setRequestStatus(RequestStatus.PENDING);
@@ -135,7 +145,7 @@ export default function KanbanTaskCard({
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={submitPayment}
+                onClick={handleClickPayment}
               >
                 {requestStatus === RequestStatus.IDLE ? (
                   'Accept'
@@ -174,6 +184,24 @@ export default function KanbanTaskCard({
                 task={task}
               />
             </div>
+          </div>
+        </Modal>
+        <Modal
+          open={isPaymentModalOpen}
+          onClose={handleClosePaymentModal}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <div>
+            <AcceptAndPayModal
+              task={task}
+              handleClose={handleClosePaymentModal}
+            />
           </div>
         </Modal>
       </div>
