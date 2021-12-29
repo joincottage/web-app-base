@@ -62,6 +62,8 @@ export default function Index() {
                   justifyContent: 'center',
                   alignItems: 'center',
                   marginLeft: '25px',
+                  position: 'sticky',
+                  top: '20px',
                 }}
               >
                 <UserTasksColumn user={user} />
