@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Copyright from '../Copyright';
@@ -32,9 +32,23 @@ export default function Index() {
     shouldFetchAll: true,
   });
   const classes = useStyles();
+  const [offsetY, setOffsetY] = useState(0);
+  const [forestOffsetY, setForestOffsetY] = useState(0);
+
+  const handleScroll = () => {
+    setOffsetY(window.innerHeight - window.scrollY / 8 - 200);
+    setForestOffsetY(window.innerHeight - window.scrollY / 75 - 200);
+  };
 
   useEffect(() => {
     dispatch(setSelectedClient({ name: 'All' }));
+
+    // @ts-ignore
+    window.addEventListener('scroll', handleScroll);
+    setOffsetY(window.innerHeight - window.scrollY - 200);
+    setForestOffsetY(window.innerHeight - window.scrollY - 200);
+
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -43,10 +57,23 @@ export default function Index() {
         <div
           style={{
             position: 'fixed',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            opacity: 0.02,
+          }}
+        >
+          <Image src="/sky.svg" layout="fill" />
+        </div>
+        <div
+          style={{
+            position: 'fixed',
             left: '-500px',
             right: 0,
             top: '-325px',
             bottom: 0,
+            transform: `translate3d(0, ${forestOffsetY - 700}px, 0)`,
             opacity: 0.05,
           }}
         >
@@ -56,9 +83,10 @@ export default function Index() {
           style={{
             position: 'fixed',
             left: '-620px',
-            top: '-75px',
+            top: '-525px',
             zIndex: -1,
-            opacity: 0.5,
+            transform: `translate3d(0, ${offsetY - 300}px, 0)`,
+            opacity: 0.15,
           }}
         >
           <SmokeMachine />
@@ -67,11 +95,25 @@ export default function Index() {
           style={{
             position: 'fixed',
             left: '150px',
-            bottom: '-98px',
-            opacity: 0.15,
+            top: 0,
+            bottom: 0,
+            transform: `translate3d(0, ${offsetY}px, 0)`,
+            //transform: `translate3d(0, 700px, 0)`,
+            opacity: 0.25,
           }}
         >
           <Image src="/cottage.png" width={300} height={300} />
+        </div>
+        <div
+          style={{
+            position: 'fixed',
+            left: 0,
+            bottom: '-450px',
+            transform: `translate3d(0, ${offsetY - 700}px, 0)`,
+            opacity: 0.1,
+          }}
+        >
+          <Image src="/hill.png" width={500} height={500} />
         </div>
         <Box my={4}>
           <div

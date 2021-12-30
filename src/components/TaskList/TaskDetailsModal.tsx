@@ -117,7 +117,9 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
             <div className="flex items-baseline ml-3">
               <Button className="mx-1" variant="outlined" color="primary">
                 <span className="text-xl">💰</span>
-                <span className="text-sm">&nbsp;Too&nbsp;Cheap</span>
+                <span className="text-sm">
+                  &nbsp;Suggest&nbsp;higher&nbsp;price
+                </span>
               </Button>
               <Button className="mx-1" variant="outlined" color="primary">
                 <span className="text-xl">🤷</span>

@@ -52,7 +52,7 @@ export const Navbar = (): JSX.Element => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }} style={{ position: 'relative' }}>
+    <Box sx={{ flexGrow: 1 }} style={{ position: 'relative', zIndex: 20 }}>
       <AppBar position="static">
         <Container maxWidth="lg">
           <Toolbar>
