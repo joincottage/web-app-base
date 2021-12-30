@@ -43,10 +43,22 @@ export default function Index() {
         <div
           style={{
             position: 'fixed',
-            left: '-635px',
-            top: '-175px',
-            opacity: 0.5,
+            left: '-500px',
+            right: 0,
+            top: '-325px',
+            bottom: 0,
+            opacity: 0.05,
+          }}
+        >
+          <Image src="/forest.svg" layout="fixed" width={2800} height={1800} />
+        </div>
+        <div
+          style={{
+            position: 'fixed',
+            left: '-620px',
+            top: '-75px',
             zIndex: -1,
+            opacity: 0.5,
           }}
         >
           <SmokeMachine />
@@ -54,12 +66,12 @@ export default function Index() {
         <div
           style={{
             position: 'fixed',
-            left: '-15px',
-            bottom: '-400px',
-            opacity: 0.05,
+            left: '150px',
+            bottom: '-98px',
+            opacity: 0.15,
           }}
         >
-          <Image src="/cottage.svg" width={600} height={1000} />
+          <Image src="/cottage.png" width={300} height={300} />
         </div>
         <Box my={4}>
           <div

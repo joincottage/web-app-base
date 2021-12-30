@@ -53,15 +53,15 @@ const init = function (context, color) {
 
   bctx.putImageData(data, 0, 0);
 
-  const imagewidth = 15 * 5;
-  const imageheight = 8 * 5;
+  const imagewidth = 10 * 5;
+  const imageheight = 6 * 5;
 
   function particle(x, y, l) {
     this.x = x;
     this.y = y;
     this.age = 0;
-    this.vx = (Math.random() * 8 - 4) / 100;
-    this.startvy = -(Math.random() * 30 + 10) / 100;
+    this.vx = (Math.random() * 2 - 4) / 100;
+    this.startvy = -(Math.random() * 5 + 10) / 100;
     this.vy = this.startvy;
     this.scale = Math.random() * 0.5;
     this.lifetime = Math.random() * l + l / 2;
@@ -157,7 +157,7 @@ const SmokeMachine = () => {
     canvas.width = innerWidth;
     canvas.height = innerHeight;
 
-    const party = init(ctx, [31, 87, 184]);
+    const party = init(ctx, [0, 0, 0]);
     party.start(); // start animating
 
     setInterval(function () {
