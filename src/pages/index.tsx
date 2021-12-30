@@ -12,6 +12,8 @@ import setSelectedClient from 'src/actions/setSelectedClient';
 import TaskList from 'src/components/TaskList';
 import IconAttribution from 'src/components/IconAttribution';
 import { createStyles, makeStyles } from '@material-ui/styles';
+import Image from 'next/image';
+import SmokeMachine from 'src/components/SmokeMachine';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -38,6 +40,27 @@ export default function Index() {
   return (
     <Fade in={true}>
       <Container maxWidth="xl">
+        <div
+          style={{
+            position: 'fixed',
+            left: '-635px',
+            top: '-175px',
+            opacity: 0.5,
+            zIndex: -1,
+          }}
+        >
+          <SmokeMachine />
+        </div>
+        <div
+          style={{
+            position: 'fixed',
+            left: '-15px',
+            bottom: '-400px',
+            opacity: 0.05,
+          }}
+        >
+          <Image src="/cottage.svg" width={600} height={1000} />
+        </div>
         <Box my={4}>
           <div
             style={{
