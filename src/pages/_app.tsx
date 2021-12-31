@@ -99,21 +99,6 @@ export default function MyApp(props: AppProps) {
       {router.pathname === '/' && (
         <>
           <div
-            className="parallax"
-            // @ts-ignore
-            parallax="0.01"
-            style={{
-              position: 'fixed',
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0,
-              opacity: 0.05,
-              backgroundImage: 'url("sky.png")',
-              backgroundSize: 'cover',
-            }}
-          ></div>
-          <div
             className="parallax forest"
             // @ts-ignore
             parallax="0.1"
