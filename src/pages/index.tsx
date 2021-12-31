@@ -14,6 +14,7 @@ import IconAttribution from 'src/components/IconAttribution';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import Image from 'next/image';
 import SmokeMachine from 'src/components/SmokeMachine';
+import initializeParallax from 'src/scripts/parallax';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -41,80 +42,21 @@ export default function Index() {
   };
 
   useEffect(() => {
+    initializeParallax(document.querySelector('#__next'));
+
     dispatch(setSelectedClient({ name: 'All' }));
 
     // @ts-ignore
-    window.addEventListener('scroll', handleScroll);
+    //window.addEventListener('scroll', requestAnimationFrame(handleScroll));
     setOffsetY(window.innerHeight - window.scrollY - 200);
     setForestOffsetY(window.innerHeight - window.scrollY - 200);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    //return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <Fade in={true}>
       <Container maxWidth="xl">
-        <div
-          style={{
-            position: 'fixed',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            opacity: 0.02,
-          }}
-        >
-          <Image src="/sky.svg" layout="fill" />
-        </div>
-        <div
-          style={{
-            position: 'fixed',
-            left: '-500px',
-            right: 0,
-            top: '-325px',
-            bottom: 0,
-            transform: `translate3d(0, ${forestOffsetY - 700}px, 0)`,
-            opacity: 0.05,
-          }}
-        >
-          <Image src="/forest.svg" layout="fixed" width={2800} height={1800} />
-        </div>
-        <div
-          style={{
-            position: 'fixed',
-            left: '-620px',
-            top: '-525px',
-            zIndex: -1,
-            transform: `translate3d(0, ${offsetY - 300}px, 0)`,
-            opacity: 0.15,
-          }}
-        >
-          <SmokeMachine />
-        </div>
-        <div
-          style={{
-            position: 'fixed',
-            left: '150px',
-            top: 0,
-            bottom: 0,
-            transform: `translate3d(0, ${offsetY}px, 0)`,
-            //transform: `translate3d(0, 700px, 0)`,
-            opacity: 0.25,
-          }}
-        >
-          <Image src="/cottage.png" width={300} height={300} />
-        </div>
-        <div
-          style={{
-            position: 'fixed',
-            left: 0,
-            bottom: '-450px',
-            transform: `translate3d(0, ${offsetY - 700}px, 0)`,
-            opacity: 0.1,
-          }}
-        >
-          <Image src="/hill.png" width={500} height={500} />
-        </div>
         <Box my={4}>
           <div
             style={{

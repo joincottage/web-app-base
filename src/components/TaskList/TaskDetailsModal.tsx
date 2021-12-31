@@ -32,6 +32,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
       });
       setRequestStatus(RequestStatus.SUCCEEDED);
       dispatch(setCurrentTask(task));
+      handleClose();
     } catch (e) {
       setRequestStatus(RequestStatus.FAILED);
       throw e;

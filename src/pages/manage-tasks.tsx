@@ -30,6 +30,8 @@ export default function ManageTasks() {
         overflow: 'hidden',
         padding: 0,
         margin: 0,
+        position: 'relative',
+        zIndex: 30,
       }}
     >
       <div className={classes.root}>
