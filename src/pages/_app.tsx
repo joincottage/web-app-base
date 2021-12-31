@@ -165,7 +165,11 @@ export default function MyApp(props: AppProps) {
                 zIndex: 20,
               }}
             >
-              <Image src="/cottage.png" width={300} height={300} />
+              {state.currentTask ? (
+                <Image src="/cottage-light.png" width={300} height={300} />
+              ) : (
+                <Image src="/cottage.png" width={300} height={300} />
+              )}
             </div>
             <div
               style={{
