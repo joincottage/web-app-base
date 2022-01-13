@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 
 # in order to connect with prisma to the local database set the below in your .env file
 # database connection strings:
