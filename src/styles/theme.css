@@ -9,6 +9,23 @@ body {
   width: 100vw;
   display: flex;
 }
+a,
+span.link {
+  color: blue;
+}
+
+a:visited,
+span.visited {
+  color: purple;
+}
+
+a:active,
+span.active {
+  color: red;
+}
+a:hover {
+  text-decoration: underline;
+}
 
 .parallax {
   background-size: cover;
