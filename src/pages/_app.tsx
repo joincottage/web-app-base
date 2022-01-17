@@ -119,18 +119,16 @@ export default function MyApp(props: AppProps) {
             }}
           >
             <div className="forest-mask"></div>
-            {state.currentTask && (
-              <div
-                style={{
-                  position: 'absolute',
-                  left: '30px',
-                  top: '360px',
-                  opacity: 0.5,
-                }}
-              >
-                <SmokeMachine />
-              </div>
-            )}
+            <div
+              style={{
+                position: 'absolute',
+                left: '30px',
+                top: '360px',
+                opacity: 0.5,
+              }}
+            >
+              <SmokeMachine />
+            </div>
             <div
               style={{
                 position: 'absolute',
@@ -141,11 +139,7 @@ export default function MyApp(props: AppProps) {
                 zIndex: 20,
               }}
             >
-              {state.currentTask ? (
-                <Image src="/cottage-light.png" width={300} height={300} />
-              ) : (
-                <Image src="/cottage.png" width={300} height={300} />
-              )}
+              <Image src="/cottage-light.png" width={300} height={300} />
             </div>
             <div
               style={{
