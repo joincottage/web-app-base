@@ -154,14 +154,14 @@ const SmokeMachine = () => {
   useEffect(() => {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
+    canvas.width = 300;
+    canvas.height = 400;
 
     const party = init(ctx, [0, 0, 0]);
     party.start(); // start animating
 
     setInterval(function () {
-      party.addsmoke(innerWidth / 2, innerHeight, 1);
+      party.addsmoke(300, 400, 1);
     }, 100);
   }, []);
 

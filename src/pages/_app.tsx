@@ -132,8 +132,8 @@ export default function MyApp(props: AppProps) {
               <div
                 style={{
                   position: 'absolute',
-                  left: '-560px',
-                  bottom: '70px',
+                  left: '30px',
+                  top: '360px',
                   opacity: 0.5,
                 }}
               >
@@ -144,7 +144,7 @@ export default function MyApp(props: AppProps) {
               style={{
                 position: 'absolute',
                 left: '235px',
-                bottom: '5px',
+                top: '712px',
                 width: '125px',
                 height: '125px',
                 zIndex: 20,
