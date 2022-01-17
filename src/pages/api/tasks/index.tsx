@@ -19,15 +19,10 @@ export default async function (
       //   break;
       // }
       try {
-        const channel = await createTextChannel(
-          (req.body as Task).name?.split(' ').join('-') || '',
-          (req.body as Task)?.shortDesc || '',
-          (req.body as any)?.clientCategoryId || ''
-        );
         await prisma.task.create({
           data: {
             ...req.body,
-            discordChannelId: channel.id,
+            discordChannelId: '',
             status: TASK_QUEUED,
           },
         });
