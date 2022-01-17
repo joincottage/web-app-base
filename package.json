@@ -25,6 +25,8 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.5.0",
+    "@draft-js-plugins/editor": "^4.1.1",
+    "@draft-js-plugins/linkify": "^4.2.0",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@fontsource/roboto": "^4.5.0",

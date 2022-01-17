@@ -6,22 +6,43 @@ import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
 import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
 import { RequestStatus } from './../../constants/request-status';
 import Axios from 'axios';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import setCurrentTask from 'src/actions/setCurrentTask';
 import { AppDataContext } from 'src/contexts/AppContext';
+import {
+  EditorState,
+  convertToRaw,
+  convertFromRaw,
+  CompositeDecorator,
+  DraftDecorator,
+} from 'draft-js';
+import dynamic from 'next/dynamic';
 
+const Editor = dynamic(
+  // @ts-ignore
+  () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
+  { ssr: false }
+);
 interface OwnProps {
   task: Task;
   handleClose: () => void;
 }
 
 export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
-  const { state } = useContext(AppDataContext);
-
+  const { state, dispatch } = useContext(AppDataContext);
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
-  const { dispatch } = useContext(AppDataContext);
+
+  const [editorState, setEditorState] = useState<EditorState | null>(null);
+  useEffect(() => {
+    try {
+      const newEditorState = EditorState.createWithContent(
+        convertFromRaw(JSON.parse(task.longDesc as string))
+      );
+      setEditorState(newEditorState);
+    } catch (err) {}
+  }, [task.longDesc]);
 
   const handleRequestAccess = async () => {
     setRequestStatus(RequestStatus.PENDING);
@@ -110,7 +131,17 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
               </div>
             </div>
             <div className="prose-sm text-gray-700 h-[539px] mt-[19px] mx-[19px]">
-              <p>{task.longDesc}</p>
+              <p>
+                {editorState && (
+                  <Editor
+                    // @ts-ignore
+                    editorState={editorState}
+                    onChange={() => {}}
+                    readOnly
+                    toolbarHidden
+                  />
+                )}
+              </p>
             </div>
           </div>
           <div className="mb-[16px] mr-[19px] h-[36px]  flex justify-between ">

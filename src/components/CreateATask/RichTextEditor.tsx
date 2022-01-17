@@ -6,6 +6,9 @@ import { convertToRaw, EditorState } from 'draft-js';
 import DOMPurify from 'dompurify';
 import { AppDataContext } from 'src/contexts/AppContext';
 import setCreateATaskState from 'src/actions/setCreateATaskState';
+import createLinkifyPlugin from '@draft-js-plugins/linkify';
+
+const linkifyPlugin = createLinkifyPlugin();
 
 const Editor = dynamic(
   // @ts-ignore
@@ -39,6 +42,7 @@ const App = ({ className }: OwnProps) => {
         wrapperClassName="wrapper-class"
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
+        plugins={[linkifyPlugin]}
       />
     </div>
   );
