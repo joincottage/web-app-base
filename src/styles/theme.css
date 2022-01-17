@@ -43,6 +43,15 @@ a:hover {
 .parallax.moon {
   transform: scale(100) translate3d(-50px, -720.12px, -99px) !important;
 }
+.forest-mask {
+  background: linear-gradient(transparent, rgba(216, 217, 219));
+  height: 100vh;
+  position: absolute;
+  bottom: 0;
+  top: 644px;
+  left: 0;
+  right: 0;
+}
 #__next {
   overflow-y: scroll;
   overflow-x: hidden;

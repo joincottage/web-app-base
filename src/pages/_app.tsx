@@ -95,7 +95,7 @@ export default function MyApp(props: AppProps) {
   }, [state, dispatch]) as AppContext;
 
   return (
-    <div className="viewport" style={{ width: '100vw' }}>
+    <div className="viewport" style={{ width: '100vw', position: 'relative' }}>
       {router.pathname === '/' && (
         <>
           <div
@@ -105,21 +105,11 @@ export default function MyApp(props: AppProps) {
             style={{
               backgroundImage: 'url("/forest.svg")',
               width: '150vw',
-              height: '150vh',
-              marginBottom: '-150vh',
+              height: '1500px',
+              marginBottom: '-1500px',
+              position: 'fixed',
             }}
-          >
-            <div
-              style={{
-                position: 'absolute',
-                bottom: '-55px',
-                left: 0,
-                right: 0,
-                height: '150px',
-                backgroundColor: 'rgb(216, 217, 219)',
-              }}
-            ></div>
-          </div>
+          ></div>
           <div
             className="parallax"
             // @ts-ignore
@@ -128,6 +118,7 @@ export default function MyApp(props: AppProps) {
               position: 'fixed',
             }}
           >
+            <div className="forest-mask"></div>
             {state.currentTask && (
               <div
                 style={{
