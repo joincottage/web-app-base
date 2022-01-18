@@ -6,6 +6,7 @@ import { Client, Task } from '.prisma/client';
 import Axios from 'axios';
 import {
   Box,
+  Chip,
   Typography,
   TextField,
   Button,
@@ -14,6 +15,8 @@ import {
   Snackbar,
   Alert,
 } from '@material-ui/core';
+import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
+import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
 import { RequestStatus } from '../../constants/request-status';
 import RichTextEditor from './RichTextEditor';
 import { convertToRaw } from 'draft-js';
@@ -33,16 +36,18 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       textAlign: 'center',
       minHeight: '405px',
+      width: '844px',
     },
     requiredSkills: {},
     price: {},
     richTextEditor: {
+      height: '40vh',
       '&:focus': {
         border: `1px solid ${theme.palette.primary.light}`,
       },
     },
     richTextEditorContainer: {
-      width: '596px',
+      width: '828px',
       border: '1px solid rgba(0, 0, 0, 0.1)',
       borderRadius: '4px',
       '&:hover': {
@@ -58,7 +63,8 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     submitButton: {
-      padding: '25px',
+      padding: '6px 16px',
+      width: '184px',
       margin: theme.spacing(1),
     },
     error: {
@@ -163,24 +169,60 @@ export default function CreateATask({ client, task }: OwnProps) {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-          <ToggleButtonGroup
-            value={bug}
-            exclusive
-            onChange={() => {
-              setBug(!bug);
-            }}
-            aria-label="text alignment"
-            className="mr-6"
-          >
-            <ToggleButton value="check" className="w-full" selected={bug}>
-              Bug
-            </ToggleButton>
-            <ToggleButton value="check" className="w-full" selected={!bug}>
-              Feature
-            </ToggleButton>
-          </ToggleButtonGroup>
-          <div className={classes.richTextEditorContainer}>
-            <RichTextEditor className={classes.richTextEditor} />
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <TextField
+              style={{ marginRight: '16px' }}
+              className={classes.price}
+              value={price}
+              type="number"
+              label="Price"
+              variant="outlined"
+              onChange={(e) => setPrice(e.target.value)}
+              required
+            />
+            <ToggleButtonGroup
+              value={bug}
+              exclusive
+              onChange={() => {
+                setBug(!bug);
+              }}
+              aria-label="text alignment"
+              className="mr-6"
+            >
+              <ToggleButton value="check" className="w-full" selected={bug}>
+                <Chip
+                  avatar={
+                    <BugReportOutlinedIcon
+                      style={{
+                        fill: '#E00004',
+                        background: 'none',
+                      }}
+                    />
+                  }
+                  label="Bug"
+                  color="primary"
+                  clickable
+                  style={{ border: 'none', width: '100px' }}
+                  variant="outlined"
+                />
+              </ToggleButton>
+              <ToggleButton value="check" className="w-full" selected={!bug}>
+                <Chip
+                  avatar={
+                    <CubeTransparentOutlineIcon
+                      style={{
+                        color: 'rgb(31,87,184)',
+                        background: 'none',
+                      }}
+                    />
+                  }
+                  label="Feature"
+                  color="primary"
+                  variant="outlined"
+                  style={{ border: 'none', width: '100px' }}
+                />
+              </ToggleButton>
+            </ToggleButtonGroup>
           </div>
           <TextField
             className={classes.requiredSkills}
@@ -190,15 +232,9 @@ export default function CreateATask({ client, task }: OwnProps) {
             onChange={(e) => setRequiredSkills(e.target.value)}
             required
           />
-          <TextField
-            className={classes.price}
-            value={price}
-            type="number"
-            label="Price"
-            variant="outlined"
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
+          <div className={classes.richTextEditorContainer}>
+            <RichTextEditor className={classes.richTextEditor} />
+          </div>
         </form>
         <Button
           className={classes.submitButton}
