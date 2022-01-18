@@ -123,12 +123,12 @@ export const Navbar = (): JSX.Element => {
             >
               <HelpIcon style={{ cursor: 'pointer' }} />
             </IconButton>
-            <IconButton style={{ color: 'white' }}>
+            {/* <IconButton style={{ color: 'white' }}>
               <ChatIcon
                 onClick={handleRouteToChat}
                 style={{ cursor: 'pointer' }}
               />
-            </IconButton>
+            </IconButton> */}
             {!isLoading && user ? (
               <>
                 <AccountIconMenu
