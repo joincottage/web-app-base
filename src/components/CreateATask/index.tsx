@@ -41,8 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
     requiredSkills: {},
     price: {},
     richTextEditor: {
-      height: '40vh',
-      overflow: 'scroll',
+      height: '50vh',
       '&:focus': {
         border: `1px solid ${theme.palette.primary.light}`,
       },
@@ -94,7 +93,9 @@ export default function CreateATask({ client, task }: OwnProps) {
   );
   const [showSuccess, setShowSuccess] = useState(false);
   const [price, setPrice] = useState(task === null ? '' : task.price);
-  const [bug, setBug] = useState(task === null ? '' : task.type);
+  const [isBugSelected, setIsBugSelected] = useState(
+    task === null ? '' : task.type
+  );
 
   const { state } = useContext(AppDataContext);
 
@@ -113,7 +114,7 @@ export default function CreateATask({ client, task }: OwnProps) {
           name: title,
           shortDesc,
           longDesc: state.serializedEditorState,
-          type: bug ? 'bug' : 'feature',
+          type: isBugSelected ? 'bug' : 'feature',
           skills: requiredSkills,
           datePosted: new Date().toString(),
           clientId: client?.id,
@@ -129,7 +130,7 @@ export default function CreateATask({ client, task }: OwnProps) {
             name: title,
             shortDesc: shortDesc,
             longDesc: longDesc,
-            type: bug ? 'bug' : 'feature',
+            type: isBugSelected ? 'bug' : 'feature',
             skills: requiredSkills,
             price: Number(price),
             datePosted: new Date().toString(),
@@ -182,15 +183,22 @@ export default function CreateATask({ client, task }: OwnProps) {
               required
             />
             <ToggleButtonGroup
-              value={bug}
+              value={isBugSelected}
               exclusive
               onChange={() => {
-                setBug(!bug);
+                setIsBugSelected(!isBugSelected);
               }}
               aria-label="text alignment"
               className="mr-6"
             >
-              <ToggleButton value="check" className="w-full" selected={bug}>
+              <ToggleButton
+                value="check"
+                className="w-full"
+                selected={isBugSelected}
+                style={{
+                  opacity: isBugSelected ? 1.0 : 0.25,
+                }}
+              >
                 <Chip
                   avatar={
                     <BugReportOutlinedIcon
@@ -202,12 +210,18 @@ export default function CreateATask({ client, task }: OwnProps) {
                   }
                   label="Bug"
                   color="primary"
-                  clickable
                   style={{ border: 'none', width: '100px' }}
                   variant="outlined"
                 />
               </ToggleButton>
-              <ToggleButton value="check" className="w-full" selected={!bug}>
+              <ToggleButton
+                value="check"
+                className="w-full"
+                selected={!isBugSelected}
+                style={{
+                  opacity: isBugSelected ? 0.25 : 1.0,
+                }}
+              >
                 <Chip
                   avatar={
                     <CubeTransparentOutlineIcon

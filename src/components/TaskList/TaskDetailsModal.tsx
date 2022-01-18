@@ -61,7 +61,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg fixed h-[751px] w-[1040px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div className="bg-white rounded-lg fixed h-[770px] w-[1040px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div className="flex w-full h-full">
         <div className="border-r-2 border-primary-500">
           {/* Company info */}
@@ -130,7 +130,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 ))}
               </div>
             </div>
-            <div className="prose-sm text-gray-700 h-[539px] mt-[19px] mx-[19px]">
+            <div className="prose-sm text-gray-700 h-[539px] m-[19px] overflow-scroll">
               <p>
                 {editorState && (
                   <Editor

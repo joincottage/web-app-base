@@ -13,4 +13,6 @@
 
 .editor-class {
   padding: 0 15px;
+  overflow: scroll;
+  max-height: calc(50vh - 75px);
 }
