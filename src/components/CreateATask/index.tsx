@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
     price: {},
     richTextEditor: {
       height: '40vh',
+      overflow: 'scroll',
       '&:focus': {
         border: `1px solid ${theme.palette.primary.light}`,
       },
