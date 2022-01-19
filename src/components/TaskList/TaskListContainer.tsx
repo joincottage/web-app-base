@@ -40,7 +40,6 @@ export default function TaskListContainer({ children }: OwnProps) {
       </Typography>
       <div
         style={{
-          backgroundColor: 'white',
           border: '1px solid rgb(224, 224, 224)',
           borderRadius: '6px',
           position: 'relative',
@@ -51,6 +50,9 @@ export default function TaskListContainer({ children }: OwnProps) {
             display: 'flex',
             justifyContent: 'space-between',
             padding: '20px',
+            background: 'white',
+            borderTopLeftRadius: '6px',
+            borderTopRightRadius: '6px',
           }}
         >
           <Input

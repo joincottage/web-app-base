@@ -1,5 +1,5 @@
 import { Task } from '.prisma/client';
-import { Button } from '@material-ui/core';
+import { Button, Chip } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import OpenInNew from '@material-ui/icons/OpenInNew';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
@@ -60,12 +60,16 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
     }
   };
 
+  const handleClickPreviewCodebase = () => {
+    window.open('https://cloudcoder.network/ws/51758359595864/ide/', '_blank');
+  };
+
   return (
     <div className="bg-white rounded-lg fixed h-[770px] w-[1040px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div className="flex w-full h-full">
         <div className="border-r-2 border-primary-500">
           {/* Company info */}
-          <div className="w-[246px]">
+          <div className="w-[246px] flex flex-col items-center">
             <div className="">
               <div className="mt-[13px] flex justify-center">
                 <img
@@ -86,19 +90,31 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 style={{ fontSize: '12px', textAlign: 'center' }}
               >
                 {/*FIXME: create a client bio in client schema */}
-                Client bio lorem expedita doloremque sapiente alias iste
-                expedita! Culpa reprehenderit aliquam quibusdam neque.
+                Cottage is a freelancing platform for software engineers.
+                Cottage matches engineers with startups to perform tasks on a
+                part time basis.
               </p>
             </div>
             <div className="mt-[22px] flex justify-center items-center my-4">
               <OpenInNew />
               <a
                 className="ml-1  text-primary-500 uppercase font-medium"
-                href="#"
+                href="https://joincottage.com"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Visit Website
               </a>
             </div>
+            <Button
+              className="flex justify-center items-center my-4 w-[190px]"
+              variant="outlined"
+              color="primary"
+              size="large"
+              onClick={handleClickPreviewCodebase}
+            >
+              Preview codebase
+            </Button>
           </div>
         </div>
         <div className="relative w-full flex flex-col justify-between">
@@ -113,9 +129,36 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 </p>
                 <div className="ml-3">
                   {task.type === 'bug' ? (
-                    <BugReportOutlinedIcon style={{ fill: '#E00004' }} />
+                    <Chip
+                      avatar={
+                        <BugReportOutlinedIcon
+                          style={{
+                            fill: '#E00004',
+                            background: 'none',
+                          }}
+                        />
+                      }
+                      label="Bug"
+                      color="primary"
+                      clickable
+                      style={{ border: 'none' }}
+                      variant="outlined"
+                    />
                   ) : (
-                    <CubeTransparentOutlineIcon />
+                    <Chip
+                      avatar={
+                        <CubeTransparentOutlineIcon
+                          style={{
+                            color: 'rgb(31,87,184)',
+                            background: 'none',
+                          }}
+                        />
+                      }
+                      label="Feature"
+                      color="primary"
+                      variant="outlined"
+                      style={{ border: 'none' }}
+                    />
                   )}
                 </div>
               </div>
@@ -154,7 +197,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 </span>
               </Button>
               <Button className="mx-1" variant="outlined" color="primary">
-                <span className="text-xl">🤷</span>
+                <span className="text-xl">ℹ️</span>
                 <span className="text-sm">&nbsp;Needs&nbsp;Info</span>
               </Button>
               <div className="">

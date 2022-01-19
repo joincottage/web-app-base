@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
       boxShadow: 'none',
       '&:hover': {
         cursor: 'pointer',
-        backgroundColor: 'rgba(219, 234, 254, 0.25)',
+        backgroundColor: 'rgb(247, 250, 254)',
       },
     },
     container: {

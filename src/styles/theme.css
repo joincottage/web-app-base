@@ -44,11 +44,11 @@ a:hover {
   transform: scale(100) translate3d(-50px, -720.12px, -99px) !important;
 }
 .forest-mask {
-  background: linear-gradient(transparent, rgba(216, 217, 219));
-  height: 100vh;
+  background: linear-gradient(transparent 30%, rgba(216, 217, 219) 75%);
+  height: 1580px;
   position: absolute;
   bottom: 0;
-  top: 644px;
+  top: 0;
   left: 0;
   right: 0;
 }

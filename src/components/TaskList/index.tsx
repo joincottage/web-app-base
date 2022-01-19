@@ -10,6 +10,7 @@ import { Fade, Typography } from '@material-ui/core';
 import setTasksInQueue from 'src/actions/setTasksInQueue';
 import TaskListContainer from './TaskListContainer';
 import Image from 'next/image';
+import times from 'lodash/times';
 
 interface OwnProps {
   //DESTRUCTUREDPROP: [];
@@ -73,6 +74,38 @@ export default function TaskList({}: OwnProps) {
     }
   }, [data]);
 
+  const allAvailableTasks = state.tasksInQueue
+    .filter(
+      (t) =>
+        state.activeFilters.length === 0 ||
+        state.activeFilters.includes(t.type as string)
+    )
+    .filter((t) =>
+      state.activeSearchTerm !== ''
+        ? t !== null &&
+          (t.skills as string)
+            .toLowerCase()
+            .indexOf(state.activeSearchTerm.toLowerCase()) > -1
+        : true
+    )
+    .reverse();
+
+  const clientSpecificAvailableTasks = state.tasksInQueue
+    .filter(
+      (t) =>
+        state.activeFilters.length === 0 ||
+        state.activeFilters.includes(t.type as string)
+    )
+    .filter((t) =>
+      state.activeSearchTerm !== ''
+        ? t !== null &&
+          (t.skills as string)
+            .toLowerCase()
+            .indexOf(state.activeSearchTerm.toLowerCase()) > -1
+        : true
+    )
+    .filter((task: Task) => task.clientName === state.selectedClient.name);
+
   return (
     <TaskListContainer>
       <div>
@@ -90,45 +123,39 @@ export default function TaskList({}: OwnProps) {
             monitored and our team is on it!
           </div>
         ) : state.selectedClient.name === 'All' ? (
-          state.tasksInQueue
-            .filter(
-              (t) =>
-                state.activeFilters.length === 0 ||
-                state.activeFilters.includes(t.type as string)
-            )
-            .filter((t) =>
-              state.activeSearchTerm !== ''
-                ? t !== null &&
-                  (t.skills as string)
-                    .toLowerCase()
-                    .indexOf(state.activeSearchTerm.toLowerCase()) > -1
-                : true
-            )
-            .reverse()
+          allAvailableTasks
             .map((task: Task, i) => (
               <TaskListItemContainer task={task} index={i} />
             ))
+            .concat(
+              times(19 - allAvailableTasks.length, () => (
+                <div
+                  className="border border-dotted border-gray-300"
+                  style={{
+                    width: '800px',
+                    height: '162px',
+                    background: 'none',
+                  }}
+                ></div>
+              ))
+            )
         ) : (
-          state.tasksInQueue
-            .filter(
-              (t) =>
-                state.activeFilters.length === 0 ||
-                state.activeFilters.includes(t.type as string)
-            )
-            .filter((t) =>
-              state.activeSearchTerm !== ''
-                ? t !== null &&
-                  (t.skills as string)
-                    .toLowerCase()
-                    .indexOf(state.activeSearchTerm.toLowerCase()) > -1
-                : true
-            )
-            .filter(
-              (task: Task) => task.clientName === state.selectedClient.name
-            )
+          clientSpecificAvailableTasks
             .map((task: Task, i) => (
               <TaskListItemContainer task={task} index={i} />
             ))
+            .concat(
+              times(19 - clientSpecificAvailableTasks.length, () => (
+                <div
+                  className="border border-dotted border-gray-300"
+                  style={{
+                    width: '800px',
+                    height: '162px',
+                    background: 'rgba(216, 217, 219, .25)',
+                  }}
+                ></div>
+              ))
+            )
         )}
         {!loading &&
           state.selectedClient.name !== 'All' &&
