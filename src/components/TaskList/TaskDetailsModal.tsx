@@ -190,28 +190,35 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
           <div className="mb-[16px] mr-[19px] h-[36px]  flex justify-between ">
             <div className="flex align-baseline"></div>
             <div className="flex items-baseline ml-3">
-              <Button className="mx-1" variant="outlined" color="primary">
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{ marginLeft: '.25rem', marginRight: '.25rem' }}
+              >
                 <span className="text-xl">💰</span>
                 <span className="text-sm">
                   &nbsp;Suggest&nbsp;higher&nbsp;price
                 </span>
               </Button>
-              <Button className="mx-1" variant="outlined" color="primary">
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{ marginLeft: '.25rem', marginRight: '.5rem' }}
+              >
                 <span className="text-xl">ℹ️</span>
                 <span className="text-sm">&nbsp;Needs&nbsp;Info</span>
               </Button>
-              <div className="">
-                <Button
-                  className="mb-2 ml-1"
-                  variant="contained"
-                  color="primary"
-                  disabled={!!state.currentTask}
-                  onClick={handleRequestAccess}
-                >
-                  <span className="text-xl">👍</span>
-                  <span className="ml-1">I'll do it!</span>
-                </Button>
-              </div>
+              <Button
+                className="mb-2 ml-1"
+                variant="contained"
+                color="primary"
+                disabled={!!state.currentTask}
+                onClick={handleRequestAccess}
+                style={{ marginBottom: '.25rem' }}
+              >
+                <span className="text-xl">👍</span>
+                <span className="ml-1">I'll do it!</span>
+              </Button>
             </div>
           </div>
         </div>
