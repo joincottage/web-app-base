@@ -13,7 +13,7 @@ import TaskList from 'src/components/TaskList';
 import IconAttribution from 'src/components/IconAttribution';
 import { createStyles, makeStyles } from '@material-ui/styles';
 
-export const getServerSideProps = withPageAuthRequired();
+// export const getServerSideProps = withPageAuthRequired();
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -76,7 +76,7 @@ export default function Index() {
                   top: '20px',
                 }}
               >
-                <UserTasksColumn user={user} />
+                {user ? <UserTasksColumn user={user} /> : null}
               </div>
             </div>
           </div>

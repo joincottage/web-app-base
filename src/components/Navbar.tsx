@@ -72,39 +72,43 @@ export const Navbar = (): JSX.Element => {
               {/*</Typography>*/}
               {/*</MuiLink>*/}
             </NextLink>
-            <div style={{ flexGrow: 1, display: 'flex' }}>
-              <NextLink href="/" passHref={true}>
-                <Button
-                  variant={router.pathname == '/' ? 'outlined' : 'text'}
-                  style={router.pathname == '/' ? activeStyles : inactiveStyles}
-                >
-                  Freelancer Mode
-                </Button>
-              </NextLink>
-              <Divider
-                orientation="vertical"
-                style={{
-                  backgroundColor: 'white',
-                  height: '35px',
-                  marginRight: '15px',
-                  marginLeft: '15px',
-                }}
-              />
-              <NextLink href="/manage-tasks" passHref={true}>
-                <Button
-                  variant={
-                    router.pathname == '/manage-tasks' ? 'outlined' : 'text'
-                  }
-                  style={
-                    router.pathname == '/manage-tasks'
-                      ? activeStyles
-                      : inactiveStyles
-                  }
-                >
-                  Client Mode
-                </Button>
-              </NextLink>
-            </div>
+            {user ? (
+              <div style={{ flexGrow: 1, display: 'flex' }}>
+                <NextLink href="/" passHref={true}>
+                  <Button
+                    variant={router.pathname == '/' ? 'outlined' : 'text'}
+                    style={
+                      router.pathname == '/' ? activeStyles : inactiveStyles
+                    }
+                  >
+                    Freelancer Mode
+                  </Button>
+                </NextLink>
+                <Divider
+                  orientation="vertical"
+                  style={{
+                    backgroundColor: 'white',
+                    height: '35px',
+                    marginRight: '15px',
+                    marginLeft: '15px',
+                  }}
+                />
+                <NextLink href="/manage-tasks" passHref={true}>
+                  <Button
+                    variant={
+                      router.pathname == '/manage-tasks' ? 'outlined' : 'text'
+                    }
+                    style={
+                      router.pathname == '/manage-tasks'
+                        ? activeStyles
+                        : inactiveStyles
+                    }
+                  >
+                    Client Mode
+                  </Button>
+                </NextLink>
+              </div>
+            ) : null}
             <IconButton
               color="inherit"
               aria-controls="simple-menu"

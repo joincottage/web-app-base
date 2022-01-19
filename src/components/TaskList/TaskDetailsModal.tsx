@@ -8,10 +8,11 @@ import dynamic from 'next/dynamic';
 import { useContext, useEffect, useState } from 'react';
 import setCurrentTask from 'src/actions/setCurrentTask';
 import { AppDataContext } from 'src/contexts/AppContext';
-import useUser from 'src/hooks/useUser';
+import useCottageUser from 'src/hooks/useUser';
 import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
 import OnboardingPrompt from '../stripe/OnboardingPrompt';
 import { RequestStatus } from './../../constants/request-status';
+import { useUser as useAuth0User } from '@auth0/nextjs-auth0';
 
 const Editor = dynamic(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -26,7 +27,8 @@ interface OwnProps {
 
 export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
   const { state, dispatch } = useContext(AppDataContext);
-  const { user } = useUser();
+  const { user: cottageUser } = useCottageUser();
+  const { user: auth0User } = useAuth0User();
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
@@ -41,7 +43,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
   }, [task.longDesc]);
 
   const handleClickAcceptTask = async () => {
-    if (!user?.stripeAccountId) {
+    if (!cottageUser?.stripeAccountId) {
       if (!showOnboardingPrompt) {
         setShowOnboardingPrompt(true);
       }
@@ -187,59 +189,61 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
               </p>
             </div>
           </div>
-          <div className="mb-[16px] mr-[19px] h-[36px]  flex justify-between ">
-            <div className="flex align-baseline"></div>
-            <div className="flex items-baseline ml-3">
-              <Button
-                variant="outlined"
-                color="primary"
-                style={{ marginLeft: '.25rem', marginRight: '.25rem' }}
-                disabled={requestStatus === RequestStatus.PENDING}
-              >
-                <span className="text-xl">💰</span>
-                <span className="text-sm">
-                  &nbsp;Suggest&nbsp;higher&nbsp;price
-                </span>
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                style={{ marginLeft: '.25rem', marginRight: '.5rem' }}
-                disabled={requestStatus === RequestStatus.PENDING}
-              >
-                <span className="text-xl">ℹ️</span>
-                <span className="text-sm">&nbsp;Needs&nbsp;Info</span>
-              </Button>
-              <OnboardingPrompt
-                show={showOnboardingPrompt}
-                handleClose={() => setShowOnboardingPrompt(false)}
-              />
-              <Button
-                className="mb-2 ml-1"
-                variant="contained"
-                color="primary"
-                disabled={
-                  !!state.currentTask ||
-                  requestStatus === RequestStatus.PENDING ||
-                  showOnboardingPrompt
-                }
-                onClick={handleClickAcceptTask}
-                style={{ marginBottom: '.25rem', width: '125px' }}
-              >
-                {requestStatus === RequestStatus.PENDING ? (
-                  '...'
-                ) : (
-                  <>
-                    <span className="text-xl">👍</span>
-                    <span className="ml-1">I&apos;ll do it!</span>
-                  </>
-                )}
-              </Button>
+          {auth0User ? (
+            <div className="mb-[16px] mr-[19px] h-[36px]  flex justify-between ">
+              <div className="flex align-baseline"></div>
+              <div className="flex items-baseline ml-3">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  style={{ marginLeft: '.25rem', marginRight: '.25rem' }}
+                  disabled={requestStatus === RequestStatus.PENDING}
+                >
+                  <span className="text-xl">💰</span>
+                  <span className="text-sm">
+                    &nbsp;Suggest&nbsp;higher&nbsp;price
+                  </span>
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  style={{ marginLeft: '.25rem', marginRight: '.5rem' }}
+                  disabled={requestStatus === RequestStatus.PENDING}
+                >
+                  <span className="text-xl">ℹ️</span>
+                  <span className="text-sm">&nbsp;Needs&nbsp;Info</span>
+                </Button>
+                <OnboardingPrompt
+                  show={showOnboardingPrompt}
+                  handleClose={() => setShowOnboardingPrompt(false)}
+                />
+                <Button
+                  className="mb-2 ml-1"
+                  variant="contained"
+                  color="primary"
+                  disabled={
+                    !!state.currentTask ||
+                    requestStatus === RequestStatus.PENDING ||
+                    showOnboardingPrompt
+                  }
+                  onClick={handleClickAcceptTask}
+                  style={{ marginBottom: '.25rem', width: '125px' }}
+                >
+                  {requestStatus === RequestStatus.PENDING ? (
+                    '...'
+                  ) : (
+                    <>
+                      <span className="text-xl">👍</span>
+                      <span className="ml-1">I&apos;ll do it!</span>
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
+          ) : null}
+          <div className="absolute right-[24px] top-[18px]">
+            <CloseIcon onClick={handleClose} className="cursor-pointer" />
           </div>
-        </div>
-        <div className="absolute right-[24px] top-[18px]">
-          <CloseIcon onClick={handleClose} className="cursor-pointer" />
         </div>
       </div>
     </div>
