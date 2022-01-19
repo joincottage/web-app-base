@@ -56,16 +56,18 @@ export default function CurrentTask({ task }: OwnProps) {
               <CurrentTaskMenu user={user} task={task} />
             </div>
             <Button
-              className="mb-3 w-full"
+              className="w-full"
               variant="contained"
               onClick={openLinks}
+              style={{ marginBottom: '.75rem' }}
             >
               Open IDE
             </Button>
             <Button
-              className="w-full leading-7 bg-white"
+              className="w-full leading-7"
               variant="outlined"
               onClick={handleSubmitForReview}
+              style={{ backgroundColor: 'white' }}
             >
               Submit For Review
             </Button>
