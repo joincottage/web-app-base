@@ -44,10 +44,9 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
     } catch (err) {}
   }, [task.longDesc]);
 
-  const handleRequestAccess = async () => {
+  const handleClickAcceptTask = async () => {
     setRequestStatus(RequestStatus.PENDING);
     try {
-      //FIXME: This needs to switch to v2/tasks/index
       await Axios.post('/api/v2/tasks', {
         task,
       });
@@ -212,12 +211,20 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 className="mb-2 ml-1"
                 variant="contained"
                 color="primary"
-                disabled={!!state.currentTask}
-                onClick={handleRequestAccess}
-                style={{ marginBottom: '.25rem' }}
+                disabled={
+                  !!state.currentTask || requestStatus === RequestStatus.PENDING
+                }
+                onClick={handleClickAcceptTask}
+                style={{ marginBottom: '.25rem', width: '120px' }}
               >
-                <span className="text-xl">👍</span>
-                <span className="ml-1">I'll do it!</span>
+                {requestStatus === RequestStatus.PENDING ? (
+                  '...'
+                ) : (
+                  <>
+                    <span className="text-xl">👍</span>
+                    <span className="ml-1">I'll do it!</span>
+                  </>
+                )}
               </Button>
             </div>
           </div>
