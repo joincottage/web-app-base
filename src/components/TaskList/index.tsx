@@ -135,6 +135,7 @@ export default function TaskList({}: OwnProps) {
                     width: '800px',
                     height: '162px',
                     background: 'none',
+                    background: 'rgba(216, 217, 219, .25)',
                   }}
                 ></div>
               ))
