@@ -14,7 +14,7 @@ interface OwnProps {
 
 export default function CurrentTask({ task }: OwnProps) {
   const { user } = useUser();
-  const ideLink = 'https://cloudcoder.network/ws/296689260511987/ide/';
+  const ideLink = 'https://cloudcoder.network/ws/51758359595864/ide/';
   const devServerLink =
     'https://ws-571429178330112-port-3000.proxy.cloudcoder.network/';
 
