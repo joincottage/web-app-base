@@ -65,6 +65,8 @@ const taskHandler: NextApiHandler = async (req, res) => {
           .status(500)
           .json({ message: 'Cannot find unique cottage user or task.' });
       }
+
+      break;
     }
     case 'GET': {
       const authId = getUserAuthId(req, res);
