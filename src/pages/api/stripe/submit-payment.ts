@@ -12,13 +12,10 @@ import { Task, User } from '.prisma/client';
 
 const CENTS_IN_A_DOLLAR = 100;
 
-const stripe = new Stripe(
-  'sk_test_51JFMlLAUYz6Zd3huPRlc0iHX4HkV8qvnCR3ek83u4xk1UMgOnlSuo6LGGp71va8Mnf58R2p8RLifP8crrgnIhB3O00u2NNyKEs',
-  {
-    apiVersion: '2020-08-27',
-    typescript: true,
-  }
-);
+const stripe = new Stripe(process.env.STRIPE_AUTH_KEY as string, {
+  apiVersion: '2020-08-27',
+  typescript: true,
+});
 
 const getPayeeUser = async (userId: number) => {
   let error = null;
