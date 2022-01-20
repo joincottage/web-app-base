@@ -56,7 +56,7 @@ export default async function (
         },
       });
 
-      res.send({ onboarding_url: accountLink.url });
+      res.redirect(accountLink.url);
       break;
     }
     default: {
