@@ -101,7 +101,7 @@ export default function Parallax() {
                 left: '-70px',
                 top: '350px',
                 background:
-                  'linear-gradient(135deg, rgb(184, 185, 186) 40%, transparent 50%);',
+                  'linear-gradient(135deg, rgb(184, 185, 186) 40%, transparent 50%)',
                 transform: 'rotate(45deg)',
               }}
             ></div>
