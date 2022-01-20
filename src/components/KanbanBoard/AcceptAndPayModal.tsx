@@ -23,6 +23,7 @@ export default function AcceptAndPayModal({ task, handleClose }: OwnProps) {
         task,
       });
       setRequestStatus(RequestStatus.SUCCEEDED);
+      handleClose();
     } catch (e) {
       setRequestStatus(RequestStatus.FAILED);
       throw e;
@@ -71,6 +72,7 @@ export default function AcceptAndPayModal({ task, handleClose }: OwnProps) {
             variant="outlined"
             color="primary"
             onClick={handleClose}
+            disabled={requestStatus === RequestStatus.PENDING}
           >
             <span className="text-sm">Cancel</span>
           </Button>
@@ -79,8 +81,13 @@ export default function AcceptAndPayModal({ task, handleClose }: OwnProps) {
             variant="contained"
             color="primary"
             onClick={submitPayment}
+            disabled={requestStatus === RequestStatus.PENDING}
           >
-            <span className="font-semibold">Accept And Pay</span>
+            <span className="font-semibold">
+              {requestStatus === RequestStatus.PENDING
+                ? 'Submitting...'
+                : "Yes, I'm sure"}
+            </span>
           </Button>
         </div>
       </div>
