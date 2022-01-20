@@ -23,7 +23,7 @@ export default async function (
       const account = await stripe.accounts.create({ type: 'express' });
       const accountLink = await stripe.accountLinks.create({
         account: account.id,
-        refresh_url: 'https://app.joincottage.com/stripe-onboarding',
+        refresh_url: 'https://app.joincottage.com/api/stripe/account-link',
         return_url: 'https://app.joincottage.com',
         type: 'account_onboarding',
       });
