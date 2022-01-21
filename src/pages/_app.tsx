@@ -1,4 +1,4 @@
-import React, { useMemo, useReducer } from 'react';
+import React, { useMemo, useReducer, useState } from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -93,6 +93,7 @@ export default function MyApp(props: AppProps) {
   const contextValue = useMemo(() => {
     return { state, dispatch };
   }, [state, dispatch]) as AppContext;
+  const [isCottageActive, setIsCottageActive] = useState(true);
 
   return (
     <div className="viewport" style={{ width: '100vw', position: 'relative' }}>

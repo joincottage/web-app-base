@@ -44,9 +44,14 @@ export default function MoneyConfetti() {
       });
     }
 
-    setInterval(function () {
+    let interval_id = setInterval(function () {
       var piece;
       context.clearRect(0, 0, canvas.width, canvas.height);
+      if (pieces.length == 0) {
+        clearInterval(interval_id);
+        return;
+      }
+
       // draw
       for (var i in pieces) {
         piece = pieces[i];
