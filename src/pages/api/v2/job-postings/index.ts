@@ -1,4 +1,3 @@
-import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import { NextApiHandler } from 'next';
 import { prisma } from '../../../../database/prisma';
 
@@ -9,7 +8,7 @@ const taskHandler: NextApiHandler = async (req, res) => {
         const jobPostings = await prisma.jobPost.findMany({});
 
         res.json(jobPostings);
-      } catch (e) {
+      } catch (e: any) {
         console.error(
           `Failed to execute prisma query for job-postings`,
           e.message
@@ -28,13 +27,15 @@ const taskHandler: NextApiHandler = async (req, res) => {
         });
 
         res.status(201).end();
-      } catch (e) {
+      } catch (e: any) {
         console.error(
           `Failed to execute prisma query for job-postings`,
           e.message
         );
         res.status(500).end();
       }
+
+      break;
     }
     default: {
       console.error(

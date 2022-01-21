@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
 import { Task } from '.prisma/client';
 import axios from 'axios';
@@ -12,7 +12,7 @@ export default function AttentionTasks({ task }: OwnProps) {
   const devServerLink = 'https://www.xkcd.com';
   const [isShowingMenu, setIsShowingMenu] = useState(false);
 
-  function discordLink(id: String) {
+  function discordLink(id: string) {
     return `https://discord.com/channels/872949298105552996/${id}`;
   }
 

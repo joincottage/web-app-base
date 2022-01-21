@@ -4,9 +4,6 @@ import {
   addUserToChannel,
   postMessageToChannel,
 } from 'src/apiService/discord/channel';
-import { prisma } from 'src/database/prisma';
-import { getSession } from '@auth0/nextjs-auth0';
-import { IN_PROGRESS } from 'src/constants/task-stages';
 import { getUserAuthId } from 'src/apiService/auth/helpers';
 
 interface NotifyTaskInterestRequest extends NextApiRequest {
@@ -46,6 +43,8 @@ export default async function (
         console.error(`Failed posting info to discord`, error);
         res.status(500).json({ message: 'Failed to post info' });
       }
+
+      break;
     }
     default: {
       console.error(

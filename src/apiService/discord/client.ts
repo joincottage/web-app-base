@@ -21,12 +21,12 @@ const createNewClient = async (): Promise<discord.Client> => {
 
 export const getClient = async (): Promise<discord.Client> => {
   if (client) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       resolve(client as discord.Client);
     });
   } else {
     client = await createNewClient();
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       resolve(client as discord.Client);
     });
   }

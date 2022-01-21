@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 /**
  * Copyright 2016 Google Inc. All rights reserved.
@@ -17,16 +18,16 @@
  */
 
 export default function initializeParallax(clip) {
-  var parallax = clip.querySelectorAll('*[parallax]');
-  var parallaxDetails = [];
-  var sticky = false;
+  const parallax = clip.querySelectorAll('*[parallax]');
+  const parallaxDetails = [];
+  let sticky = false;
 
   // Edge requires a transform on the document body and a fixed position element
   // in order for it to properly render the parallax effect as you scroll.
   // See https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/5084491/
   if (getComputedStyle(document.body).transform == 'none')
     document.body.style.transform = 'translateZ(0)';
-  var fixedPos = document.createElement('div');
+  const fixedPos = document.createElement('div');
   fixedPos.style.position = 'fixed';
   fixedPos.style.top = '0';
   fixedPos.style.width = '1px';
@@ -34,9 +35,9 @@ export default function initializeParallax(clip) {
   fixedPos.style.zIndex = 1;
   document.body.insertBefore(fixedPos, document.body.firstChild);
 
-  for (var i = 0; i < parallax.length; i++) {
-    var elem = parallax[i];
-    var container = elem.parentNode;
+  for (let i = 0; i < parallax.length; i++) {
+    const elem = parallax[i];
+    const container = elem.parentNode;
     if (getComputedStyle(container).overflow != 'visible') {
       console.error(
         'Need non-scrollable container to apply perspective for',
@@ -50,7 +51,7 @@ export default function initializeParallax(clip) {
         elem
       );
     }
-    var clip = container.parentNode;
+    const clip = container.parentNode;
     if (getComputedStyle(clip).overflow == 'visible') {
       console.error(
         'Parent of sticky container should be scrollable element',
@@ -58,7 +59,7 @@ export default function initializeParallax(clip) {
       );
     }
     // TODO(flackr): optimize to not redo this for the same clip/container.
-    var perspectiveElement;
+    let perspectiveElement;
     if (sticky || getComputedStyle(clip).webkitOverflowScrolling) {
       sticky = true;
       perspectiveElement = container;
@@ -73,10 +74,10 @@ export default function initializeParallax(clip) {
     elem.style.transformOrigin = 'bottom right';
 
     // Find the previous and next elements to parallax between.
-    var previousCover = parallax[i].previousElementSibling;
+    let previousCover = parallax[i].previousElementSibling;
     while (previousCover && previousCover.hasAttribute('parallax'))
       previousCover = previousCover.previousElementSibling;
-    var nextCover = parallax[i].nextElementSibling;
+    let nextCover = parallax[i].nextElementSibling;
     while (nextCover && !nextCover.hasAttribute('parallax-cover'))
       nextCover = nextCover.nextElementSibling;
 
@@ -92,31 +93,18 @@ export default function initializeParallax(clip) {
   // Add a scroll listener to hide perspective elements when they should no
   // longer be visible.
   clip.addEventListener('scroll', function () {
-    for (var i = 0; i < parallaxDetails.length; i++) {
-      var container = parallaxDetails[i].node.parentNode;
-      var previousCover = parallaxDetails[i].previousCover;
-      var nextCover = parallaxDetails[i].nextCover;
-      var parallaxStart = previousCover
-        ? previousCover.offsetTop + previousCover.offsetHeight
-        : 0;
-      var parallaxEnd = nextCover
-        ? nextCover.offsetTop
-        : container.offsetHeight;
-      var threshold = 200;
-      var visible =
-        parallaxStart - threshold - clip.clientHeight < clip.scrollTop &&
-        parallaxEnd + threshold > clip.scrollTop;
+    for (let i = 0; i < parallaxDetails.length; i++) {
       // FIXME: Repainting the images while scrolling can cause jank.
       // For now, keep them all.
-      // var display = visible ? 'block' : 'none'
-      var display = 'block';
+      // let display = visible ? 'block' : 'none'
+      const display = 'block';
       if (parallaxDetails[i].node.style.display != display)
         parallaxDetails[i].node.style.display = display;
     }
   });
   window.addEventListener('resize', onResize.bind(null, parallaxDetails));
   onResize(parallaxDetails);
-  for (var i = 0; i < parallax.length; i++) {
+  for (let i = 0; i < parallax.length; i++) {
     parallax[i].parentNode.insertBefore(
       parallax[i],
       parallax[i].parentNode.firstChild
@@ -125,27 +113,26 @@ export default function initializeParallax(clip) {
 }
 
 function onResize(details) {
-  for (var i = 0; i < details.length; i++) {
-    var container = details[i].node.parentNode;
+  for (let i = 0; i < details.length; i++) {
+    const container = details[i].node.parentNode;
 
-    var clip = container.parentNode;
-    var previousCover = details[i].previousCover;
-    var nextCover = details[i].nextCover;
-    var rate = details[i].node.getAttribute('parallax');
+    const clip = container.parentNode;
+    const previousCover = details[i].previousCover;
+    const nextCover = details[i].nextCover;
+    const rate = details[i].node.getAttribute('parallax');
 
-    var parallaxStart = previousCover
+    const parallaxStart = previousCover
       ? previousCover.offsetTop + previousCover.offsetHeight
       : 0;
-    var scrollbarWidth = details[i].sticky
+    const scrollbarWidth = details[i].sticky
       ? 0
       : clip.offsetWidth - clip.clientWidth;
-    var parallaxElem = details[i].sticky ? container : clip;
-    var height = details[i].node.offsetHeight;
-    var depth = 0;
+    const height = details[i].node.offsetHeight;
+    let depth = 0;
     if (rate) {
       depth = 1 - 1 / rate;
     } else {
-      var parallaxEnd = nextCover
+      const parallaxEnd = nextCover
         ? nextCover.offsetTop
         : container.offsetHeight;
       depth =
@@ -153,12 +140,12 @@ function onResize(details) {
     }
     if (details[i].sticky) depth = 1.0 / depth;
 
-    var scale = 1.0 / (1.0 - depth);
+    const scale = 1.0 / (1.0 - depth);
 
     // The scrollbar is included in the 'bottom right' perspective origin.
-    var dx = scrollbarWidth * (scale - 1);
+    const dx = scrollbarWidth * (scale - 1);
     // Offset for the position within the container.
-    var dy = details[i].sticky
+    const dy = details[i].sticky
       ? -(clip.scrollHeight - parallaxStart - height) * (1 - scale)
       : (parallaxStart - depth * (height - clip.clientHeight)) * scale;
 

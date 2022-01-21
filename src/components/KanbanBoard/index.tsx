@@ -2,7 +2,6 @@ import {
   Backdrop,
   Box,
   Button,
-  Divider,
   Fade,
   Modal,
   Theme,
@@ -11,11 +10,8 @@ import {
 import { makeStyles } from '@material-ui/styles';
 import { Client, Task } from '@prisma/client';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
-import useTasks from 'src/hooks/useTasks';
-import useClients from 'src/hooks/useClients';
+import React, { useContext, useState } from 'react';
 import CreateATask from '../CreateATask';
-import TaskCard from '../TaskList/TaskCard';
 import CloseIcon from '@material-ui/icons/Close';
 import CreateIcon from '@material-ui/icons/Create';
 import BuildIcon from '@material-ui/icons/Build';

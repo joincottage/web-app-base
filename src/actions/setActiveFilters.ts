@@ -1,5 +1,3 @@
-import { Task } from '@prisma/client';
-
 export const SET_ACTIVE_FILTERS = 'SET_ACTIVE_FILTERS';
 export interface SetActiveFiltersAction {
   type: typeof SET_ACTIVE_FILTERS;

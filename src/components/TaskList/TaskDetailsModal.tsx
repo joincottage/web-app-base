@@ -1,35 +1,20 @@
 import { Task } from '.prisma/client';
-import {
-  Button,
-  Chip,
-  Fade,
-  Paper,
-  Theme,
-  Typography,
-} from '@material-ui/core';
-import Popper, { PopperPlacementType } from '@material-ui/core/Popper';
-import CloseIcon from '@material-ui/icons/Close';
-import OpenInNew from '@material-ui/icons/OpenInNew';
+import { Button, Chip } from '@material-ui/core';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
-import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
-import { RequestStatus } from './../../constants/request-status';
+import CloseIcon from '@material-ui/icons/Close';
 import Axios from 'axios';
+import { convertFromRaw, EditorState } from 'draft-js';
+import dynamic from 'next/dynamic';
 import { useContext, useEffect, useState } from 'react';
 import setCurrentTask from 'src/actions/setCurrentTask';
 import { AppDataContext } from 'src/contexts/AppContext';
-import {
-  EditorState,
-  convertToRaw,
-  convertFromRaw,
-  CompositeDecorator,
-  DraftDecorator,
-} from 'draft-js';
-import dynamic from 'next/dynamic';
 import useUser from 'src/hooks/useUser';
-import { createStyles, makeStyles } from '@material-ui/styles';
+import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
 import OnboardingPrompt from '../stripe/OnboardingPrompt';
+import { RequestStatus } from './../../constants/request-status';
 
 const Editor = dynamic(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
   { ssr: false }
@@ -49,17 +34,13 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
 
   const [editorState, setEditorState] = useState<EditorState | null>(null);
   useEffect(() => {
-    try {
-      const newEditorState = EditorState.createWithContent(
-        convertFromRaw(JSON.parse(task.longDesc as string))
-      );
-      setEditorState(newEditorState);
-    } catch (err) {}
+    const newEditorState = EditorState.createWithContent(
+      convertFromRaw(JSON.parse(task.longDesc as string))
+    );
+    setEditorState(newEditorState);
   }, [task.longDesc]);
 
-  const handleClickAcceptTask = async (
-    event: React.MouseEvent<HTMLElement>
-  ) => {
+  const handleClickAcceptTask = async () => {
     if (!user?.stripeAccountId) {
       if (!showOnboardingPrompt) {
         setShowOnboardingPrompt(true);
@@ -195,9 +176,9 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
               <p>
                 {editorState && (
                   <Editor
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     editorState={editorState}
-                    onChange={() => {}}
                     readOnly
                     toolbarHidden
                   />
@@ -249,7 +230,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 ) : (
                   <>
                     <span className="text-xl">👍</span>
-                    <span className="ml-1">I'll do it!</span>
+                    <span className="ml-1">I&apos;ll do it!</span>
                   </>
                 )}
               </Button>

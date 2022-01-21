@@ -1,10 +1,7 @@
 import { prisma } from '../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createTextChannel } from 'src/apiService/discord/channel';
-import { Task } from '@prisma/client';
 import { TASK_QUEUED } from 'src/constants/task-stages';
 import { getUserAuthId } from 'src/apiService/auth/helpers';
-import moment from 'moment';
 
 const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 

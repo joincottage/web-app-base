@@ -1,7 +1,5 @@
-import { prisma } from '../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
-
-const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
+import { prisma } from '../../../database/prisma';
 
 export default async function (
   req: NextApiRequest,

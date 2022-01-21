@@ -21,7 +21,9 @@
     "prisma-status": "prisma migrate status",
     "prisma-migrate": "prisma migrate dev",
     "prisma": "prisma",
-    "prepare": "npx husky install"
+    "prepare": "npx husky install",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.5.0",
@@ -68,6 +70,7 @@
     "eslint-config-next": "^11.1.2",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.2",
     "postcss": "^8.3.11",

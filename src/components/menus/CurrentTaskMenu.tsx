@@ -1,33 +1,10 @@
-import { UserProfile } from '@auth0/nextjs-auth0';
-import React, { useContext, useState } from 'react';
-import Link from 'next/link';
-import Button from '@material-ui/core/Button';
+import { IconButton } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import HelpIcon from '@material-ui/icons/Help';
-import { IconButton } from '@material-ui/core';
-import { Task } from '.prisma/client';
-import setCurrentTask from 'src/actions/setCurrentTask';
-import { AppDataContext } from 'src/contexts/AppContext';
-import axios from 'axios';
+import React from 'react';
 
-interface OwnProps {
-  style?: any;
-  user?: UserProfile;
-  task: Task;
-}
-
-export default function CurrentTaskMenu({
-  style,
-  user,
-  task,
-}: OwnProps): JSX.Element {
+export default function CurrentTaskMenu(): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { state, dispatch } = useContext(AppDataContext);
-  const [isShowingMenu, setIsShowingMenu] = useState(false);
-  const [isShowingAbandon, setIsShowingAbandon] = useState(false);
-  const [confirmDelete, setConfirmDelete] = useState('');
-  const confirmDeleteCheck = `${task.clientName}/${task.name}`;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -36,60 +13,6 @@ export default function CurrentTaskMenu({
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  async function handleAbandonTask() {
-    dispatch(setCurrentTask(null));
-    if (user === undefined) {
-      console.log('user is undefined');
-      return;
-    }
-    await axios.put('/api/tasks/abandon-task', {
-      task,
-      discordChannelId: task.discordChannelId,
-      discordUserId: user.sub?.split('|')[2],
-    });
-  }
-
-  const AbandonTaskModal = () => (
-    <div className="fixed top-0 left-0 z-50 bg-black bg-opacity-90 grid place-content-center w-screen h-screen">
-      <div className="bg-gray-200 p-6 rounded-lg max-w-lg text-center">
-        <p className="my-3 text-red-700 font-semibold text-2xl">
-          Are you sure?
-        </p>
-        <p className="text-center mb-8 mx-6">
-          Abandoning this current task will mean you won't be paid for the work
-          done until this point.
-        </p>
-        <div className="flex flex-col my-2">
-          <label className="my-3" htmlFor="delete">
-            Please type
-            <span className="mx-2 py-1 px-2 rounded-lg bg-gray-300 font-medium">
-              {task.clientName}/{task.name}
-            </span>
-            to confirm.
-          </label>
-          <input
-            id="delete"
-            className="mx-6 rounded leading-8 pl-2"
-            type="text"
-            onChange={(e) => {
-              setConfirmDelete(e.target.value);
-            }}
-          />
-        </div>
-        <div className="mt-6 flex justify-center">
-          <button
-            className="mx-3 button-secondary-destructive disabled:hover:bg-white"
-            disabled={confirmDelete !== confirmDeleteCheck}
-            onClick={handleAbandonTask}
-          >
-            Yes, Abandon Task
-          </button>
-          <button className="mx-3 button-primary">Keep working on task.</button>
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <div>

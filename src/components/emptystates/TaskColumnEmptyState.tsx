@@ -1,11 +1,10 @@
-import PreviousTaskEmptyState from './PreviousTaskEmptyState';
-import ReviewTaskEmptyState from './ReviewTaskEmptyState';
-import CurrentTaskLoadingState from './CurrentTaskLoadingState';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, makeStyles } from '@material-ui/styles';
-import { Theme } from '@material-ui/core';
+import CurrentTaskLoadingState from './CurrentTaskLoadingState';
+import PreviousTaskEmptyState from './PreviousTaskEmptyState';
+import ReviewTaskEmptyState from './ReviewTaskEmptyState';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     title: {
       fontWeight: 600,

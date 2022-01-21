@@ -1,4 +1,4 @@
-import { Guild, TextChannel } from 'discord.js';
+import { TextChannel } from 'discord.js';
 import { getClient } from './client';
 const guildId = process.env.DISCORD_GUILD_ID || '';
 
@@ -7,30 +7,22 @@ export const createTextChannel = async (
   topic: string,
   categoryId: string
 ) => {
-  console.log(`guildId: ${guildId}`);
-  console.log(`clientCategoryId: ${categoryId}`);
-  console.log(`channelName: ${channelName}`);
-  console.log(`topic: ${topic}`);
-  try {
-    const client = await getClient();
-    const guild = await client.guilds.fetch(guildId);
-    const channel = await guild.channels.create(channelName, {
-      parent: categoryId,
-      type: 'text',
-      // permissionOverwrites: [ // todo figure out how to set all the permissions
-      //   {
-      //     type: 'role',
-      //     id: guild.roles.everyone,
-      //     deny: [Permissions.FLAGS.VIEW_CHANNEL],
-      //   },
-      // ],
-      topic,
-    });
+  const client = await getClient();
+  const guild = await client.guilds.fetch(guildId);
+  const channel = await guild.channels.create(channelName, {
+    parent: categoryId,
+    type: 'text',
+    // permissionOverwrites: [ // todo figure out how to set all the permissions
+    //   {
+    //     type: 'role',
+    //     id: guild.roles.everyone,
+    //     deny: [Permissions.FLAGS.VIEW_CHANNEL],
+    //   },
+    // ],
+    topic,
+  });
 
-    return channel;
-  } catch (e) {
-    throw e;
-  }
+  return channel;
 };
 
 export const postMessageToChannel = async (
@@ -41,8 +33,6 @@ export const postMessageToChannel = async (
     console.log('Posting message to Discord channel');
     const client = await getClient();
     const guild = await client.guilds.fetch(guildId);
-    //TODO: Hunter said this was okay, not sure what is happening, will fix later
-    // @ts-ignore
     const channel = guild.channels.cache.find((ch) => ch.id === channelId);
     if (channel?.isText()) {
       (channel as TextChannel).send(message);
@@ -60,8 +50,6 @@ export const addUserToChannel = async (channelId: string, userId: string) => {
     const client = await getClient();
     const guild = await client.guilds.fetch(guildId, true);
     console.log('Fetched guild object');
-    //TODO: Hunter said this was okay, not sure what is happening, will fix later
-    // @ts-ignore
     const channel = guild.channels.cache.find((ch) => ch.id === channelId);
     console.log('Fetched channel object');
     const user = await client.users.fetch(userId);
@@ -78,12 +66,10 @@ export const removeUserFromChannel = async (
   userId: string
 ) => {
   try {
-    console.log(`Removing user to Discord channel`);
+    console.log(`Removing user from Discord channel`);
     const client = await getClient();
     const guild = await client.guilds.fetch(guildId, true);
     console.log('Fetched guild object');
-    //TODO: Hunter said this was okay, not sure what is happening, will fix later
-    // @ts-ignore
     const channel = guild.channels.cache.find((ch) => ch.id === channelId);
     console.log('Fetched channel object');
     const user = await client.users.fetch(userId);

@@ -1,5 +1,3 @@
-import { Task } from '@prisma/client';
-
 export const SET_ACTIVE_SEARCH_TERM = 'SET_ACTIVE_SEARCH_TERM';
 export interface SetActiveSearchTerm {
   type: typeof SET_ACTIVE_SEARCH_TERM;

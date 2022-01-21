@@ -1,4 +1,3 @@
-import { Client } from '@prisma/client';
 import { useState, useEffect } from 'react';
 
 const useClients = () => {

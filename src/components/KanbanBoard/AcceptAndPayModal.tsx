@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Task } from '.prisma/client';
+import { useState } from 'react';
+import { Task, User } from '.prisma/client';
 import Axios from 'axios';
 import { Button } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { RequestStatus } from 'src/constants/request-status';
 
 interface OwnProps {
-  task: Task;
+  task: Task & { freelancer?: User };
   handleClose: () => void;
 }
 
@@ -28,16 +28,6 @@ export default function AcceptAndPayModal({ task, handleClose }: OwnProps) {
       setRequestStatus(RequestStatus.FAILED);
       throw e;
     }
-
-    try {
-      await Axios.post('/api/discord/notify-task-complete', {
-        discordChannelId: task.discordChannelId,
-        task,
-      });
-    } catch (e) {
-      // TODO: roll back payment if this fails, since it will still appear in the "review" column.
-      throw e;
-    }
   };
 
   return (
@@ -56,9 +46,7 @@ export default function AcceptAndPayModal({ task, handleClose }: OwnProps) {
             src={task.userImgUrl || ''}
           />
         )}
-        {/*Relation to freelancer donesn't exist in the task schema*/}
-        {/*@ts-ignore*/}
-        <p className="font-xl font-bold">{task.freelancer.name}</p>
+        <p className="font-xl font-bold">{task.freelancer?.name}</p>
       </div>
       <div className="flex justify-center mt-12">
         <p className="text-center font-light text-2xl w-[309px]">

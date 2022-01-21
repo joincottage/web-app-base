@@ -3,7 +3,6 @@
 import dynamic from 'next/dynamic';
 import React, { useState, useContext } from 'react';
 import { convertToRaw, EditorState } from 'draft-js';
-import DOMPurify from 'dompurify';
 import { AppDataContext } from 'src/contexts/AppContext';
 import setCreateATaskState from 'src/actions/setCreateATaskState';
 import createLinkifyPlugin from '@draft-js-plugins/linkify';
@@ -11,6 +10,7 @@ import createLinkifyPlugin from '@draft-js-plugins/linkify';
 const linkifyPlugin = createLinkifyPlugin();
 
 const Editor = dynamic(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
   { ssr: false }
@@ -36,6 +36,7 @@ const App = ({ className }: OwnProps) => {
   return (
     <div className={`App ${className}`}>
       <Editor
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         editorState={editorState}
         onEditorStateChange={handleEditorChange}

@@ -6,9 +6,7 @@ import { IN_ATTENTION } from 'src/constants/task-stages';
 export const useAttentionTasks = () => {
   const [attentionLoading, setLoading] = useState(true);
   const [attentionError, setError] = useState(null);
-  const [attentionTasks, setData] = useState<
-    Task[] | { message: string } | null
-  >(null);
+  const [attentionTasks, setData] = useState<Task[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +17,7 @@ export const useAttentionTasks = () => {
         const data = await response.data.tasks;
         setData(data);
         setLoading(false);
-      } catch (err) {
+      } catch (err: any) {
         setError(err);
       }
     };

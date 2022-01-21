@@ -1,27 +1,13 @@
-import {
-  Backdrop,
-  Box,
-  Button,
-  Divider,
-  Fade,
-  Modal,
-  Theme,
-} from '@material-ui/core';
-import { useState, useContext } from 'react';
-import { Tooltip } from '@material-ui/core';
-import { Client } from '.prisma/client';
-import { Task } from '.prisma/client';
-import useTasksUsername from './../../hooks/useTaskUsername';
+import { Client, Task } from '.prisma/client';
+import { Backdrop, Button, Modal, Tooltip } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import { AppDataContext } from 'src/contexts/AppContext';
-import { RequestStatus } from 'src/constants/request-status';
-import LoadingSpinner from 'src/components/LoadingSpinner';
-import AcceptAndPayModal from './AcceptAndPayModal';
-import Axios from 'axios';
-import { useRouter } from 'next/router';
 import CloseIcon from '@material-ui/icons/Close';
-import CreateATask from './../CreateATask';
+import { useRouter } from 'next/router';
+import { useContext, useState } from 'react';
 import { TASK_QUEUED } from 'src/constants/task-stages';
+import { AppDataContext } from 'src/contexts/AppContext';
+import CreateATask from './../CreateATask';
+import AcceptAndPayModal from './AcceptAndPayModal';
 
 interface OwnProps {
   task: Task;
@@ -32,21 +18,13 @@ interface OwnProps {
   styles?: any;
 }
 
-export default function KanbanTaskCard({
-  task,
-  mode,
-  showAcceptButton,
-  showUserImg,
-  showCompanyLogo = true,
-  styles = {},
-}: OwnProps) {
-  const { username, loading, error } = useTasksUsername();
+export default function KanbanTaskCard({ task, showAcceptButton }: OwnProps) {
   const router = useRouter();
   const [isCreateATaskOpen, setIsCreateATaskOpen] = useState(
     router.query.showCreateTask === 'true'
   );
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const { state, dispatch } = useContext(AppDataContext);
+  const { state } = useContext(AppDataContext);
 
   const handleClickCreateATask = () => {
     if (task.status == TASK_QUEUED) {
@@ -57,9 +35,6 @@ export default function KanbanTaskCard({
   const handleCloseCreateATask = () => {
     setIsCreateATaskOpen(false);
   };
-  const [requestStatus, setRequestStatus] = useState<RequestStatus>(
-    RequestStatus.IDLE
-  );
 
   const handleClosePaymentModal = () => {
     setIsPaymentModalOpen(false);
@@ -67,29 +42,6 @@ export default function KanbanTaskCard({
 
   const handleClickPayment = () => {
     setIsPaymentModalOpen(true);
-  };
-
-  const submitPayment = async () => {
-    setRequestStatus(RequestStatus.PENDING);
-    try {
-      await Axios.post('/api/stripe/submit-payment', {
-        task,
-      });
-      setRequestStatus(RequestStatus.SUCCEEDED);
-    } catch (e) {
-      setRequestStatus(RequestStatus.FAILED);
-      throw e;
-    }
-
-    try {
-      await Axios.post('/api/discord/notify-task-complete', {
-        discordChannelId: task.discordChannelId,
-        task,
-      });
-    } catch (e) {
-      // TODO: roll back payment if this fails, since it will still appear in the "review" column.
-      throw e;
-    }
   };
 
   return (
@@ -137,7 +89,6 @@ export default function KanbanTaskCard({
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => {}}
                 style={{ marginRight: '10px' }}
               >
                 View PR
@@ -147,15 +98,7 @@ export default function KanbanTaskCard({
                 color="primary"
                 onClick={handleClickPayment}
               >
-                {requestStatus === RequestStatus.IDLE ? (
-                  'Accept'
-                ) : requestStatus === RequestStatus.PENDING ? (
-                  <LoadingSpinner />
-                ) : requestStatus === RequestStatus.FAILED ? (
-                  'Failed. Click to retry'
-                ) : (
-                  'Accept and Pay'
-                )}
+                Accept
               </Button>
             </div>
           )}

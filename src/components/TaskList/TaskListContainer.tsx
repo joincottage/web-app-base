@@ -1,20 +1,17 @@
-import React, { useContext, ChangeEvent } from 'react';
+import { Input, InputAdornment } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import { Avatar, Theme } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/styles';
-import TaskList from 'src/components/TaskList';
-import { Client } from '.prisma/client';
+import SearchIcon from '@material-ui/icons/Search';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import React, { ChangeEvent, useContext } from 'react';
+import setActiveSearchTerm from 'src/actions/setActiveSearchTerm';
 import { AppDataContext } from '../../contexts/AppContext';
 import TaskTypeFilter from './TaskTypeFilter';
-import { Input, InputAdornment } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import setActiveSearchTerm from 'src/actions/setActiveSearchTerm';
 
 interface OwnProps {
   children: JSX.Element;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     title: {
       fontWeight: 600,
@@ -23,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function TaskListContainer({ children }: OwnProps) {
-  const { state, dispatch } = useContext(AppDataContext);
+  const { dispatch } = useContext(AppDataContext);
   const classes = useStyles();
 
   const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {

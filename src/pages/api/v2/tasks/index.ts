@@ -1,14 +1,13 @@
-import { withApiAuthRequired } from '@auth0/nextjs-auth0';
+import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
 import { NextApiHandler } from 'next';
-import { prisma } from '../../../../database/prisma';
-import { getUserAuthId } from '../../../../apiService/auth/helpers';
-import { getSession } from '@auth0/nextjs-auth0';
 import { IN_PROGRESS } from 'src/constants/task-stages';
+import { getUserAuthId } from '../../../../apiService/auth/helpers';
+import { prisma } from '../../../../database/prisma';
 
 const taskHandler: NextApiHandler = async (req, res) => {
   const { body, method } = req;
   const task = body.task;
-  switch (req.method) {
+  switch (method) {
     case 'POST': {
       try {
         const session = getSession(req, res);
@@ -129,7 +128,7 @@ const taskHandler: NextApiHandler = async (req, res) => {
         });
 
         res.json(tasks);
-      } catch (e) {
+      } catch (e: any) {
         console.error(
           `Failed to execute prisma query for tasks with inputs status: ${status}, client: ${client}, user: ${user}`,
           e.message

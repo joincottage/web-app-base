@@ -1,23 +1,17 @@
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
-import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import NextLink from 'next/link';
-import MuiLink from '@material-ui/core/Link';
-import { useUser } from '@auth0/nextjs-auth0';
-import { styled } from '@material-ui/core/styles';
-import { AccountIconMenu } from './menus/AccountIconMenu';
 import Container from '@material-ui/core/Container';
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
-import HelpIcon from '@material-ui/icons/Help';
-import useClient from 'src/hooks/useClients';
-import { Avatar } from '@material-ui/core';
-import { useEffect } from 'react';
 import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MuiLink from '@material-ui/core/Link';
+import { styled } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import HelpIcon from '@material-ui/icons/Help';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import HelpMenu from './menus/HelpMenu';
-import ChatIcon from '@material-ui/icons/Chat';
+import useClient from 'src/hooks/useClients';
+import { AccountIconMenu } from './menus/AccountIconMenu';
 
 const Div = styled(MuiLink)(({ theme }) => ({
   ...theme.typography.h6,
@@ -41,9 +35,6 @@ export const Navbar = (): JSX.Element => {
   const { user, isLoading } = useClient();
   const router = useRouter();
 
-  const handleRouteToChat = () => {
-    router.push('/chat');
-  };
   const handleClickHelp = () => {
     window.open(
       'https://stormy-equipment-95d.notion.site/Freelancer-ed8e005142cb475193063738be937175',

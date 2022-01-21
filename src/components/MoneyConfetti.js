@@ -6,16 +6,14 @@ export default function MoneyConfetti() {
   function range_random(gteq, lt) {
     return gteq + Math.random() * (lt - gteq);
   }
-  function sample(array) {
-    return array[Math.floor(Math.random() * array.length)];
-  }
-  var TO_RADIAN = Math.PI / 180;
-  var NUM_OF_PIECES = 100;
+
+  let TO_RADIAN = Math.PI / 180;
+  let NUM_OF_PIECES = 100;
 
   useEffect(() => {
-    var image_f = new Image();
+    let image_f = new Image();
     image_f.src = 'dollar_front.png';
-    var image_r = new Image();
+    let image_r = new Image();
     image_r.src = 'dollar_back.png';
 
     const canvas = canvasRef.current;
@@ -25,10 +23,10 @@ export default function MoneyConfetti() {
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    var context = canvas.getContext('2d');
-    var pieces = [];
-    var step = 0;
-    for (var i = 0; i < NUM_OF_PIECES; i++) {
+    let context = canvas.getContext('2d');
+    let pieces = [];
+    let step = 0;
+    for (let i = 0; i < NUM_OF_PIECES; i++) {
       pieces.push({
         w: 20,
         h: 10,
@@ -45,7 +43,7 @@ export default function MoneyConfetti() {
     }
 
     let interval_id = setInterval(function () {
-      var piece;
+      let piece;
       context.clearRect(0, 0, canvas.width, canvas.height);
       if (pieces.length == 0) {
         clearInterval(interval_id);
@@ -53,9 +51,9 @@ export default function MoneyConfetti() {
       }
 
       // draw
-      for (var i in pieces) {
+      for (let i in pieces) {
         piece = pieces[i];
-        var scaley = Math.sin(step * piece.cyclevsy);
+        let scaley = Math.sin(step * piece.cyclevsy);
 
         context.save();
         context.translate(
@@ -76,7 +74,7 @@ export default function MoneyConfetti() {
         piece.vy += piece.ay;
       }
       // remove
-      for (var i = pieces.length - 1; i >= 0; i--) {
+      for (let i = pieces.length - 1; i >= 0; i--) {
         piece = pieces[i];
         if (piece.y > canvas.height) {
           pieces.splice(i, 1);
@@ -98,7 +96,7 @@ export default function MoneyConfetti() {
       }}
     >
       <canvas
-        class="confetti"
+        className="confetti"
         id="confetti"
         ref={canvasRef}
         width="320"

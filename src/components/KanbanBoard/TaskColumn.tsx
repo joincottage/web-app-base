@@ -1,10 +1,8 @@
 import { Box } from '@material-ui/core';
-import { Task } from '@prisma/client';
-import React, { useContext } from 'react';
-import { TASK_QUEUED } from 'src/constants/task-stages';
-import { AppDataContext } from 'src/contexts/AppContext';
-import KanbanTaskCard from './KanbanTaskCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Task } from '@prisma/client';
+import React from 'react';
+import KanbanTaskCard from './KanbanTaskCard';
 
 interface OwnProps {
   title: string;
@@ -33,8 +31,6 @@ export default function TaskColumn({
   showAcceptButtons,
   style = {},
 }: OwnProps) {
-  const { state } = useContext(AppDataContext);
-
   return (
     <Box
       style={{

@@ -1,6 +1,5 @@
 import { prisma } from '../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { encrypt } from '../../../utils/encryption';
 import Axios from 'axios';
 
 const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';

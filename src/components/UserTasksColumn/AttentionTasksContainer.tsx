@@ -9,8 +9,8 @@ interface OwnProps {
 export default function AttentionTasksContainer({ tasks }: OwnProps) {
   return (
     <div>
-      {tasks.map((item) => (
-        <div className="mb-2">
+      {tasks.map((item, i) => (
+        <div className="mb-2" key={i}>
           <AttentionTasks task={item} />
         </div>
       ))}

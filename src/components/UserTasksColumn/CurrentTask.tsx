@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext } from 'react';
 import { Task } from '.prisma/client';
-import axios from 'axios';
 import { useUser } from '@auth0/nextjs-auth0';
 import { Button, Typography } from '@material-ui/core';
-import { AppDataContext } from 'src/contexts/AppContext';
+import axios from 'axios';
+import { useContext } from 'react';
 import setCurrentTask from 'src/actions/setCurrentTask';
 import setTasksInReview from 'src/actions/setTasksInReview';
 import CurrentTaskMenu from 'src/components/menus/CurrentTaskMenu';
+import { AppDataContext } from 'src/contexts/AppContext';
 
 interface OwnProps {
   task: Task;
@@ -15,8 +15,6 @@ interface OwnProps {
 export default function CurrentTask({ task }: OwnProps) {
   const { user } = useUser();
   const ideLink = 'https://cloudcoder.network/ws/51758359595864/ide/';
-  const devServerLink =
-    'https://ws-571429178330112-port-3000.proxy.cloudcoder.network/';
 
   const { state, dispatch } = useContext(AppDataContext);
 
@@ -53,7 +51,7 @@ export default function CurrentTask({ task }: OwnProps) {
               >
                 {task.name}
               </Typography>
-              <CurrentTaskMenu user={user} task={task} />
+              <CurrentTaskMenu />
             </div>
             <Button
               className="w-full"

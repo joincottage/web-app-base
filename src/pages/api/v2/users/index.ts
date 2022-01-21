@@ -32,6 +32,8 @@ const userHandler: NextApiHandler = async (req, res) => {
         console.error('Failed trying to fetch current task for user', err);
         res.status(500).end();
       }
+
+      break;
     }
     /*
     Returns information about the currently authenticated user along with any tasks
@@ -93,7 +95,7 @@ const userHandler: NextApiHandler = async (req, res) => {
         res.status(500).end();
       }
 
-      return;
+      break;
     }
     default: {
       console.error(

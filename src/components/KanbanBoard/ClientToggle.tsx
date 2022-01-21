@@ -5,7 +5,6 @@ import React, { useContext, useEffect } from 'react';
 import { AppDataContext } from 'src/contexts/AppContext';
 import useLocalStorage from 'src/hooks/useLocalStorage';
 import setSelectedClientAction from 'src/actions/setSelectedClient';
-import useClients from 'src/hooks/useClients';
 
 interface OwnProps {
   clients: Client[] | null;

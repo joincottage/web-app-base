@@ -1,6 +1,5 @@
 //import { useState, useEffect } from 'react';
 import { Task } from '@prisma/client';
-import { IN_REVIEW } from 'src/constants/task-stages';
 import Typography from '@material-ui/core/Typography';
 
 interface OwnProps {
@@ -19,8 +18,11 @@ export default function ReviewTasks({ tasks }: OwnProps) {
   }
   return (
     <div className="">
-      {tasks.map((task) => (
-        <div className="my-3 px-3 py-2 rounded bg-blue-100 shadow max-w-[15rem]">
+      {tasks.map((task, i) => (
+        <div
+          className="my-3 px-3 py-2 rounded bg-blue-100 shadow max-w-[15rem]"
+          key={i}
+        >
           <div className="flex justify-between my-1">
             <div className="text-left">
               <Typography

@@ -3,12 +3,12 @@
 // in the Stripe account so that we can pay out to freelancers for every task completed.
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { decrypt, encrypt } from 'src/utils/encryption';
+import { decrypt } from 'src/utils/encryption';
 import { prisma } from './../../../database/prisma';
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
 import Stripe from 'stripe';
-import { Task, User } from '.prisma/client';
+import { Task } from '.prisma/client';
 
 const CENTS_IN_A_DOLLAR = 100;
 
@@ -75,7 +75,7 @@ export default async function (
             },
           });
           res.send('OK');
-        } catch (err) {
+        } catch (err: any) {
           // Error code will be authentication_required if authentication is needed
           console.log('Error code is: ', err.code);
           const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(

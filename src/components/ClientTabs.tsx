@@ -4,7 +4,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import { AppDataContext } from '../contexts/AppContext';
 import setSelectedClient from 'src/actions/setSelectedClient';
-import { Avatar, Divider, Fade } from '@material-ui/core';
+import { Avatar, Fade } from '@material-ui/core';
 import { Client } from '@prisma/client';
 import ClientColumnLoadingState from './emptystates/ClientColumnLoadingState';
 interface OwnProps {
@@ -78,9 +78,8 @@ export default function BasicTabs({ clients }: OwnProps) {
             aria-label="basic tabs example"
           >
             {renderableClients.map((client, index) => (
-              <Fade in={true} timeout={(index + 1) * 500}>
+              <Fade in={true} timeout={(index + 1) * 500} key={index}>
                 <Tab
-                  key={index}
                   onClick={() => {
                     dispatch(setSelectedClient(client.original));
                   }}

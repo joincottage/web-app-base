@@ -1,23 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { UserProfile } from '@auth0/nextjs-auth0';
-import TaskEmptyState from '../emptystates/TaskEmptyState';
-import CurrentTaskContainer from './CurrentTaskContainer';
-import TaskColumnEmptyState from '../emptystates/TaskColumnEmptyState';
-import ReviewTasks from './ReviewTasks';
-import AttentionTasksContainer from './AttentionTasksContainer';
-import PreviousTasks from './PreviousTasks';
-import { useCurrentTask } from '../../hooks/useCurrentTask';
-import { useReviewTasks } from '../../hooks/useReviewTasks';
-import { usePreviousTasks } from '../../hooks/usePreviousTasks';
-import { useAttentionTasks } from '../../hooks/useAttentionTasks';
 import { Task } from '.prisma/client';
-import { AppDataContext } from 'src/contexts/AppContext';
-import { Fade, Theme, Tooltip, Typography } from '@material-ui/core';
-import setTasksInReview from 'src/actions/setTasksInReview';
-import setPreviousTasks from 'src/actions/setPreviousTasks';
-import setCurrentTask from 'src/actions/setCurrentTask';
+import { UserProfile } from '@auth0/nextjs-auth0';
+import { Fade, Tooltip, Typography } from '@material-ui/core';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { createStyles, makeStyles } from '@material-ui/styles';
+import React, { useContext, useEffect, useState } from 'react';
+import setCurrentTask from 'src/actions/setCurrentTask';
+import setPreviousTasks from 'src/actions/setPreviousTasks';
+import setTasksInReview from 'src/actions/setTasksInReview';
+import { AppDataContext } from 'src/contexts/AppContext';
+import { useAttentionTasks } from '../../hooks/useAttentionTasks';
+import { useCurrentTask } from '../../hooks/useCurrentTask';
+import { usePreviousTasks } from '../../hooks/usePreviousTasks';
+import { useReviewTasks } from '../../hooks/useReviewTasks';
+import TaskColumnEmptyState from '../emptystates/TaskColumnEmptyState';
+import TaskEmptyState from '../emptystates/TaskEmptyState';
+import AttentionTasksContainer from './AttentionTasksContainer';
+import CurrentTaskContainer from './CurrentTaskContainer';
+import PreviousTasks from './PreviousTasks';
+import ReviewTasks from './ReviewTasks';
 
 const ANIMATION_TIMEOUT_MILLIS = 500;
 
@@ -25,7 +25,7 @@ interface OwnProps {
   user: UserProfile | undefined;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     title: {
       fontWeight: 600,
@@ -121,7 +121,6 @@ export default function UserTaskColumn({ user }: OwnProps) {
         >
           <div>
             <div className="text-left">
-              {/* @ts-ignore */}
               {attentionTasks !== null && attentionTasks.length !== 0 ? (
                 <div>
                   <p className="my-3 font-semibold">Attention Tasks</p>
@@ -137,7 +136,6 @@ export default function UserTaskColumn({ user }: OwnProps) {
               >
                 Your Current Task
               </Typography>
-              {/* @ts-ignore */}
               {state.currentTask !== null ? (
                 <div>
                   <CurrentTaskContainer task={state.currentTask as Task} />

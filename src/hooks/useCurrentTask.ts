@@ -1,6 +1,6 @@
 import { Task } from '@prisma/client';
-import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { IN_PROGRESS } from 'src/constants/task-stages';
 
 function isEmpty(obj: Record<any, any>) {
@@ -22,9 +22,10 @@ export const useCurrentTask = () => {
 
         setCurrentTask(isEmpty(data) ? null : data[0]);
         setCurrentTaskLoading(false);
-      } catch (err) {
+      } catch (err: any) {
         // FIXME: response.json() fails when a user doesn't have a current task since the response body is empty
         setCurrentTask(null);
+        setCurrentTaskError(err);
       }
     };
 

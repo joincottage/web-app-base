@@ -31,9 +31,6 @@ export default async function (
   const discordUserId = body.discordUserId;
 
   switch (req.method) {
-    case 'POST': {
-    }
-    //MARK: Change current task to in_review
     case 'PUT':
       try {
         await prisma.task.update({
@@ -53,10 +50,6 @@ export default async function (
 
       res.send('OK');
       break;
-    case 'GET': {
-    }
-    case 'DELETE': {
-    }
     default: {
       console.error(
         `Unsupported method type ${req.method} made to endpoint ${req.url}`

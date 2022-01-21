@@ -1,12 +1,9 @@
 import { Task } from '.prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  addUserToChannel,
-  postMessageToChannel,
-} from 'src/apiService/discord/channel';
+import { postMessageToChannel } from 'src/apiService/discord/channel';
 import { prisma } from 'src/database/prisma';
 import { getSession } from '@auth0/nextjs-auth0';
-import { DONE, IN_PROGRESS } from 'src/constants/task-stages';
+import { DONE } from 'src/constants/task-stages';
 
 interface NotifyTaskCompleteRequest extends NextApiRequest {
   body: {

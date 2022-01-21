@@ -1,23 +1,18 @@
-// @ts-nocheck
-import React, { useState } from 'react';
-import { createStyles, Theme } from '@material-ui/core/styles';
+import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import {
+  Box,
   Button,
+  Container,
   TextField,
   Typography,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  Container,
-  Box,
+  Theme,
 } from '@material-ui/core';
-import Axios from 'axios';
-import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { makeStyles } from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
+import { createStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
+import Axios from 'axios';
 import { useRouter } from 'next/dist/client/router';
+import React, { useState } from 'react';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -67,7 +62,7 @@ export default function ClientSignup() {
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
-  const { user, isLoading } = useUser();
+  const { user } = useUser();
 
   const handleRequestAccess = async () => {
     setRequestStatus(RequestStatus.PENDING);
@@ -138,7 +133,7 @@ export default function ClientSignup() {
           </Button>
           {requestStatus === RequestStatus.FAILED ? (
             <div className={classes.error}>
-              Something went wrong. We're on it!
+              Something went wrong. We&apos;re on it!
             </div>
           ) : null}
         </div>

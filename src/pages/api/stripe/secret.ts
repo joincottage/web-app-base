@@ -4,7 +4,7 @@ import { prisma } from './../../../database/prisma';
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
 import Stripe from 'stripe';
-import { Task, User } from '.prisma/client';
+import { User } from '.prisma/client';
 import { getSession } from '@auth0/nextjs-auth0';
 
 const stripe = new Stripe(process.env.STRIPE_AUTH_KEY as string, {

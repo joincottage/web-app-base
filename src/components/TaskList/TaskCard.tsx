@@ -1,31 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Theme } from '@material-ui/core/styles';
-import { makeStyles, createStyles } from '@material-ui/styles';
-import Card from '@material-ui/core/Card';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import { red } from '@material-ui/core/colors';
-import {
-  Backdrop,
-  Button,
-  Chip,
-  Fade,
-  Modal,
-  Typography,
-} from '@material-ui/core';
 import { Task } from '.prisma/client';
-import CloseIcon from '@material-ui/icons/Close';
-import IllDoIt from '../IllDoIt';
-import { UserProfile, useUser } from '@auth0/nextjs-auth0';
-import { AppDataContext } from 'src/contexts/AppContext';
-import moment from 'moment';
-import Axios from 'axios';
-import LoadingSpinner from '../LoadingSpinner';
+import { Backdrop, Chip, Fade, Modal, Typography } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
+import Card from '@material-ui/core/Card';
+import { red } from '@material-ui/core/colors';
+import { Theme } from '@material-ui/core/styles';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
+import CloseIcon from '@material-ui/icons/Close';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import moment from 'moment';
+import React, { useState } from 'react';
 import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
 import TaskDetailsModal from './TaskDetailsModal';
-import { RequestStatus } from 'src/constants/request-status';
-import { convertFromRaw, Editor, EditorState } from 'draft-js';
 
 interface OwnProps {
   task: Task;
@@ -95,37 +80,15 @@ function getModalStyle() {
   };
 }
 
-const renderLongDescription = (task: Task) => {
-  let editorState: EditorState;
-  try {
-    editorState = EditorState.createWithContent(
-      convertFromRaw(JSON.parse(task.longDesc as string))
-    );
-  } catch (err) {
-    return task.longDesc;
-  }
-
-  // @ts-ignore
-  return <Editor editorState={editorState} readOnly />;
-};
-
 export default function TaskCard({
   task,
-  mode,
   showAcceptButton,
-  showUserImg,
-  showCompanyLogo = true,
   styles = {},
 }: OwnProps) {
-  const { user } = useUser();
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [modalStyle] = React.useState(getModalStyle);
-  const { state, dispatch } = useContext(AppDataContext);
-
-  const handleClickIllDoIt = () => {};
 
   const handleClickTaskCard = async () => {
     setShowTaskModal(true);
@@ -184,9 +147,6 @@ export default function TaskCard({
               </Typography>
               <span className="ml-2 mr-2">{' - '}</span>
               <span>
-                {/* TODO: This needs to be added to the database schmea*/}
-                {/* BUG: This ts-ignore needs to be removed!!*/}
-                {/* @ts-ignore */}
                 {task.type === 'bug' ? (
                   <Chip
                     avatar={

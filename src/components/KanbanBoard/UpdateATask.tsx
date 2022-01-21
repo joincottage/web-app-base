@@ -1,18 +1,16 @@
-// @ts-nocheck
-import { makeStyles } from '@material-ui/styles';
-import { createStyles, Theme } from '@material-ui/core/styles';
-import React, { SyntheticEvent, useState, useEffect } from 'react';
-import { Client } from '.prisma/client';
-import { Task } from '.prisma/task';
-import Axios from 'axios';
 import {
+  Alert,
   Box,
-  Typography,
-  TextField,
   Button,
   Snackbar,
-  Alert,
+  TextField,
+  Theme,
+  Typography,
 } from '@material-ui/core';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { Client, Task } from '@prisma/client';
+import Axios from 'axios';
+import React, { useState } from 'react';
 import { RequestStatus } from '../../constants/request-status';
 
 interface OwnProps {
@@ -67,20 +65,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function UpdateATask({ client, task }: OwnProps) {
   const classes = useStyles();
-  const [title, setTitle] = useState(task.name);
-  const [shortDesc, setShortDesc] = useState(task.shortDesc);
-  const [longDesc, setLongDesc] = useState(task.longDesc);
-  const [requiredSkills, setRequiredSkills] = useState(task.skills);
+  const [title, setTitle] = useState(task?.name);
+  const [shortDesc, setShortDesc] = useState(task?.shortDesc);
+  const [longDesc, setLongDesc] = useState(task?.longDesc);
+  const [requiredSkills, setRequiredSkills] = useState(task?.skills);
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
   const [showSuccess, setShowSuccess] = useState(false);
-  const [price, setPrice] = useState(task.price);
-
-  useEffect(() => {
-    console.log(task);
-    //setTitle(task.name);
-  }, []);
+  const [price, setPrice] = useState<number | null | undefined>(task?.price);
 
   const handleSubmit = async () => {
     setRequestStatus(RequestStatus.PENDING);
@@ -90,7 +83,7 @@ export default function UpdateATask({ client, task }: OwnProps) {
           clientName: client?.name,
           clientImgUrl: client?.logoUrl,
           clientCategoryId: client?.discordCategoryId,
-          id: task.id,
+          id: task?.id,
           name: title,
           shortDesc: shortDesc,
           longDesc: longDesc,
@@ -112,7 +105,7 @@ export default function UpdateATask({ client, task }: OwnProps) {
     setLongDesc('');
     setRequiredSkills('');
   };
-  const handleCloseShowSuccess = (event: SyntheticEvent<Element, Event>) => {
+  const handleCloseShowSuccess = () => {
     setShowSuccess(false);
   };
 
@@ -162,7 +155,7 @@ export default function UpdateATask({ client, task }: OwnProps) {
             value={price}
             label="Price"
             variant="outlined"
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) => setPrice(Number(e.target.value))}
             required
           />
         </form>
@@ -184,7 +177,7 @@ export default function UpdateATask({ client, task }: OwnProps) {
         </Button>
         {requestStatus === RequestStatus.FAILED ? (
           <div className={classes.error}>
-            Something went wrong. We're on it!
+            Something went wrong. We&apos;re on it!
           </div>
         ) : null}
       </div>

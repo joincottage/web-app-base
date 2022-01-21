@@ -33,8 +33,8 @@ export const initialState: AppState = {
   activeSearchTerm: '',
   serializedEditorState: '',
 };
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 export const AppDataContext = React.createContext<AppContext>({
   state: initialState,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   dispatch: () => {},
 });

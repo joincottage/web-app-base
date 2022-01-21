@@ -1,26 +1,24 @@
-// @ts-nocheck
-import { makeStyles } from '@material-ui/styles';
-import { createStyles, Theme } from '@material-ui/core/styles';
-import React, { SyntheticEvent, useState, useEffect, useContext } from 'react';
 import { Client, Task } from '.prisma/client';
-import Axios from 'axios';
 import {
+  Alert,
   Box,
-  Chip,
-  Typography,
-  TextField,
   Button,
+  Chip,
+  Snackbar,
+  TextField,
+  Theme,
   ToggleButton,
   ToggleButtonGroup,
-  Snackbar,
-  Alert,
+  Typography,
 } from '@material-ui/core';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
-import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
-import { RequestStatus } from '../../constants/request-status';
-import RichTextEditor from './RichTextEditor';
-import { convertToRaw } from 'draft-js';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import Axios from 'axios';
+import React, { useContext, useState } from 'react';
 import { AppDataContext } from 'src/contexts/AppContext';
+import { RequestStatus } from '../../constants/request-status';
+import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
+import RichTextEditor from './RichTextEditor';
 
 interface OwnProps {
   client: Client | null;
@@ -94,15 +92,11 @@ export default function CreateATask({ client, task }: OwnProps) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [price, setPrice] = useState(task === null ? '' : task.price);
   const [isBugSelected, setIsBugSelected] = useState(
-    task === null ? '' : task.type
+    task === null ? false : task.type === 'bug'
   );
 
   const { state } = useContext(AppDataContext);
 
-  useEffect(() => {
-    console.log(task);
-    //setTitle(task.name);
-  }, []);
   const handleSubmit = async () => {
     setRequestStatus(RequestStatus.PENDING);
     try {
@@ -150,7 +144,7 @@ export default function CreateATask({ client, task }: OwnProps) {
     setLongDesc('');
     setRequiredSkills('');
   };
-  const handleCloseShowSuccess = (event: SyntheticEvent<Element, Event>) => {
+  const handleCloseShowSuccess = () => {
     setShowSuccess(false);
   };
 
@@ -162,7 +156,6 @@ export default function CreateATask({ client, task }: OwnProps) {
         </Typography>
         <form className={classes.form} noValidate autoComplete="off">
           <TextField
-            className={classes.textField}
             value={title}
             label="Title"
             variant="outlined"
@@ -266,7 +259,7 @@ export default function CreateATask({ client, task }: OwnProps) {
         </Button>
         {requestStatus === RequestStatus.FAILED ? (
           <div className={classes.error}>
-            Something went wrong. We're on it!
+            Something went wrong. We&apos;re on it!
           </div>
         ) : null}
       </div>

@@ -1,46 +1,25 @@
-import React, { useContext, useEffect } from 'react';
-import { AppDataContext } from '../../contexts/AppContext';
-import TaskCardSkeleton from 'src/components/emptystates/TaskCardEmptyState';
-import TaskCard from './TaskCard';
+import { Fade } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import { Task } from '@prisma/client';
-import useTasks from 'src/hooks/useTasks';
-import { TASK_QUEUED } from 'src/constants/task-stages';
-import { Fade, Typography } from '@material-ui/core';
-import setTasksInQueue from 'src/actions/setTasksInQueue';
-import TaskListContainer from './TaskListContainer';
-import Image from 'next/image';
 import times from 'lodash/times';
+import React, { useContext, useEffect } from 'react';
+import setTasksInQueue from 'src/actions/setTasksInQueue';
+import TaskCardSkeleton from 'src/components/emptystates/TaskCardEmptyState';
+import { TASK_QUEUED } from 'src/constants/task-stages';
+import useTasks from 'src/hooks/useTasks';
+import { AppDataContext } from '../../contexts/AppContext';
+import TaskCard from './TaskCard';
+import TaskListContainer from './TaskListContainer';
 
-interface OwnProps {
-  //DESTRUCTUREDPROP: [];
-}
-
-const EmptyTaskList = () => (
+const EmptyTaskCard = () => (
   <div
+    className="border border-dotted border-gray-300"
     style={{
-      background: 'none',
-      position: 'absolute',
-      top: '150px',
-      width: '100%',
+      width: '800px',
+      height: '162px',
+      background: 'rgba(216, 217, 219, .25)',
     }}
-  >
-    <div className="w-[100%] flex justify-center text-gray-400 font-bold ml-4 mb-4">
-      <Image
-        src="/no-task.png"
-        alt="Sleeping clipboard"
-        width={128}
-        height={128}
-      />
-    </div>
-    <Typography
-      variant="h6"
-      className="flex justify-center text-gray-400"
-      style={{ fontWeight: 700 }}
-    >
-      No tasks available
-    </Typography>
-  </div>
+  ></div>
 );
 
 const TaskListItemContainer = ({
@@ -58,7 +37,7 @@ const TaskListItemContainer = ({
   </Fade>
 );
 
-export default function TaskList({}: OwnProps) {
+export default function TaskList() {
   const { loading, error, data } = useTasks();
   const { state, dispatch } = useContext(AppDataContext);
 
@@ -125,43 +104,22 @@ export default function TaskList({}: OwnProps) {
         ) : state.selectedClient.name === 'All' ? (
           allAvailableTasks
             .map((task: Task, i) => (
-              <TaskListItemContainer task={task} index={i} />
+              <TaskListItemContainer task={task} index={i} key={i} />
             ))
             .concat(
-              times(19 - allAvailableTasks.length, () => (
-                <div
-                  className="border border-dotted border-gray-300"
-                  style={{
-                    width: '800px',
-                    height: '162px',
-                    background: 'rgba(216, 217, 219, .25)',
-                  }}
-                ></div>
-              ))
+              times(19 - allAvailableTasks.length, () => <EmptyTaskCard />)
             )
         ) : (
           clientSpecificAvailableTasks
             .map((task: Task, i) => (
-              <TaskListItemContainer task={task} index={i} />
+              <TaskListItemContainer task={task} index={i} key={i} />
             ))
             .concat(
               times(19 - clientSpecificAvailableTasks.length, () => (
-                <div
-                  className="border border-dotted border-gray-300"
-                  style={{
-                    width: '800px',
-                    height: '162px',
-                    background: 'rgba(216, 217, 219, .25)',
-                  }}
-                ></div>
+                <EmptyTaskCard />
               ))
             )
         )}
-        {!loading &&
-          state.selectedClient.name !== 'All' &&
-          state.tasksInQueue.filter(
-            (task: Task) => task.clientName === state.selectedClient.name
-          ).length === 0 && <EmptyTaskList />}
       </div>
     </TaskListContainer>
   );
