@@ -101,6 +101,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
               color="primary"
               size="large"
               onClick={handleClickPreviewCodebase}
+              style={{ marginTop: '30px' }}
             >
               Preview codebase
             </Button>
