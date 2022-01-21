@@ -1,5 +1,13 @@
 import { Task } from '.prisma/client';
-import { Button, Chip } from '@material-ui/core';
+import {
+  Button,
+  Chip,
+  Fade,
+  Paper,
+  Theme,
+  Typography,
+} from '@material-ui/core';
+import Popper, { PopperPlacementType } from '@material-ui/core/Popper';
 import CloseIcon from '@material-ui/icons/Close';
 import OpenInNew from '@material-ui/icons/OpenInNew';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
@@ -17,6 +25,9 @@ import {
   DraftDecorator,
 } from 'draft-js';
 import dynamic from 'next/dynamic';
+import useUser from 'src/hooks/useUser';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import OnboardingPrompt from '../stripe/OnboardingPrompt';
 
 const Editor = dynamic(
   // @ts-ignore
@@ -30,9 +41,11 @@ interface OwnProps {
 
 export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
   const { state, dispatch } = useContext(AppDataContext);
+  const { user } = useUser();
   const [requestStatus, setRequestStatus] = useState<RequestStatus>(
     RequestStatus.IDLE
   );
+  const [showOnboardingPrompt, setShowOnboardingPrompt] = useState(false);
 
   const [editorState, setEditorState] = useState<EditorState | null>(null);
   useEffect(() => {
@@ -44,7 +57,17 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
     } catch (err) {}
   }, [task.longDesc]);
 
-  const handleClickAcceptTask = async () => {
+  const handleClickAcceptTask = async (
+    event: React.MouseEvent<HTMLElement>
+  ) => {
+    if (!user?.stripeAccountId) {
+      if (!showOnboardingPrompt) {
+        setShowOnboardingPrompt(true);
+      }
+
+      return;
+    }
+
     setRequestStatus(RequestStatus.PENDING);
     try {
       await Axios.post('/api/v2/tasks', {
@@ -193,6 +216,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 variant="outlined"
                 color="primary"
                 style={{ marginLeft: '.25rem', marginRight: '.25rem' }}
+                disabled={requestStatus === RequestStatus.PENDING}
               >
                 <span className="text-xl">💰</span>
                 <span className="text-sm">
@@ -203,16 +227,23 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                 variant="outlined"
                 color="primary"
                 style={{ marginLeft: '.25rem', marginRight: '.5rem' }}
+                disabled={requestStatus === RequestStatus.PENDING}
               >
                 <span className="text-xl">ℹ️</span>
                 <span className="text-sm">&nbsp;Needs&nbsp;Info</span>
               </Button>
+              <OnboardingPrompt
+                show={showOnboardingPrompt}
+                handleClose={() => setShowOnboardingPrompt(false)}
+              />
               <Button
                 className="mb-2 ml-1"
                 variant="contained"
                 color="primary"
                 disabled={
-                  !!state.currentTask || requestStatus === RequestStatus.PENDING
+                  !!state.currentTask ||
+                  requestStatus === RequestStatus.PENDING ||
+                  showOnboardingPrompt
                 }
                 onClick={handleClickAcceptTask}
                 style={{ marginBottom: '.25rem', width: '120px' }}

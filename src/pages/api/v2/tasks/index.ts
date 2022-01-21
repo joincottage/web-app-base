@@ -51,7 +51,7 @@ const taskHandler: NextApiHandler = async (req, res) => {
           },
         });
         if (updatedTask.count === 0) {
-          console.error(`Failed updating task due to it being unavalible`);
+          console.error(`Failed updating task due to it being unavailible`);
           res
             .status(500)
             .json({ message: 'Error picking up task: Task Unavailable' });
