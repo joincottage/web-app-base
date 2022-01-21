@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const init = function (context, color) {
   color = color || [24, 46.8, 48.2];
@@ -119,6 +119,7 @@ const init = function (context, color) {
     currentparticles = newparticles;
   }
 
+  let animFrameId;
   function frame(time) {
     if (running) {
       const deltat = time - lastframe;
@@ -126,21 +127,22 @@ const init = function (context, color) {
 
       updateanddrawparticles(deltat);
 
-      polyfillAnimFrame(frame);
+      animFrameId = polyfillAnimFrame(frame);
     }
   }
 
   const running = false;
   function start() {
     running = true;
-    polyfillAnimFrame(function (time) {
+    animFrameId = polyfillAnimFrame(function (time) {
       lastframe = time;
-      polyfillAnimFrame(frame);
+      animFrameId = polyfillAnimFrame(frame);
     });
   }
 
   function stop() {
     running = false;
+    cancelAnimationFrame && cancelAnimationFrame(animFrameId);
   }
 
   return {
@@ -152,8 +154,13 @@ const init = function (context, color) {
 };
 
 const SmokeMachine = () => {
+  const canvasRef = useRef(null);
   useEffect(() => {
-    const canvas = document.getElementById('canvas');
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
+
     const ctx = canvas.getContext('2d');
     canvas.width = 300;
     canvas.height = 400;
@@ -164,10 +171,13 @@ const SmokeMachine = () => {
     setInterval(function () {
       party.addsmoke(300, 400, 1);
     }, 100);
+
+    return () => party.stop();
   }, []);
 
   return (
     <canvas
+      ref={canvasRef}
       id="canvas"
       width="50"
       height="898"
