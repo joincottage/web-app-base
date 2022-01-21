@@ -107,26 +107,12 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
               </div>
             </div>
             <div className="mt-[22px] flex justify-center">
-              <p
-                className="text-sm w-[191px]"
-                style={{ fontSize: '12px', textAlign: 'center' }}
-              >
+              <p className="text-sm w-[191px]" style={{ fontSize: '12px' }}>
                 {/*FIXME: create a client bio in client schema */}
                 Cottage is a freelancing platform for software engineers.
                 Cottage matches engineers with startups to perform tasks on a
                 part time basis.
               </p>
-            </div>
-            <div className="mt-[22px] flex justify-center items-center my-4">
-              <OpenInNew />
-              <a
-                className="ml-1  text-primary-500 uppercase font-medium"
-                href="https://joincottage.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visit Website
-              </a>
             </div>
             <Button
               className="flex justify-center items-center my-4 w-[190px]"
@@ -137,6 +123,16 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
             >
               Preview codebase
             </Button>
+            <div className="flex justify-center items-center my-4">
+              <a
+                className="text-primary-500 uppercase"
+                href="https://joincottage.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit Website
+              </a>
+            </div>
           </div>
         </div>
         <div className="relative w-full flex flex-col justify-between">

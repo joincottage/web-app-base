@@ -14,9 +14,9 @@ export default function MoneyConfetti() {
 
   useEffect(() => {
     var image_f = new Image();
-    image_f.src = 'one_dollar_bill.png';
+    image_f.src = 'dollar_front.png';
     var image_r = new Image();
-    image_r.src = 'one_dollar_bill_reverse.png';
+    image_r.src = 'dollar_back.png';
 
     const canvas = canvasRef.current;
     if (!canvasRef.current) {
