@@ -68,6 +68,11 @@ export default async function (
             amount: ((task as Task).price as number) * CENTS_IN_A_DOLLAR,
             currency: 'usd',
             destination: decrypt(payeeUser?.stripeAccountId as string),
+            metadata: {
+              taskId: task.id,
+              taskName: task.name,
+              payeeUserName: payeeUser?.name || '',
+            },
           });
           res.send('OK');
         } catch (err) {
