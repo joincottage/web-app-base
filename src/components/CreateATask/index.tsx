@@ -116,7 +116,6 @@ export default function CreateATask({ client, task }: OwnProps) {
           longDesc: state.serializedEditorState,
           type: isBugSelected ? 'bug' : 'feature',
           skills: requiredSkills,
-          datePosted: new Date().toString(),
           clientId: client?.id,
           price: Number(price),
         });
@@ -133,7 +132,6 @@ export default function CreateATask({ client, task }: OwnProps) {
             type: isBugSelected ? 'bug' : 'feature',
             skills: requiredSkills,
             price: Number(price),
-            datePosted: new Date().toString(),
           },
         });
       }

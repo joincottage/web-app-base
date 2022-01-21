@@ -224,7 +224,7 @@ export default function TaskCard({
               <span>
                 <Typography variant="body2">
                   {'Posted '}
-                  {moment().diff(moment(task.datePosted), 'days')}
+                  {moment().diff(moment(task.createdAt), 'days')}
                   {' days ago'}
                 </Typography>
               </span>

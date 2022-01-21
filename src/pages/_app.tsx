@@ -128,19 +128,25 @@ export default function MyApp(props: AppProps) {
                 opacity: 0.5,
               }}
             >
-              <SmokeMachine />
+              {isCottageActive && <SmokeMachine />}
             </div>
             <div
+              onClick={() => setIsCottageActive(true)}
               style={{
                 position: 'absolute',
                 left: '235px',
                 top: '712px',
                 width: '125px',
                 height: '125px',
-                zIndex: 20,
+                zIndex: 999999,
+                cursor: 'pointer',
               }}
             >
-              <Image src="/cottage-light.png" width={300} height={300} />
+              {isCottageActive ? (
+                <Image src="/cottage-light.png" width={300} height={300} />
+              ) : (
+                <Image src="/cottage.png" width={300} height={300} />
+              )}
             </div>
             <div
               style={{

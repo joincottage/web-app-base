@@ -96,7 +96,6 @@ export default function UpdateATask({ client, task }: OwnProps) {
           longDesc: longDesc,
           skills: requiredSkills,
           price: Number(price),
-          datePosted: new Date().toString(),
         },
       });
       setRequestStatus(RequestStatus.SUCCEEDED);
