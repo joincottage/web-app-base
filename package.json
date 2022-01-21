@@ -21,7 +21,7 @@
     "prisma-status": "prisma migrate status",
     "prisma-migrate": "prisma migrate dev",
     "prisma": "prisma",
-    "prepare": "husky install"
+    "prepare": "npx husky install"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.5.0",
