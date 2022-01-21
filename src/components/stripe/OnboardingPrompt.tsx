@@ -29,8 +29,9 @@ export default function OnboardingPrompt({ show, handleClose }: OwnProps) {
         We need to know how to pay you first!
       </DialogTitle>
       <DialogContent>
+        {/* TODO: Actually save the task via a query param in the return URL */}
         <DialogContentText>
-          Head over to Stripe so that we can connect to your bank.
+          Head over to Stripe so that we can connect to your bank. We&apos;ll save this task for you in the meantime.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
