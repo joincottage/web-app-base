@@ -59,13 +59,16 @@ export default function Index() {
   }, []);
 
   useEffect(() => {
-    const anonId = cookieCutter.get(COTTAGE_ANONID);
+    if (!auth0User || !cottageUser) {
+      return;
+    }
 
+    const anonId = cookieCutter.get(COTTAGE_ANONID);
     // Link cottage_anonid with user object if logged in
     if (
-      (cottageUser && !cottageUser.anonId) ||
+      !cottageUser.anonId ||
       // Perhaps the user cleared their cookies
-      (cottageUser && cottageUser.anonId !== anonId)
+      cottageUser.anonId !== anonId
     ) {
       Axios.put('/api/v2/users', { anonId, id: cottageUser.id });
     }
@@ -100,21 +103,23 @@ export default function Index() {
               <ClientTabs clients={clients} />
             </div>
             <TaskList />
-            <div className="w-64">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginLeft: '25px',
-                  position: 'sticky',
-                  top: '20px',
-                }}
-              >
-                {cottageUser && <UserTasksColumn user={auth0User} />}
+            {auth0User && (
+              <div className="w-64">
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginLeft: '25px',
+                    position: 'sticky',
+                    top: '20px',
+                  }}
+                >
+                  <UserTasksColumn user={auth0User} />
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <Copyright />
           <IconAttribution />
