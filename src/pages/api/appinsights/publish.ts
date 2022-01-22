@@ -4,6 +4,18 @@ import {
   publishMessage,
   AppInsights,
 } from 'src/apiService/google-pubsub/publishAppInsights';
+import initMiddleware from 'src/utils/initMiddleware';
+import Cors from 'cors';
+
+// Initialize the cors middleware
+const cors = initMiddleware(
+  // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+  Cors({
+    origin: ['https://joincottage.com', 'https://app.joincottage.com'],
+    // Only allow requests with GET, POST and OPTIONS
+    methods: ['GET', 'POST', 'OPTIONS'],
+  })
+);
 
 interface AppInsightsRequest extends NextApiRequest {
   body: AppInsights;
@@ -13,6 +25,9 @@ export default async function publish(
   req: AppInsightsRequest,
   res: NextApiResponse
 ) {
+  // Run cors
+  await cors(req, res);
+
   const { body, method } = req;
   const { EventType, Value, AnonId, Metadata } = body;
 
