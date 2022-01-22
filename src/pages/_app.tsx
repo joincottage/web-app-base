@@ -26,6 +26,7 @@ import {
 import theme from '../theme';
 import './../styles/RichTextEditor.css';
 import './../styles/theme.css';
+import Axios from 'axios';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
@@ -84,6 +85,13 @@ export default function MyApp(props: AppProps) {
     if (jssStyles) {
       jssStyles.parentElement?.removeChild(jssStyles);
     }
+
+    Axios.post('/api/appinsights/publish', {
+      EventType: 'PageView',
+      Value: router.pathname,
+      AnonId: 'test',
+      Metadata: 'test',
+    });
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -1,0 +1,44 @@
+/* eslint-disable no-console */
+import { NextApiRequest, NextApiResponse } from 'next';
+import { writeToBigQuery } from 'src/apiService/google-bigquery/writeToBigQuery';
+import { AppInsights } from 'src/apiService/google-pubsub/publishAppInsights';
+import { receiveAppInsights } from 'src/apiService/google-pubsub/receiveAppInsights';
+
+interface AnalyticsRequest extends NextApiRequest {
+  body: AppInsights;
+}
+
+export default async function receive(
+  req: AnalyticsRequest,
+  res: NextApiResponse
+) {
+  const { method } = req;
+
+  if (method !== 'GET') {
+    res.setHeader('Allow', ['GET']);
+    res.status(405).end(`Method ${method} Not Allowed`);
+
+    return;
+  }
+
+  try {
+    console.log(`Receiving analytics...`);
+    const messagePayloads = await receiveAppInsights();
+    if (messagePayloads.length > 0) {
+      console.log('Writing analytics to database...');
+      await writeToBigQuery(messagePayloads);
+      console.log('Success');
+    } else {
+      console.log(
+        'No analytics messages found. This probably means that the app has not been visited recently.'
+      );
+    }
+    res.status(200).send('Success');
+  } catch (error) {
+    console.error(
+      `Failed to process request to ${method} /api/analytics/receive`,
+      error
+    );
+    res.status(500).json({ message: 'Server error' });
+  }
+}
