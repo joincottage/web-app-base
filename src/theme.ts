@@ -19,7 +19,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Poppins", sans serif',
+    fontFamily: '"Avenir Next LT Pro Regular", sans serif',
   },
   components: {
     // Name of the component

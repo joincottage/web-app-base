@@ -78,3 +78,8 @@ a:hover {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+@font-face {
+  font-family: 'Avenir Next LT Pro Regular';
+  src: url('/fonts/Avenir-Next-LT-Pro-Regular.otf');
+}

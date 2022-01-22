@@ -96,7 +96,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
               </p>
             </div>
             <Button
-              className="flex justify-center items-center my-4 w-[190px]"
+              className="flex justify-center items-center my-4"
               variant="outlined"
               color="primary"
               size="large"
@@ -224,7 +224,7 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
                   showOnboardingPrompt
                 }
                 onClick={handleClickAcceptTask}
-                style={{ marginBottom: '.25rem', width: '120px' }}
+                style={{ marginBottom: '.25rem', width: '125px' }}
               >
                 {requestStatus === RequestStatus.PENDING ? (
                   '...'
