@@ -3,33 +3,34 @@ import { NextApiHandler } from 'next';
 import { prisma } from '../../../../database/prisma';
 import { IN_ATTENTION, IN_PROGRESS } from '../../../../constants/task-stages';
 import { getUserAuthId } from '../../../../apiService/auth/helpers';
-import { getUserAuthEmail } from 'src/apiService/auth/email';
+
+const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
 const userHandler: NextApiHandler = async (req, res) => {
   switch (req.method) {
     case 'POST': {
-      const userAuthId = getUserAuthId(req, res);
-      const userEmail = getUserAuthEmail(req, res);
-      if (userAuthId == null) {
-        res.status(401).end();
-        return;
+      if (req.headers.authorization !== auth0HookToken) {
+        res.status(401).json({ message: 'You are not authorized' });
+        break;
       }
+
+      const { email, name, auth_id } = req.body;
+
       try {
-        const user = await prisma.user.findFirst({
-          where: { auth_id: userAuthId },
+        await prisma.user.create({
+          data: {
+            email,
+            name,
+            auth_id,
+          },
         });
 
-        if (user === null) {
-          await prisma.user.create({
-            data: {
-              auth_id: userAuthId,
-              email: userEmail,
-            },
-          });
-        }
         res.send('OK');
       } catch (err) {
-        console.error('Failed trying to fetch current task for user', err);
+        console.error(
+          'POST /api/v2/users - Failed attempt to add user to database',
+          err
+        );
         res.status(500).end();
       }
 
