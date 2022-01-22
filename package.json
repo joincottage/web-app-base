@@ -45,6 +45,8 @@
     "@types/react": "^17.0.14",
     "axios": "^0.21.4",
     "clsx": "latest",
+    "cookie-cutter": "^0.2.0",
+    "cookies": "^0.8.0",
     "discord.js": "^12.5.3",
     "dompurify": "^2.3.4",
     "draft-convert": "^2.1.12",
@@ -57,14 +59,17 @@
     "react-dom": "^17.0.2",
     "react-draft-wysiwyg": "^1.14.7",
     "sendbird-uikit": "^2.5.0",
-    "stripe": "^8.191.0"
+    "stripe": "^8.191.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/cookie": "^0.4.1",
     "@types/dompurify": "^2.3.2",
     "@types/draft-convert": "^2.1.4",
     "@types/draft-js": "^0.11.7",
     "@types/lodash": "^4.14.178",
     "@types/react-draft-wysiwyg": "^1.13.3",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
     "autoprefixer": "^10.4.0",

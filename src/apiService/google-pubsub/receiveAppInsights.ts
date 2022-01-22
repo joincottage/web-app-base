@@ -12,7 +12,7 @@ export interface AppInsightsPayload {
   CreatedAt: string;
 }
 
-// Triggered from Google Cloud Scheduler: https://console.cloud.google.com/cloudscheduler?project=wherewithal-quiz&authuser=0
+// Triggered from Google Cloud Scheduler: https://console.cloud.google.com/cloudscheduler?authuser=1&project=cottage-328223
 const receiveAppInsights = async () =>
   new Promise<AppInsightsPayload[]>((resolve) => {
     const messagePayloads: AppInsightsPayload[] = [];

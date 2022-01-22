@@ -16,6 +16,9 @@ import { SET_TASKS_IN_QUEUE } from 'src/actions/setTasksInQueue';
 import { SET_TASKS_IN_REVIEW } from 'src/actions/setTasksInReview';
 import Parallax from 'src/components/Parallax';
 import { Navbar } from '../components/Navbar';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import cookieCutter from 'cookie-cutter';
 import {
   AppAction,
   AppContext,
@@ -27,6 +30,7 @@ import theme from '../theme';
 import './../styles/RichTextEditor.css';
 import './../styles/theme.css';
 import Axios from 'axios';
+import { COTTAGE_ANONID } from 'src/constants/cookies';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
@@ -89,8 +93,8 @@ export default function MyApp(props: AppProps) {
     Axios.post('/api/appinsights/publish', {
       EventType: 'PageView',
       Value: router.pathname,
-      AnonId: 'test',
-      Metadata: 'test',
+      AnonId: cookieCutter.get(COTTAGE_ANONID),
+      Metadata: '',
     });
   }, []);
 

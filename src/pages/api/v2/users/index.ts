@@ -7,6 +7,8 @@ import { getUserAuthId } from '../../../../apiService/auth/helpers';
 const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
 const userHandler: NextApiHandler = async (req, res) => {
+  console.log(`${req.method} - ${req.url}`);
+
   switch (req.method) {
     case 'POST': {
       if (req.headers.authorization !== auth0HookToken) {
@@ -36,22 +38,39 @@ const userHandler: NextApiHandler = async (req, res) => {
 
       break;
     }
+    case 'PUT': {
+      const authId = getUserAuthId(req, res);
+      if (!authId) {
+        res.status(401).end();
+        return;
+      }
+
+      await prisma.user.update({
+        where: {
+          id: req.body.id,
+        },
+        data: { ...req.body },
+      });
+
+      res.send('OK');
+
+      break;
+    }
     /*
     Returns information about the currently authenticated user along with any tasks
     that are in progress
      */
     case 'GET': {
       const authId = getUserAuthId(req, res);
-
       if (!authId) {
         res.status(401).end();
-
         return;
       }
 
       try {
         const user = await prisma.user.findUnique({
           select: {
+            id: true,
             name: true,
             createdAt: true,
             img_url: true,
@@ -59,6 +78,7 @@ const userHandler: NextApiHandler = async (req, res) => {
             skills: true,
             type: true,
             hasJoinedDiscord: true,
+            anonId: true,
             tasks: {
               select: {
                 id: true,

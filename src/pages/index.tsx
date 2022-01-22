@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Copyright from '../Copyright';
-import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { useUser as useAuth0User } from '@auth0/nextjs-auth0';
 import { Fade, Typography } from '@material-ui/core';
 import ClientTabs from 'src/components/ClientTabs';
 import UserTasksColumn from 'src/components/UserTasksColumn';
@@ -12,8 +12,30 @@ import setSelectedClient from 'src/actions/setSelectedClient';
 import TaskList from 'src/components/TaskList';
 import IconAttribution from 'src/components/IconAttribution';
 import { createStyles, makeStyles } from '@material-ui/styles';
+import { NextPageContext } from 'next';
+import { setCookie } from 'src/utils/cookies';
+import { v4 as uuidv4 } from 'uuid';
+import { COTTAGE_ANONID } from 'src/constants/cookies';
+import useCottageUser from 'src/hooks/useUser';
+import Axios from 'axios';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import cookieCutter from 'cookie-cutter';
 
-// export const getServerSideProps = withPageAuthRequired();
+// This needs to be present for any publicly accessible page
+export const getServerSideProps = (ctx: NextPageContext) => {
+  const { req } = ctx;
+
+  if (!(req as any).cookies.cottage_anonid) {
+    setCookie(ctx, COTTAGE_ANONID, uuidv4(), {
+      maxAge: 10 * 365 * 24 * 60 * 60 * 1000, // 10 years
+    });
+  }
+
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+};
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -24,7 +46,8 @@ const useStyles = makeStyles(() =>
 );
 
 export default function Index() {
-  const { user } = useUser();
+  const { user: auth0User } = useAuth0User();
+  const { user: cottageUser } = useCottageUser();
   const { dispatch } = useContext(AppDataContext);
   const { clients } = useClients({
     shouldFetchAll: true,
@@ -34,6 +57,19 @@ export default function Index() {
   useEffect(() => {
     dispatch(setSelectedClient({ name: 'All' }));
   }, []);
+
+  useEffect(() => {
+    const anonId = cookieCutter.get(COTTAGE_ANONID);
+
+    // Link cottage_anonid with user object if logged in
+    if (
+      (cottageUser && !cottageUser.anonId) ||
+      // Perhaps the user cleared their cookies
+      (cottageUser && cottageUser.anonId !== anonId)
+    ) {
+      Axios.put('/api/v2/users', { anonId, id: cottageUser.id });
+    }
+  }, [cottageUser]);
 
   return (
     <Fade in={true}>
@@ -76,7 +112,7 @@ export default function Index() {
                   top: '20px',
                 }}
               >
-                {user ? <UserTasksColumn user={user} /> : null}
+                {cottageUser && <UserTasksColumn user={auth0User} />}
               </div>
             </div>
           </div>

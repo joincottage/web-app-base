@@ -33,6 +33,7 @@ model User {
   tasks            Task[]
   client           Client?  @relation(fields: [clientId], references: [id])
   clientId         Int?
+  anonId           String?
 }
 
 model Task {
