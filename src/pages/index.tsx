@@ -12,8 +12,6 @@ import setSelectedClient from 'src/actions/setSelectedClient';
 import TaskList from 'src/components/TaskList';
 import IconAttribution from 'src/components/IconAttribution';
 import { createStyles, makeStyles } from '@material-ui/styles';
-import { NextPageContext } from 'next';
-import { setCookie } from 'src/utils/cookies';
 import { v4 as uuidv4 } from 'uuid';
 import { COTTAGE_ANONID } from 'src/constants/cookies';
 import useCottageUser from 'src/hooks/useUser';
@@ -21,21 +19,6 @@ import Axios from 'axios';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import cookieCutter from 'cookie-cutter';
-
-// This needs to be present for any publicly accessible page
-export const getServerSideProps = (ctx: NextPageContext) => {
-  const { req } = ctx;
-
-  if (!(req as any).cookies.cottage_anonid) {
-    setCookie(ctx, COTTAGE_ANONID, uuidv4(), {
-      maxAge: 10 * 365 * 24 * 60 * 60 * 1000, // 10 years
-    });
-  }
-
-  return {
-    props: {}, // will be passed to the page component as props
-  };
-};
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -54,8 +37,18 @@ export default function Index() {
   });
   const classes = useStyles();
 
+  let anonId: string;
   useEffect(() => {
     dispatch(setSelectedClient({ name: 'All' }));
+
+    // Set tracking cookie if not already present
+    // This needs to be present for any publicly accessible page
+    if (!cookieCutter.get(COTTAGE_ANONID)) {
+      anonId = uuidv4();
+      cookieCutter.set(COTTAGE_ANONID, anonId, {
+        expires: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000), // 10 years
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -63,8 +56,8 @@ export default function Index() {
       return;
     }
 
-    const anonId = cookieCutter.get(COTTAGE_ANONID);
     // Link cottage_anonid with user object if logged in
+    anonId = anonId || cookieCutter.get(COTTAGE_ANONID);
     if (
       !cottageUser.anonId ||
       // Perhaps the user cleared their cookies

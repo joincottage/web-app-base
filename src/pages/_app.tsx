@@ -107,6 +107,14 @@ export default function MyApp(props: AppProps) {
         Metadata: '',
       });
     }
+
+    // Record device dimensions
+    Axios.post('/api/appinsights/publish', {
+      EventType: 'DeviceDimensions',
+      Value: `${window.innerWidth} x ${window.innerHeight}`,
+      AnonId: cookieCutter.get(COTTAGE_ANONID),
+      Metadata: '',
+    });
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
