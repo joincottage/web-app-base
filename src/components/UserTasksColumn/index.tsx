@@ -121,7 +121,6 @@ export default function UserTaskColumn({ user }: OwnProps) {
         >
           <div>
             <div className="text-left">
-              {/* @ts-ignore */}
               {attentionTasks && attentionTasks.length !== 0 ? (
                 <div>
                   <p className="my-3 font-semibold">Attention Tasks</p>

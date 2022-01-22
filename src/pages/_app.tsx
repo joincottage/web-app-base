@@ -90,12 +90,23 @@ export default function MyApp(props: AppProps) {
       jssStyles.parentElement?.removeChild(jssStyles);
     }
 
+    // Record page views
     Axios.post('/api/appinsights/publish', {
       EventType: 'PageView',
       Value: router.pathname,
       AnonId: cookieCutter.get(COTTAGE_ANONID),
       Metadata: '',
     });
+
+    // Figure out where new users come from
+    if (document.referrer) {
+      Axios.post('/api/appinsights/publish', {
+        EventType: 'Referral',
+        Value: document.referrer,
+        AnonId: cookieCutter.get(COTTAGE_ANONID),
+        Metadata: '',
+      });
+    }
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
