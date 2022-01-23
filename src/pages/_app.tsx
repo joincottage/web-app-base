@@ -93,7 +93,7 @@ export default function MyApp(props: AppProps) {
     // Record page views
     Axios.post('/api/appinsights/publish', {
       EventType: 'PageView',
-      Value: router.pathname,
+      Value: window.location.href,
       AnonId: cookieCutter.get(COTTAGE_ANONID),
       Metadata: '',
     });
@@ -112,6 +112,14 @@ export default function MyApp(props: AppProps) {
     Axios.post('/api/appinsights/publish', {
       EventType: 'DeviceDimensions',
       Value: `${window.innerWidth} x ${window.innerHeight}`,
+      AnonId: cookieCutter.get(COTTAGE_ANONID),
+      Metadata: '',
+    });
+
+    // Record user agent
+    Axios.post('/api/appinsights/publish', {
+      EventType: 'UserAgent',
+      Value: window.navigator.userAgent,
       AnonId: cookieCutter.get(COTTAGE_ANONID),
       Metadata: '',
     });
