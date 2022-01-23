@@ -10,6 +10,7 @@ export interface AppInsightsPayload {
   AnonId: string;
   Metadata: string;
   CreatedAt: string;
+  Origin: string;
 }
 
 // Triggered from Google Cloud Scheduler: https://console.cloud.google.com/cloudscheduler?authuser=1&project=cottage-328223
@@ -28,7 +29,7 @@ const receiveAppInsights = async () =>
       console.log(`\tAttributes: ${JSON.stringify(message.attributes)}`);
       messageCount += 1;
 
-      const { EventType, Value, AnonId, Metadata } = JSON.parse(
+      const { EventType, Value, AnonId, Metadata, Origin } = JSON.parse(
         message.data
       ) as AppInsights;
 
@@ -38,6 +39,7 @@ const receiveAppInsights = async () =>
         AnonId,
         Metadata,
         CreatedAt: 'AUTO',
+        Origin,
       } as AppInsightsPayload;
 
       messagePayloads.push(payload);

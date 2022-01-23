@@ -29,13 +29,14 @@ export default async function publish(
   await cors(req, res);
 
   const { body, method } = req;
-  const { EventType, Value, AnonId, Metadata } = body;
+  const { EventType, Value, AnonId, Metadata, Origin } = body;
 
   if (
     EventType === undefined ||
     Value === undefined ||
     AnonId === undefined ||
-    Metadata === undefined
+    Metadata === undefined ||
+    Origin === undefined
   ) {
     res.status(400).end(`Required params not found`);
 

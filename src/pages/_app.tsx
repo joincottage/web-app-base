@@ -31,6 +31,7 @@ import './../styles/RichTextEditor.css';
 import './../styles/theme.css';
 import Axios from 'axios';
 import { COTTAGE_ANONID } from 'src/constants/cookies';
+import { COTTAGE_APP } from 'src/constants/analytics';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
@@ -96,6 +97,7 @@ export default function MyApp(props: AppProps) {
       Value: window.location.href,
       AnonId: cookieCutter.get(COTTAGE_ANONID),
       Metadata: '',
+      Origin: COTTAGE_APP,
     });
 
     // Figure out where new users come from
@@ -105,6 +107,7 @@ export default function MyApp(props: AppProps) {
         Value: document.referrer,
         AnonId: cookieCutter.get(COTTAGE_ANONID),
         Metadata: '',
+        Origin: COTTAGE_APP,
       });
     }
 
@@ -114,6 +117,7 @@ export default function MyApp(props: AppProps) {
       Value: `${window.innerWidth} x ${window.innerHeight}`,
       AnonId: cookieCutter.get(COTTAGE_ANONID),
       Metadata: '',
+      Origin: COTTAGE_APP,
     });
 
     // Record user agent
@@ -122,6 +126,7 @@ export default function MyApp(props: AppProps) {
       Value: window.navigator.userAgent,
       AnonId: cookieCutter.get(COTTAGE_ANONID),
       Metadata: '',
+      Origin: COTTAGE_APP,
     });
   }, []);
 
