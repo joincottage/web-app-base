@@ -5,8 +5,9 @@ import { postMessageToChannel } from 'src/apiService/discord/channel';
 import { IN_PROGRESS, IN_REVIEW } from 'src/constants/task-stages';
 import { getUserAuthId } from 'src/apiService/auth/helpers';
 import { getUserAuthEmail } from 'src/apiService/auth/email';
+import { withSentry } from '@sentry/nextjs';
 
-export default async function (
+async function currentTaskHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -114,5 +115,7 @@ export default async function (
     }
   }
 }
+
+export default withSentry(currentTaskHandler);
 
 // potential util for testing https://dev.to/jamesharv/comment/145f8

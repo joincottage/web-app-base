@@ -3,10 +3,11 @@ import { NextApiHandler } from 'next';
 import { prisma } from '../../../../database/prisma';
 import { IN_ATTENTION, IN_PROGRESS } from '../../../../constants/task-stages';
 import { getUserAuthId } from '../../../../apiService/auth/helpers';
+import { withSentry } from '@sentry/nextjs';
 
 const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
-const userHandler: NextApiHandler = async (req, res) => {
+const usersHandler: NextApiHandler = async (req, res) => {
   console.log(`${req.method} - ${req.url}`);
 
   switch (req.method) {
@@ -127,4 +128,4 @@ const userHandler: NextApiHandler = async (req, res) => {
   }
 };
 
-export default withApiAuthRequired(userHandler);
+export default withSentry(withApiAuthRequired(usersHandler));

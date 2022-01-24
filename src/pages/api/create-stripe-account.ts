@@ -1,10 +1,11 @@
 import Stripe from 'stripe';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { withSentry } from '@sentry/nextjs';
 
 const stripeAPIKey = process.env.STRIPE_AUTH_KEY || '';
 const stripe = new Stripe(stripeAPIKey, { apiVersion: '2020-08-27' });
 
-export default async function (
+async function createStripeAccountHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -39,3 +40,5 @@ export default async function (
 
   res.redirect(accountLinks.url);
 }
+
+export default withSentry(createStripeAccountHandler);

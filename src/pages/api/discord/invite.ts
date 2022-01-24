@@ -7,8 +7,9 @@
  */
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createInviteLink } from '../../../apiService/discord/invite';
+import { withSentry } from '@sentry/nextjs';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const inviteHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'GET': {
       try {
@@ -30,4 +31,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default handler;
+export default withSentry(inviteHandler);

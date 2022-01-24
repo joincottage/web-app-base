@@ -2,6 +2,7 @@ import { getSession } from '@auth0/nextjs-auth0';
 import { prisma } from './../../../database/prisma';
 import { encrypt } from '../../../utils/encryption';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { withSentry } from '@sentry/nextjs';
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
 import Stripe from 'stripe';
@@ -11,7 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_AUTH_KEY as string, {
   typescript: true,
 });
 
-export default async function (
+async function accountLinkHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -65,3 +66,5 @@ export default async function (
     }
   }
 }
+
+export default withSentry(accountLinkHandler);

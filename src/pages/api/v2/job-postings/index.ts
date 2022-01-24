@@ -1,7 +1,8 @@
 import { NextApiHandler } from 'next';
 import { prisma } from '../../../../database/prisma';
+import { withSentry } from '@sentry/nextjs';
 
-const taskHandler: NextApiHandler = async (req, res) => {
+const jobPostingsHandler: NextApiHandler = async (req, res) => {
   switch (req.method) {
     case 'GET': {
       try {
@@ -46,4 +47,4 @@ const taskHandler: NextApiHandler = async (req, res) => {
   }
 };
 
-export default taskHandler;
+export default withSentry(jobPostingsHandler);

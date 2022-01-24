@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '../../../database/prisma';
+import { withSentry } from '@sentry/nextjs';
 
-export default async function (
+async function clientsHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -42,5 +43,7 @@ export default async function (
     }
   }
 }
+
+export default withSentry(clientsHandler);
 
 // potential util for testing https://dev.to/jamesharv/comment/145f8

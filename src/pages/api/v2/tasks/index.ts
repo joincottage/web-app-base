@@ -3,8 +3,9 @@ import { NextApiHandler } from 'next';
 import { IN_PROGRESS } from 'src/constants/task-stages';
 import { getUserAuthId } from '../../../../apiService/auth/helpers';
 import { prisma } from '../../../../database/prisma';
+import { withSentry } from '@sentry/nextjs';
 
-const taskHandler: NextApiHandler = async (req, res) => {
+const tasksHandler: NextApiHandler = async (req, res) => {
   const { body, method } = req;
   const task = body.task;
   switch (method) {
@@ -147,4 +148,4 @@ const taskHandler: NextApiHandler = async (req, res) => {
   }
 };
 
-export default withApiAuthRequired(taskHandler);
+export default withSentry(withApiAuthRequired(tasksHandler));

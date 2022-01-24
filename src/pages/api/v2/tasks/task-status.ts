@@ -1,8 +1,9 @@
 import { prisma } from './../../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUserAuthId } from 'src/apiService/auth/helpers';
+import { withSentry } from '@sentry/nextjs';
 
-export default async function (
+async function taskStatusHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -65,5 +66,7 @@ export default async function (
     }
   }
 }
+
+export default withSentry(taskStatusHandler);
 
 // potential util for testing https://dev.to/jamesharv/comment/145f8

@@ -5,6 +5,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { decrypt } from 'src/utils/encryption';
 import { prisma } from './../../../database/prisma';
+import { withSentry } from '@sentry/nextjs';
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
 import Stripe from 'stripe';
@@ -33,7 +34,7 @@ const getPayeeUser = async (userId: number) => {
   return { payeeUser, error };
 };
 
-export default async function (
+async function submitPaymentHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -97,3 +98,5 @@ export default async function (
     }
   }
 }
+
+export default withSentry(submitPaymentHandler);

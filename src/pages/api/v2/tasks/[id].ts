@@ -2,6 +2,7 @@ import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import { NextApiHandler } from 'next';
 import { prisma } from '../../../../database/prisma';
 import { getUserAuthId } from '../../../../apiService/auth/helpers';
+import { withSentry } from '@sentry/nextjs';
 
 const taskHandler: NextApiHandler = async (req, res) => {
   switch (req.method) {
@@ -62,4 +63,4 @@ const taskHandler: NextApiHandler = async (req, res) => {
   }
 };
 
-export default withApiAuthRequired(taskHandler);
+export default withSentry(withApiAuthRequired(taskHandler));

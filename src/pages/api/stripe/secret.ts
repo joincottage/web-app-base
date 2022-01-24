@@ -6,6 +6,7 @@ import { prisma } from './../../../database/prisma';
 import Stripe from 'stripe';
 import { User } from '.prisma/client';
 import { getSession } from '@auth0/nextjs-auth0';
+import { withSentry } from '@sentry/nextjs';
 
 const stripe = new Stripe(process.env.STRIPE_AUTH_KEY as string, {
   apiVersion: '2020-08-27',
@@ -67,7 +68,7 @@ const createStripeCustomerAndSaveInCottageDB = async (
   return { customerId: customer.id, error };
 };
 
-export default async function (
+async function secretHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -134,3 +135,5 @@ export default async function (
     }
   }
 }
+
+export default withSentry(secretHandler);

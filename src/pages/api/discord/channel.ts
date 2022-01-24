@@ -1,7 +1,8 @@
 import { createTextChannel } from '../../../apiService/discord/channel';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { withSentry } from '@sentry/nextjs';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const channelHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'POST': {
       try {
@@ -33,4 +34,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default handler;
+export default withSentry(channelHandler);

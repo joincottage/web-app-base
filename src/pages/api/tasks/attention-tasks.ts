@@ -3,8 +3,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { IN_ATTENTION } from 'src/constants/task-stages';
 import { getUserAuthId } from 'src/apiService/auth/helpers';
 import { getUserAuthEmail } from 'src/apiService/auth/email';
+import { withSentry } from '@sentry/nextjs';
 
-export default async function (
+async function attentionTasks(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -70,5 +71,7 @@ export default async function (
     }
   }
 }
+
+export default withSentry(attentionTasks);
 
 // potentia util for testing https://dev.to/jamesharv/comment/145f8

@@ -3,15 +3,13 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { writeToBigQuery } from 'src/apiService/google-bigquery/writeToBigQuery';
 import { AppInsights } from 'src/apiService/google-pubsub/publishAppInsights';
 import { receiveAppInsights } from 'src/apiService/google-pubsub/receiveAppInsights';
+import { withSentry } from '@sentry/nextjs';
 
 interface AnalyticsRequest extends NextApiRequest {
   body: AppInsights;
 }
 
-export default async function receive(
-  req: AnalyticsRequest,
-  res: NextApiResponse
-) {
+async function receiveHandler(req: AnalyticsRequest, res: NextApiResponse) {
   const { method } = req;
 
   if (method !== 'GET') {
@@ -42,3 +40,5 @@ export default async function receive(
     res.status(500).json({ message: 'Server error' });
   }
 }
+
+export default withSentry(receiveHandler);

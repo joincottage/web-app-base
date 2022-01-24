@@ -9,8 +9,9 @@ import {
   TASK_QUEUED,
 } from '../../../../constants/task-stages';
 import { getUserAuthId } from '../../../../apiService/auth/helpers';
+import { withSentry } from '@sentry/nextjs';
 
-const userHandler: NextApiHandler = async (req, res) => {
+const clientsHandler: NextApiHandler = async (req, res) => {
   switch (req.method) {
     /*
     Returns information about the currently authenticated user along with any tasks
@@ -89,4 +90,4 @@ const userHandler: NextApiHandler = async (req, res) => {
   }
 };
 
-export default withApiAuthRequired(userHandler);
+export default withSentry(withApiAuthRequired(clientsHandler));

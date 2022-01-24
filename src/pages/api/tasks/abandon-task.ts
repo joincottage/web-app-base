@@ -3,6 +3,7 @@ import { prisma } from './../../../database/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { removeUserFromChannel } from 'src/apiService/discord/channel';
 import { TASK_QUEUED } from 'src/constants/task-stages';
+import { withSentry } from '@sentry/nextjs';
 
 //const auth0HookToken = process.env.AUTH0_HOOK_TOKEN || '';
 
@@ -22,7 +23,7 @@ export default withApiAuthRequired(async function products(req, res) {
 */
 }
 
-export default async function (
+async function abandonTaskHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -59,5 +60,7 @@ export default async function (
     }
   }
 }
+
+export default withSentry(abandonTaskHandler);
 
 // potential util for testing https://dev.to/jamesharv/comment/145f8

@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios from 'axios';
+import { withSentry } from '@sentry/nextjs';
 
 interface NotifyNewUserRequest extends NextApiRequest {
   body: {
@@ -18,7 +19,7 @@ Name: ${name}
 Email: ${email}
 Skills: ${skills}`;
 
-export default async function (
+async function notifyNewUserHandler(
   req: NotifyNewUserRequest,
   res: NextApiResponse
 ) {
@@ -51,3 +52,5 @@ export default async function (
     res.status(500).json({ message: 'Failed to post info' });
   }
 }
+
+export default withSentry(notifyNewUserHandler);

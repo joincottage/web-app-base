@@ -6,6 +6,7 @@ import {
 } from 'src/apiService/google-pubsub/publishAppInsights';
 import initMiddleware from 'src/utils/initMiddleware';
 import Cors from 'cors';
+import { withSentry } from '@sentry/nextjs';
 
 // Initialize the cors middleware
 const cors = initMiddleware(
@@ -21,10 +22,7 @@ interface AppInsightsRequest extends NextApiRequest {
   body: AppInsights;
 }
 
-export default async function publish(
-  req: AppInsightsRequest,
-  res: NextApiResponse
-) {
+async function publishHandler(req: AppInsightsRequest, res: NextApiResponse) {
   // Run cors
   await cors(req, res);
 
@@ -62,3 +60,5 @@ export default async function publish(
     res.status(500).json({ message: 'Server error' });
   }
 }
+
+export default withSentry(publishHandler);
