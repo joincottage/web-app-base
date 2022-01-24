@@ -111,10 +111,11 @@ const usersHandler: NextApiHandler = async (req, res) => {
         });
 
         res.json(user);
-      } catch (e) {
+      } catch (e: any) {
         console.error('Failed to execute prisma query for user ', e.message);
 
-        res.status(500).end();
+        // Throw error to Sentry
+        throw e;
       }
 
       break;

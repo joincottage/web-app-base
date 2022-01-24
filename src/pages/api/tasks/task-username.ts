@@ -37,7 +37,9 @@ async function taskUsernameHandler(
         }
       } catch (err) {
         console.error('failed trying to fetch the username for a task', err);
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw err;
       }
       break;
     default: {

@@ -53,7 +53,9 @@ async function taskStatusHandler(
         res.json(tasks !== null ? tasks : []);
       } catch (err) {
         console.error('Failed trying to fetch current task for user', err);
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw err;
       }
       break;
     }

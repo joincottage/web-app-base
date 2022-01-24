@@ -49,7 +49,9 @@ async function notifyNewUserHandler(
     res.status(200).json({ message: 'success' });
   } catch (error) {
     console.error(`Failed posing info to discord`, error);
-    res.status(500).json({ message: 'Failed to post info' });
+
+    // Throw error to Sentry
+    throw error;
   }
 }
 

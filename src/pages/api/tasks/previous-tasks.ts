@@ -53,7 +53,9 @@ async function previousTasksHandler(
         }
       } catch (err) {
         console.error('Failed trying to fetch completed tasks for user', err);
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw err;
       }
       break;
     }

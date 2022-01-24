@@ -57,7 +57,9 @@ async function publishHandler(req: AppInsightsRequest, res: NextApiResponse) {
       `Failed to process request to ${method} /api/appinsights/publish`,
       error
     );
-    res.status(500).json({ message: 'Server error' });
+
+    // Throw error to Sentry
+    throw error;
   }
 }
 

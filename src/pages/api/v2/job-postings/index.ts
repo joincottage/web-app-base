@@ -33,7 +33,9 @@ const jobPostingsHandler: NextApiHandler = async (req, res) => {
           `Failed to execute prisma query for job-postings`,
           e.message
         );
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw e;
       }
 
       break;

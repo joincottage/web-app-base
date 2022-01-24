@@ -123,7 +123,9 @@ async function secretHandler(
         res.json({ client_secret: setupIntent.client_secret });
       } catch (e) {
         console.error(`Failed to create Stripe secret`, e);
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw e;
       }
       break;
     default: {

@@ -44,12 +44,14 @@ const taskHandler: NextApiHandler = async (req, res) => {
         });
 
         res.json(task);
-      } catch (e) {
+      } catch (e: any) {
         console.error(
           `Failed to execute prisma query for task with id: ${taskId}`,
           e.message
         );
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw e;
       }
 
       break;

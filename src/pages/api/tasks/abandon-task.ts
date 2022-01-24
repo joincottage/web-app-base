@@ -46,7 +46,9 @@ async function abandonTaskHandler(
         await removeUserFromChannel(discordChannelId, discordUserId);
       } catch (err) {
         console.error('Failed attempting to abandon task', err);
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw err;
       }
 
       res.send('OK');

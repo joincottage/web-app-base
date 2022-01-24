@@ -45,7 +45,9 @@ async function reviewTasks(
         }
       } catch (err) {
         console.error('Failed trying to fetch tasks in review for user', err);
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw err;
       }
       break;
     }

@@ -83,10 +83,15 @@ async function submitPaymentHandler(
             err.raw.payment_intent.id
           );
           console.log('PI retrieved: ', paymentIntentRetrieved.id);
+
+          // Throw error to Sentry
+          throw err;
         }
       } catch (e) {
         console.error(`Failed to process Stripe payment`, e);
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw e;
       }
       break;
     default: {

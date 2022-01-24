@@ -20,7 +20,9 @@ const channelHandler = async (req: NextApiRequest, res: NextApiResponse) => {
           `Failed to create channel for request: ${JSON.stringify(req.body)}`,
           e
         );
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw e;
       }
       break;
     }

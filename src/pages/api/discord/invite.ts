@@ -17,7 +17,9 @@ const inviteHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         res.redirect(inviteLink);
       } catch (e) {
         console.error(`Failed to get discord invite link`, e);
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw e;
       }
       break;
     }

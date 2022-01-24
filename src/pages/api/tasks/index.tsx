@@ -87,7 +87,9 @@ async function tasksHandler(
         res.json(tasks);
       } catch (err) {
         console.error('Failed trying to fetch all tasks', err);
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw err;
       }
       break;
     }

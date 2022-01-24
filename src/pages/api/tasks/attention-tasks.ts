@@ -57,7 +57,9 @@ async function attentionTasks(
           'Failed trying to fetch tasks in attention for user',
           err
         );
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw err;
       }
 
       break;

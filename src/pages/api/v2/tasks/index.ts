@@ -134,7 +134,9 @@ const tasksHandler: NextApiHandler = async (req, res) => {
           `Failed to execute prisma query for tasks with inputs status: ${status}, client: ${client}, user: ${user}`,
           e.message
         );
-        res.status(500).end();
+
+        // Throw error to Sentry
+        throw e;
       }
 
       break;

@@ -37,7 +37,9 @@ async function receiveHandler(req: AnalyticsRequest, res: NextApiResponse) {
       `Failed to process request to ${method} /api/analytics/receive`,
       error
     );
-    res.status(500).json({ message: 'Server error' });
+
+    // Throw error to Sentry
+    throw error;
   }
 }
 
