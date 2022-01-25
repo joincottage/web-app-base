@@ -49,7 +49,7 @@ async function publishHandler(req: AppInsightsRequest, res: NextApiResponse) {
   }
 
   try {
-    console.log(`Publishing app insights... ${JSON.stringify(body)}`);
+    console.log(`Publishing app insights...`);
     await publishMessage(body);
     res.status(200).send('Success');
   } catch (error) {

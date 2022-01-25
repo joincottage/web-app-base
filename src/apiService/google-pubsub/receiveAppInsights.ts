@@ -25,8 +25,6 @@ const receiveAppInsights = async () =>
     let messageCount = 0;
     const messageHandler = (message: any) => {
       console.log(`Received message ${message.id}:`);
-      console.log(`\tData: ${message.data}`);
-      console.log(`\tAttributes: ${JSON.stringify(message.attributes)}`);
       messageCount += 1;
 
       const { EventType, Value, AnonId, Metadata, Origin } = JSON.parse(

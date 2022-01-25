@@ -18,7 +18,6 @@ import Parallax from 'src/components/Parallax';
 import { Navbar } from '../components/Navbar';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import cookieCutter from 'cookie-cutter';
 import {
   AppAction,
   AppContext,
@@ -29,9 +28,7 @@ import {
 import theme from '../theme';
 import './../styles/RichTextEditor.css';
 import './../styles/theme.css';
-import Axios from 'axios';
-import { COTTAGE_ANONID } from 'src/constants/cookies';
-import { COTTAGE_APP } from 'src/constants/analytics';
+import { publishAppInsights } from 'src/utils/appinsights';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
@@ -92,42 +89,18 @@ export default function MyApp(props: AppProps) {
     }
 
     // Record page views
-    Axios.post('/api/appinsights/publish', {
-      EventType: 'PageView',
-      Value: window.location.href,
-      AnonId: cookieCutter.get(COTTAGE_ANONID),
-      Metadata: '',
-      Origin: COTTAGE_APP,
-    });
-
+    publishAppInsights('PageView', window.location.href);
     // Figure out where new users come from
     if (document.referrer) {
-      Axios.post('/api/appinsights/publish', {
-        EventType: 'Referral',
-        Value: document.referrer,
-        AnonId: cookieCutter.get(COTTAGE_ANONID),
-        Metadata: '',
-        Origin: COTTAGE_APP,
-      });
+      publishAppInsights('Referral', document.referrer);
     }
-
     // Record device dimensions
-    Axios.post('/api/appinsights/publish', {
-      EventType: 'DeviceDimensions',
-      Value: `${window.innerWidth} x ${window.innerHeight}`,
-      AnonId: cookieCutter.get(COTTAGE_ANONID),
-      Metadata: '',
-      Origin: COTTAGE_APP,
-    });
-
+    publishAppInsights(
+      'DeviceDimensions',
+      `${window.innerWidth} x ${window.innerHeight}`
+    );
     // Record user agent
-    Axios.post('/api/appinsights/publish', {
-      EventType: 'UserAgent',
-      Value: window.navigator.userAgent,
-      AnonId: cookieCutter.get(COTTAGE_ANONID),
-      Metadata: '',
-      Origin: COTTAGE_APP,
-    });
+    publishAppInsights('UserAgent', window.navigator.userAgent);
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
