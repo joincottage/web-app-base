@@ -43,13 +43,13 @@ export default function TaskDetailsModal({ task, handleClose }: OwnProps) {
   }, [task.longDesc]);
 
   const handleClickAcceptTask = async () => {
-    if (!cottageUser?.stripeAccountId) {
-      if (!showOnboardingPrompt) {
-        setShowOnboardingPrompt(true);
-      }
+    // if (!cottageUser?.stripeAccountId) {
+    //   if (!showOnboardingPrompt) {
+    //     setShowOnboardingPrompt(true);
+    //   }
 
-      return;
-    }
+    //   return;
+    // }
 
     setRequestStatus(RequestStatus.PENDING);
     try {
