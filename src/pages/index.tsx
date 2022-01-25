@@ -58,12 +58,13 @@ export default function Index() {
 
     // Link cottage_anonid with user object if logged in
     anonId = anonId || cookieCutter.get(COTTAGE_ANONID);
-    if (
-      !cottageUser.anonId ||
-      // Perhaps the user cleared their cookies
-      cottageUser.anonId !== anonId
-    ) {
+    if (!cottageUser.anonId) {
       Axios.put('/api/v2/users', { anonId, id: cottageUser.id });
+    } else if (cottageUser.anonId !== anonId) {
+      // Perhaps the user cleared their cookies
+      cookieCutter.set(COTTAGE_ANONID, cottageUser.anonId, {
+        expires: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000), // 10 years
+      });
     }
   }, [cottageUser]);
 
