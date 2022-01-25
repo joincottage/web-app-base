@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useMemo, useReducer } from 'react';
+import React, { useEffect, useMemo, useReducer } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { SET_ACTIVE_FILTERS } from 'src/actions/setActiveFilters';
 import { SET_ACTIVE_SEARCH_TERM } from 'src/actions/setActiveSearchTerm';
@@ -16,6 +16,7 @@ import { SET_TASKS_IN_QUEUE } from 'src/actions/setTasksInQueue';
 import { SET_TASKS_IN_REVIEW } from 'src/actions/setTasksInReview';
 import Parallax from 'src/components/Parallax';
 import { Navbar } from '../components/Navbar';
+import debounce from 'lodash/debounce';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import {
@@ -29,6 +30,12 @@ import theme from '../theme';
 import './../styles/RichTextEditor.css';
 import './../styles/theme.css';
 import { publishAppInsights } from 'src/utils/appinsights';
+import { MAX_SCROLL_DEPTH_PX } from 'src/constants/analytics';
+import { v4 as uuidv4 } from 'uuid';
+import { COTTAGE_ANONID } from 'src/constants/cookies';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import cookieCutter from 'cookie-cutter';
 
 function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
@@ -81,11 +88,21 @@ function appReducer(state: AppState, action: AppAction) {
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
   const router = useRouter();
-  React.useEffect(() => {
+
+  useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentElement?.removeChild(jssStyles);
+    }
+
+    // Set tracking cookie if not already present
+    // This needs to be present for any publicly accessible page
+    if (!cookieCutter.get(COTTAGE_ANONID)) {
+      const anonId = uuidv4();
+      cookieCutter.set(COTTAGE_ANONID, anonId, {
+        expires: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000), // 10 years
+      });
     }
 
     // Record page views
@@ -101,6 +118,20 @@ export default function MyApp(props: AppProps) {
     );
     // Record user agent
     publishAppInsights('UserAgent', window.navigator.userAgent);
+    // Record scroll depth
+    const publishScrollDepth = debounce(
+      (e: any) => {
+        publishAppInsights(
+          'ScrollDepthPercent',
+          ((e.target.scrollTop / MAX_SCROLL_DEPTH_PX) * 100).toString()
+        );
+      },
+      500,
+      { leading: false, trailing: true }
+    );
+    document.addEventListener('scroll', publishScrollDepth, true);
+
+    return () => document.removeEventListener('scroll', publishScrollDepth);
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
