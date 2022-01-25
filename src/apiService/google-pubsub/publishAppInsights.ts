@@ -8,6 +8,7 @@ export interface AppInsights {
   AnonId: string;
   Metadata: string;
   Origin: string;
+  SessionId: string;
 }
 
 export async function publishMessage(data: AppInsights) {

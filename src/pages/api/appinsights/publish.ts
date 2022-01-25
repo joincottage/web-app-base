@@ -27,14 +27,15 @@ async function publishHandler(req: AppInsightsRequest, res: NextApiResponse) {
   await cors(req, res);
 
   const { body, method } = req;
-  const { EventType, Value, AnonId, Metadata, Origin } = body;
+  const { EventType, Value, AnonId, Metadata, Origin, SessionId } = body;
 
   if (
     EventType === undefined ||
     Value === undefined ||
     AnonId === undefined ||
     Metadata === undefined ||
-    Origin === undefined
+    Origin === undefined ||
+    SessionId === undefined
   ) {
     res.status(400).end(`Required params not found`);
 
