@@ -102,6 +102,7 @@ export default function MyApp(props: AppProps) {
       const anonId = uuidv4();
       cookieCutter.set(COTTAGE_ANONID, anonId, {
         expires: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000), // 10 years
+        domain: 'joincottage.com',
       });
     }
 
