@@ -106,19 +106,22 @@ export default function MyApp(props: AppProps) {
       });
     }
 
-    // Record page views
-    publishAppInsights('PageView', window.location.href);
-    // Figure out where new users come from
-    if (document.referrer) {
-      publishAppInsights('Referral', document.referrer);
-    }
-    // Record device dimensions
-    publishAppInsights(
-      'DeviceDimensions',
-      `${window.innerWidth} x ${window.innerHeight}`
-    );
-    // Record user agent
-    publishAppInsights('UserAgent', window.navigator.userAgent);
+    setTimeout(() => {
+      // Record page views
+      publishAppInsights('PageView', window.location.href);
+      // Figure out where new users come from
+      if (document.referrer) {
+        publishAppInsights('Referral', document.referrer);
+      }
+      // Record device dimensions
+      publishAppInsights(
+        'DeviceDimensions',
+        `${window.innerWidth} x ${window.innerHeight}`
+      );
+      // Record user agent
+      publishAppInsights('UserAgent', window.navigator.userAgent);
+    }, 0);
+
     // Record scroll depth
     const publishScrollDepth = debounce(
       (e: any) => {

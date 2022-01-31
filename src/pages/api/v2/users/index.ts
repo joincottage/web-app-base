@@ -80,6 +80,8 @@ const usersHandler: NextApiHandler = async (req, res) => {
             type: true,
             hasJoinedDiscord: true,
             anonId: true,
+            stripeAccountId: true,
+            stripeCustomerId: true,
             tasks: {
               select: {
                 id: true,

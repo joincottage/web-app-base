@@ -22,7 +22,8 @@ export const publishAppInsights = async (
     sessionId = uuidv4();
     cookieCutter.set(COTTAGE_SESSIONID, sessionId, {
       expires: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
-      domain: 'joincottage.com',
+      //domain: 'joincottage.com',
+      path: '/',
     });
 
     const response = await Axios.get<User>(
