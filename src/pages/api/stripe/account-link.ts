@@ -22,7 +22,7 @@ async function accountLinkHandler(
       const accountLink = await stripe.accountLinks.create({
         account: account.id,
         refresh_url: 'https://app.joincottage.com/api/stripe/account-link',
-        return_url: 'https://app.joincottage.com',
+        return_url: 'https://app.cottage.dev/listing-details?recordId=' + req.query.recordId,
         type: 'account_onboarding',
       });
 
