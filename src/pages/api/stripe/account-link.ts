@@ -7,6 +7,8 @@ import { withSentry } from '@sentry/nextjs';
 // See your keys here: https://dashboard.stripe.com/apikeys
 import Stripe from 'stripe';
 
+const base = require('airtable').base('appdEwe1Z4gCXfEoB');
+
 const stripe = new Stripe(process.env.STRIPE_AUTH_KEY as string, {
   apiVersion: '2020-08-27',
   typescript: true,
@@ -18,41 +20,54 @@ async function accountLinkHandler(
 ): Promise<void> {
   switch (req.method) {
     case 'GET': {
+      if (!req.query.userId) {
+        res.status(400).send('Bad Request');
+        return;
+      }
+
       const account = await stripe.accounts.create({ type: 'express' });
       const accountLink = await stripe.accountLinks.create({
         account: account.id,
         refresh_url: 'https://app.joincottage.com/api/stripe/account-link',
-        return_url: 'https://app.cottage.dev/listing-details?recordId=' + req.query.recordId,
+        return_url: 'https://app.cottage.dev',
         type: 'account_onboarding',
       });
 
-      const session = await getSession(req, res);
-      const userInfo = session?.user;
+      base('Users').update([
+        {
+          "id": req.query.userId,
+          "fields": {
+            "stripeAccountId": account.id
+          }
+        }]);
 
-      if (!userInfo) {
-        console.log('User not found in Auth0 database');
-        res.status(401).end();
-        return;
-      }
+      // const session = await getSession(req, res);
+      // const userInfo = session?.user;
 
-      const user = await prisma.user.findFirst({
-        where: { auth_id: userInfo.sub },
-      });
+      // if (!userInfo) {
+      //   console.log('User not found in Auth0 database');
+      //   res.status(401).end();
+      //   return;
+      // }
 
-      if (!user) {
-        console.log('User not found in Cottage database');
-        res.status(401).end();
-        return;
-      }
+      // const user = await prisma.user.findFirst({
+      //   where: { auth_id: userInfo.sub },
+      // });
 
-      await prisma.user.update({
-        where: {
-          id: user.id,
-        },
-        data: {
-          stripeAccountId: encrypt(account.id),
-        },
-      });
+      // if (!user) {
+      //   console.log('User not found in Cottage database');
+      //   res.status(401).end();
+      //   return;
+      // }
+
+      // await prisma.user.update({
+      //   where: {
+      //     id: user.id,
+      //   },
+      //   data: {
+      //     stripeAccountId: encrypt(account.id),
+      //   },
+      // });
 
       res.redirect(accountLink.url);
       break;
