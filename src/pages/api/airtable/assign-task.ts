@@ -39,7 +39,7 @@ async function accountLinkHandler(
             "Status": "In Progress",
             "Assignee": [req.query.userId as string],
             "Assignee ID": req.query.userId as string,
-            "Assignee Email": (user as any).Email
+            "Assignee Email": (user as any).fields.Email
           }
         }]);
 
