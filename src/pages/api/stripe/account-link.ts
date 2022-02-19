@@ -6,8 +6,9 @@ import { withSentry } from '@sentry/nextjs';
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
 import Stripe from 'stripe';
+import Airtable from 'airtable';
 
-const base = require('airtable').base('appdEwe1Z4gCXfEoB');
+const base = new Airtable({apiKey: process.env.AIRTABLE_API_KEY}).base('appdEwe1Z4gCXfEoB');.base('appdEwe1Z4gCXfEoB');
 
 const stripe = new Stripe(process.env.STRIPE_AUTH_KEY as string, {
   apiVersion: '2020-08-27',
