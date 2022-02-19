@@ -20,7 +20,7 @@ async function accountLinkHandler(
 ): Promise<void> {
   switch (req.method) {
     case 'GET': {
-      if (!req.query.userId) {
+      if (!req.query.recordId || !req.query.userId) {
         res.status(400).send('Bad Request');
         return;
       }
@@ -32,6 +32,8 @@ async function accountLinkHandler(
         return_url: 'https://app.cottage.dev',
         type: 'account_onboarding',
       });
+
+      // TODO: assign task to user
 
       base('Users').update([
         {
