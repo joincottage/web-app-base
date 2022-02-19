@@ -22,7 +22,7 @@ async function accountLinkHandler(
 ): Promise<void> {
   switch (req.method) {
     case 'GET': {
-      if (!req.query.userId || !req.query.redirect) {
+      if (!req.query.userId || !req.query.redirect || !req.query.recordId) {
         res.status(400).send('Bad Request');
         return;
       }
@@ -32,7 +32,7 @@ async function accountLinkHandler(
         resolve(record);
       }));
 
-      base('Tasks').update([
+      await base('Tasks').update([
         {
           "id": req.query.recordId as string,
           "fields": {
