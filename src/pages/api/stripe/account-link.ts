@@ -8,7 +8,8 @@ import { withSentry } from '@sentry/nextjs';
 import Stripe from 'stripe';
 import Airtable from 'airtable';
 
-const base = new Airtable({apiKey: process.env.AIRTABLE_API_KEY}).base('appdEwe1Z4gCXfEoB');.base('appdEwe1Z4gCXfEoB');
+// @ts-ignore
+const base = new Airtable({apiKey: process.env.AIRTABLE_API_KEY}).base('appdEwe1Z4gCXfEoB');
 
 const stripe = new Stripe(process.env.STRIPE_AUTH_KEY as string, {
   apiVersion: '2020-08-27',
@@ -38,7 +39,7 @@ async function accountLinkHandler(
 
       base('Users').update([
         {
-          "id": req.query.userId,
+          "id": req.query.userId as string,
           "fields": {
             "stripeAccountId": account.id
           }
