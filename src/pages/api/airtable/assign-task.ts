@@ -22,26 +22,10 @@ async function accountLinkHandler(
 ): Promise<void> {
   switch (req.method) {
     case 'GET': {
-      if (!req.query.recordId || !req.query.userId) {
+      if (!req.query.userId || !req.query.redirect) {
         res.status(400).send('Bad Request');
         return;
       }
-
-      const account = await stripe.accounts.create({ type: 'express' });
-      const accountLink = await stripe.accountLinks.create({
-        account: account.id,
-        refresh_url: 'https://app.joincottage.com/api/stripe/account-link',
-        return_url: 'https://app.cottage.dev/listing-details?recordId=' + req.query.recordId,
-        type: 'account_onboarding',
-      });
-
-      base('Users').update([
-        {
-          "id": req.query.userId as string,
-          "fields": {
-            "stripeAccountId": account.id
-          }
-        }]);
 
       const user = await new Promise((resolve, reject) => base('Users').find(req.query.userId as string, function(err, record) {
         if (err) { console.error(err); reject(err); return; }
@@ -59,35 +43,7 @@ async function accountLinkHandler(
           }
         }]);
 
-      // const session = await getSession(req, res);
-      // const userInfo = session?.user;
-
-      // if (!userInfo) {
-      //   console.log('User not found in Auth0 database');
-      //   res.status(401).end();
-      //   return;
-      // }
-
-      // const user = await prisma.user.findFirst({
-      //   where: { auth_id: userInfo.sub },
-      // });
-
-      // if (!user) {
-      //   console.log('User not found in Cottage database');
-      //   res.status(401).end();
-      //   return;
-      // }
-
-      // await prisma.user.update({
-      //   where: {
-      //     id: user.id,
-      //   },
-      //   data: {
-      //     stripeAccountId: encrypt(account.id),
-      //   },
-      // });
-
-      res.redirect(accountLink.url);
+      res.redirect(req.query.redirect as string);
       break;
     }
     default: {
