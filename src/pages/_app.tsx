@@ -106,36 +106,36 @@ export default function MyApp(props: AppProps) {
       });
     }
 
-    setTimeout(() => {
-      // Record page views
-      publishAppInsights('PageView', window.location.href);
-      // Figure out where new users come from
-      if (document.referrer) {
-        publishAppInsights('Referral', document.referrer);
-      }
-      // Record device dimensions
-      publishAppInsights(
-        'DeviceDimensions',
-        `${window.innerWidth} x ${window.innerHeight}`
-      );
-      // Record user agent
-      publishAppInsights('UserAgent', window.navigator.userAgent);
-    }, 0);
+    // setTimeout(() => {
+    //   // Record page views
+    //   publishAppInsights('PageView', window.location.href);
+    //   // Figure out where new users come from
+    //   if (document.referrer) {
+    //     publishAppInsights('Referral', document.referrer);
+    //   }
+    //   // Record device dimensions
+    //   publishAppInsights(
+    //     'DeviceDimensions',
+    //     `${window.innerWidth} x ${window.innerHeight}`
+    //   );
+    //   // Record user agent
+    //   publishAppInsights('UserAgent', window.navigator.userAgent);
+    // }, 0);
 
-    // Record scroll depth
-    const publishScrollDepth = debounce(
-      (e: any) => {
-        publishAppInsights(
-          'ScrollDepthPercent',
-          ((e.target.scrollTop / MAX_SCROLL_DEPTH_PX) * 100).toString()
-        );
-      },
-      500,
-      { leading: false, trailing: true }
-    );
-    document.addEventListener('scroll', publishScrollDepth, true);
+    // // Record scroll depth
+    // const publishScrollDepth = debounce(
+    //   (e: any) => {
+    //     publishAppInsights(
+    //       'ScrollDepthPercent',
+    //       ((e.target.scrollTop / MAX_SCROLL_DEPTH_PX) * 100).toString()
+    //     );
+    //   },
+    //   500,
+    //   { leading: false, trailing: true }
+    // );
+    // document.addEventListener('scroll', publishScrollDepth, true);
 
-    return () => document.removeEventListener('scroll', publishScrollDepth);
+    // return () => document.removeEventListener('scroll', publishScrollDepth);
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
