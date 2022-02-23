@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "NODE_ENV=development && next",
     "prebuild": "prisma generate",
     "build": "next build",
     "start": "npm run dev",
