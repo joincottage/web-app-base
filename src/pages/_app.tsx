@@ -14,7 +14,6 @@ import { SET_PREVIOUS_TASKS } from 'src/actions/setPreviousTasks';
 import { SET_SELECTED_CLIENT } from 'src/actions/setSelectedClient';
 import { SET_TASKS_IN_QUEUE } from 'src/actions/setTasksInQueue';
 import { SET_TASKS_IN_REVIEW } from 'src/actions/setTasksInReview';
-import Parallax from 'src/components/Parallax';
 import { Navbar } from '../components/Navbar';
 import {
   AppAction,
@@ -142,7 +141,6 @@ export default function MyApp(props: AppProps) {
 
   return (
     <div className="viewport" style={{ width: '100vw', position: 'relative' }}>
-      {router.pathname === '/' && <Parallax />}
       <UserProvider>
         <AppDataContext.Provider value={contextValue}>
           <Head>
