@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import SmokeMachine from './SmokeMachine';
 import NextImage from 'next/image';
 import initializeParallax from 'src/scripts/parallax';
-import { Fade } from '@material-ui/core';
+import { Fade } from '@mui/material';
 
 const loadImage = (url: string) =>
   new Promise<void>((resolve) => {

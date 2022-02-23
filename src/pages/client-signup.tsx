@@ -6,10 +6,9 @@ import {
   TextField,
   Typography,
   Theme,
-} from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import { createStyles } from '@material-ui/styles';
-import { makeStyles } from '@material-ui/styles';
+} from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import { createStyles, makeStyles } from '@mui/styles';
 import Axios from 'axios';
 import { useRouter } from 'next/dist/client/router';
 import React, { useState } from 'react';

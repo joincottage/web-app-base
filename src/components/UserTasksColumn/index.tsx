@@ -1,8 +1,8 @@
 import { Task } from '.prisma/client';
 import { UserProfile } from '@auth0/nextjs-auth0';
-import { Fade, Tooltip, Typography } from '@material-ui/core';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import { createStyles, makeStyles } from '@material-ui/styles';
+import { Fade, Tooltip, Typography } from '@mui/material';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { createStyles, makeStyles } from '@mui/styles';
 import React, { useContext, useEffect, useState } from 'react';
 import setCurrentTask from 'src/actions/setCurrentTask';
 import setPreviousTasks from 'src/actions/setPreviousTasks';

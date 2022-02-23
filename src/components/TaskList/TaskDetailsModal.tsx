@@ -1,7 +1,7 @@
 import { Task } from '.prisma/client';
-import { Button, Chip } from '@material-ui/core';
-import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
-import CloseIcon from '@material-ui/icons/Close';
+import { Button, Chip } from '@mui/material';
+import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
+import CloseIcon from '@mui/icons-material/Close';
 import Axios from 'axios';
 import { convertFromRaw, EditorState } from 'draft-js';
 import dynamic from 'next/dynamic';

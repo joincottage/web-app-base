@@ -1,9 +1,9 @@
 import React from 'react';
 import ProTip from '../ProTip';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import NextLink from 'next/link';
 import Copyright from '../Copyright';
 

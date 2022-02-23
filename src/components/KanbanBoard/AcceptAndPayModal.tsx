@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Task, User } from '.prisma/client';
 import Axios from 'axios';
-import { Button } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import CloseIcon from '@material-ui/icons/Close';
+import { Button } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import CloseIcon from '@mui/icons-material/Close';
 import { RequestStatus } from 'src/constants/request-status';
 
 interface OwnProps {

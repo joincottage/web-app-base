@@ -5,7 +5,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-} from '@material-ui/core';
+} from '@mui/material';
 import MoneyConfetti from 'src/components/MoneyConfetti';
 
 interface OwnProps {
@@ -31,7 +31,8 @@ export default function OnboardingPrompt({ show, handleClose }: OwnProps) {
       <DialogContent>
         {/* TODO: Actually save the task via a query param in the return URL */}
         <DialogContentText>
-          Head over to Stripe so that we can connect to your bank. We&apos;ll save this task for you in the meantime.
+          Head over to Stripe so that we can connect to your bank. We&apos;ll
+          save this task for you in the meantime.
         </DialogContentText>
       </DialogContent>
       <DialogActions>

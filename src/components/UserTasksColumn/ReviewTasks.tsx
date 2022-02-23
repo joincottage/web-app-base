@@ -1,6 +1,6 @@
 //import { useState, useEffect } from 'react';
 import { Task } from '@prisma/client';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
 interface OwnProps {
   tasks: Task[];

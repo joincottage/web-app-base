@@ -5,7 +5,7 @@ import { IN_REVIEW } from 'src/constants/task-stages';
 
 export const useReviewTasks = () => {
   const [reviewTasksLoading, setReviewTasksLoading] = useState(true);
-  const [reviewTasksError, setReviewTasksError] = useState(null);
+  const [reviewTasksError, setReviewTasksError] = useState<unknown>(null);
   const [reviewTasks, setReviewTasks] = useState<Task[] | null>(null);
 
   useEffect(() => {

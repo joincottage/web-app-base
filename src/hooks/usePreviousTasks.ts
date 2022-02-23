@@ -5,7 +5,7 @@ import { DONE } from 'src/constants/task-stages';
 
 export const usePreviousTasks = () => {
   const [previousTasksLoading, setPreviousTasksLoading] = useState(true);
-  const [previousTasksError, setPreviousTasksError] = useState(null);
+  const [previousTasksError, setPreviousTasksError] = useState<unknown>(null);
   const [previousTasks, setPreviousTasks] = useState<Task[] | null>(null);
 
   useEffect(() => {

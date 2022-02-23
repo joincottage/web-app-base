@@ -1,5 +1,5 @@
 import { App } from 'sendbird-uikit';
-import { Fade } from '@material-ui/core';
+import { Fade } from '@mui/material';
 
 // https://sendbird.com/docs/uikit/v1/react/guides/themes
 const cottageColorSet = {

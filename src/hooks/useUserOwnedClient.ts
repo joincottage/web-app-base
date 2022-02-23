@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const useClients = () => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<unknown>(null);
   const [data, setData] = useState<any | null>(null);
 
   useEffect(() => {

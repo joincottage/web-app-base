@@ -1,5 +1,5 @@
-import { Fade } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
+import { Fade } from '@mui/material';
+import Divider from '@mui/material/Divider';
 import { Task } from '@prisma/client';
 import times from 'lodash/times';
 import React, { useContext, useEffect } from 'react';

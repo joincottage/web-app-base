@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import CubeTransparentOutlineIcon from '../icons/CubeTransparentOutlineIcon';
-import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
-import Chip from '@material-ui/core/Chip';
+import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
+import Chip from '@mui/material/Chip';
 import { AppDataContext } from 'src/contexts/AppContext';
 import setActiveFilters from 'src/actions/setActiveFilters';
 

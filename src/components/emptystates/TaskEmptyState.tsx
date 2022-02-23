@@ -1,6 +1,6 @@
 //import { useState, useEffect } from "react";
 import Link from 'next/link';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
 export default function TaskEmptyState() {
   //TODO: allow for h3 & p to be passed in to make this component reuseable

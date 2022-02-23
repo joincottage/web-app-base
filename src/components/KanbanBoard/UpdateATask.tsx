@@ -6,8 +6,8 @@ import {
   TextField,
   Theme,
   Typography,
-} from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/styles';
+} from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';
 import { Client, Task } from '@prisma/client';
 import Axios from 'axios';
 import React, { useState } from 'react';

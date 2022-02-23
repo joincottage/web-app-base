@@ -6,15 +6,15 @@ import {
   Modal,
   Theme,
   Typography,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Client, Task } from '@prisma/client';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import CreateATask from '../CreateATask';
-import CloseIcon from '@material-ui/icons/Close';
-import CreateIcon from '@material-ui/icons/Create';
-import BuildIcon from '@material-ui/icons/Build';
+import CloseIcon from '@mui/icons-material/Close';
+import CreateIcon from '@mui/icons-material/Create';
+import BuildIcon from '@mui/icons-material/Build';
 import {
   TASK_QUEUED,
   IN_PROGRESS,

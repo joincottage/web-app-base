@@ -1,7 +1,7 @@
-import { Input, InputAdornment } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import SearchIcon from '@material-ui/icons/Search';
-import { createStyles, makeStyles } from '@material-ui/styles';
+import { Input, InputAdornment } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import SearchIcon from '@mui/icons-material/Search';
+import { createStyles, makeStyles } from '@mui/styles';
 import React, { ChangeEvent, useContext } from 'react';
 import setActiveSearchTerm from 'src/actions/setActiveSearchTerm';
 import { AppDataContext } from '../../contexts/AppContext';

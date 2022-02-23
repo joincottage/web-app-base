@@ -1,7 +1,7 @@
 import { Client, Task } from '.prisma/client';
-import { Backdrop, Button, Modal, Tooltip } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import CloseIcon from '@material-ui/icons/Close';
+import { Backdrop, Button, Modal, Tooltip } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import CloseIcon from '@mui/icons-material/Close';
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import { TASK_QUEUED } from 'src/constants/task-stages';

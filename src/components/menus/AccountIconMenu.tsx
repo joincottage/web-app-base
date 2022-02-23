@@ -1,10 +1,10 @@
 import { UserProfile } from '@auth0/nextjs-auth0';
 import React from 'react';
 import Link from 'next/link';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Avatar from '@material-ui/core/Avatar';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Avatar from '@mui/material/Avatar';
 
 interface OwnProps {
   style?: any;

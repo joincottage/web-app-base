@@ -1,6 +1,6 @@
 import { UserProvider } from '@auth0/nextjs-auth0';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -16,9 +16,6 @@ import { SET_TASKS_IN_QUEUE } from 'src/actions/setTasksInQueue';
 import { SET_TASKS_IN_REVIEW } from 'src/actions/setTasksInReview';
 import Parallax from 'src/components/Parallax';
 import { Navbar } from '../components/Navbar';
-import debounce from 'lodash/debounce';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import {
   AppAction,
   AppContext,
@@ -29,8 +26,6 @@ import {
 import theme from '../theme';
 import './../styles/RichTextEditor.css';
 import './../styles/theme.css';
-import { publishAppInsights } from 'src/utils/appinsights';
-import { MAX_SCROLL_DEPTH_PX } from 'src/constants/analytics';
 import { v4 as uuidv4 } from 'uuid';
 import { COTTAGE_ANONID } from 'src/constants/cookies';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

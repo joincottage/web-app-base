@@ -1,5 +1,5 @@
-import { Theme, Tooltip } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Theme, Tooltip } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Task } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 import {

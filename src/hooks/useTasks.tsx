@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 const useTasks = () => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<unknown>(null);
   const [data, setData] = useState<Task[] | null>(null);
 
   useEffect(() => {

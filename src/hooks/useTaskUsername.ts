@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const useTasksUsername = () => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<unknown>(null);
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {

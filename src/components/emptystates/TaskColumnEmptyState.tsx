@@ -1,5 +1,5 @@
-import Typography from '@material-ui/core/Typography';
-import { createStyles, makeStyles } from '@material-ui/styles';
+import Typography from '@mui/material/Typography';
+import { createStyles, makeStyles } from '@mui/styles';
 import CurrentTaskLoadingState from './CurrentTaskLoadingState';
 import PreviousTaskEmptyState from './PreviousTaskEmptyState';
 import ReviewTaskEmptyState from './ReviewTaskEmptyState';

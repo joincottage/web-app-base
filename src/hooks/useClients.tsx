@@ -9,7 +9,7 @@ interface OwnProps {
 const useClients = ({ shouldFetchAll = false }: OwnProps = {}) => {
   const { user, isLoading } = useUser();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<unknown>(null);
   const [clients, setClients] = useState<Client[] | null>(null);
 
   useEffect(() => {

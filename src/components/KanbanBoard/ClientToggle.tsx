@@ -1,4 +1,4 @@
-import { Avatar, Typography } from '@material-ui/core';
+import { Avatar, Typography } from '@mui/material';
 import { Client } from '@prisma/client';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';

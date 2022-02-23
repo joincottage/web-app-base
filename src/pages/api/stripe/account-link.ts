@@ -1,6 +1,6 @@
-import { getSession } from '@auth0/nextjs-auth0';
-import { prisma } from './../../../database/prisma';
-import { encrypt } from '../../../utils/encryption';
+// import { getSession } from '@auth0/nextjs-auth0';
+// import { prisma } from './../../../database/prisma';
+// import { encrypt } from '../../../utils/encryption';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { withSentry } from '@sentry/nextjs';
 // Set your secret key. Remember to switch to your live secret key in production.
@@ -8,8 +8,9 @@ import { withSentry } from '@sentry/nextjs';
 import Stripe from 'stripe';
 import Airtable from 'airtable';
 
-// @ts-ignore
-const base = new Airtable({apiKey: process.env.AIRTABLE_API_KEY}).base('appdEwe1Z4gCXfEoB');
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
+  'appdEwe1Z4gCXfEoB'
+);
 
 const stripe = new Stripe(process.env.STRIPE_AUTH_KEY as string, {
   apiVersion: '2020-08-27',
@@ -31,33 +32,43 @@ async function accountLinkHandler(
       const accountLink = await stripe.accountLinks.create({
         account: account.id,
         refresh_url: 'https://app.joincottage.com/api/stripe/account-link',
-        return_url: 'https://app.cottage.dev/listing-details?recordId=' + req.query.recordId,
+        return_url:
+          'https://app.cottage.dev/listing-details?recordId=' +
+          req.query.recordId,
         type: 'account_onboarding',
       });
 
       base('Users').update([
         {
-          "id": req.query.userId as string,
-          "fields": {
-            "stripeAccountId": account.id
-          }
-        }]);
+          id: req.query.userId as string,
+          fields: {
+            stripeAccountId: account.id,
+          },
+        },
+      ]);
 
-      const user = await new Promise((resolve, reject) => base('Users').find(req.query.userId as string, function(err, record) {
-        if (err) { console.error(err); reject(err); return; }
-        resolve(record);
-      }));
+      const user = await new Promise((resolve, reject) =>
+        base('Users').find(req.query.userId as string, function (err, record) {
+          if (err) {
+            console.error(err);
+            reject(err);
+            return;
+          }
+          resolve(record);
+        })
+      );
 
       base('Tasks').update([
         {
-          "id": req.query.recordId as string,
-          "fields": {
-            "Status": "In Progress",
-            "Assignee": [req.query.userId as string],
-            "Assignee ID": req.query.userId as string,
-            "Assignee Email": (user as any).Email
-          }
-        }]);
+          id: req.query.recordId as string,
+          fields: {
+            Status: 'In Progress',
+            Assignee: [req.query.userId as string],
+            'Assignee ID': req.query.userId as string,
+            'Assignee Email': (user as any).Email,
+          },
+        },
+      ]);
 
       // const session = await getSession(req, res);
       // const userInfo = session?.user;

@@ -1,6 +1,6 @@
 import { Task } from '.prisma/client';
 import { useUser } from '@auth0/nextjs-auth0';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import axios from 'axios';
 import { useContext } from 'react';
 import setCurrentTask from 'src/actions/setCurrentTask';

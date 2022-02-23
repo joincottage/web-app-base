@@ -10,9 +10,9 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
-} from '@material-ui/core';
-import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
-import { createStyles, makeStyles } from '@material-ui/styles';
+} from '@mui/material';
+import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
+import { createStyles, makeStyles } from '@mui/styles';
 import Axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { AppDataContext } from 'src/contexts/AppContext';
