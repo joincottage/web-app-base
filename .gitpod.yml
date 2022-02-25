@@ -1,3 +1,10 @@
 tasks:
-  - init: npm install && npm run build
-    command: npm run start
+  - name: Local Database
+    command: docker-compose up
+  - name: Dev Server
+    init: npm install && npm run build
+    command: npm run dev
+    openMode: split-right
+  - name: Scratch Space
+    command: echo "Welcome to the Cottage App!"
+    openMode: split-right
