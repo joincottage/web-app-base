@@ -1,7 +1,7 @@
 tasks:
   - name: Scratch Space
   - name: Dev Server
-    init: npm install --yes && npm run build
+    init: npm install -D --yes && npm run build
     command: npm run dev
     openMode: split-right
   - name: Local Database
