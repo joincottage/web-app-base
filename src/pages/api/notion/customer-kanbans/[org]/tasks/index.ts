@@ -1,11 +1,12 @@
 import { NextApiHandler } from 'next';
 import { withSentry } from '@sentry/nextjs';
-import getDBIdByOrg from '../../../../../apiService/notion/getDBIdByOrg';
+import addTaskToDB, { Task } from 'src/apiService/notion/addTaskToDB';
 import createDB from 'src/apiService/notion/createDB';
+import getDBIdByOrg from 'src/apiService/notion/getDBIdByOrg';
 
 const taskHandler: NextApiHandler = async (req, res) => {
   switch (req.method) {
-    case 'GET': {
+    case 'POST': {
       if (req.headers.authorization !== process.env.API_ACCESS_TOKEN) {
         res.status(401).json({ message: 'You are not authorized' });
         break;
@@ -19,6 +20,13 @@ const taskHandler: NextApiHandler = async (req, res) => {
         return;
       }
 
+      const { title, body, priority } = req.body;
+      if (!title || !body || !priority) {
+        res.status(400).send('must provide task details');
+
+        return;
+      }
+
       try {
         let dbCreatedOnRequest = false;
         let notionDBID = await getDBIdByOrg(org as string);
@@ -28,10 +36,12 @@ const taskHandler: NextApiHandler = async (req, res) => {
           notionDBID = notionDB?.id;
         }
 
-        res.json({ url: `https://notion.so/${notionDBID}`, notionDBID, dbCreatedOnRequest  });
+        const notionTask = await addTaskToDB(notionDBID as string, { title, body, priority } as Task);
+
+        res.json({ url: `https://notion.so/${notionTask.id}`, dbCreatedOnRequest });
       } catch (e: any) {
         console.error(
-          `Failed to create DB in Notion for ${org}`,
+          `Failed to create new task in Notion for ${org}: `,
           e.message
         );
 

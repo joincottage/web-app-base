@@ -42,13 +42,15 @@ async function createNotionDB(parentPageId: string, org: string, logoUrl: string
   return notionDB;
 }
 
-async function saveNotionDBIDAndOrgToCottageDB(id: string, org: string) {
+async function saveNotionDBIDAndOrgToCottageDB(id: string, org: string, logoUrl: string) {
   try {
     await prisma.client.create({
       data: {
         userEmailOfOwner: '',
         githubOrgName: org,
         notionDBId: id,
+        name: org,
+        logoUrl,
       }
     });
   } catch (err) {
@@ -64,7 +66,7 @@ export default async function createDB(org: string, logoUrl: string) {
   }
   
   const notionDB = await createNotionDB(process.env.NOTION_CUSTOMER_KANBANS_PAGE_ID, org, logoUrl);
-  await saveNotionDBIDAndOrgToCottageDB(notionDB.id, org);
+  await saveNotionDBIDAndOrgToCottageDB(notionDB.id, org, logoUrl);
 
   return notionDB;
 }
