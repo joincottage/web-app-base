@@ -8,11 +8,10 @@ async function clientsHandler(
 ): Promise<void> {
   switch (req.method) {
     case 'POST': {
-      // FIXME: Why does this always fail?
-      // if (req.headers.authorization !== auth0HookToken) {
-      //   res.status(401).json({ message: 'You are not authorized' });
-      //   break;
-      // }
+      if (req.headers.authorization !== process.env.API_ACCESS_TOKEN) {
+        res.status(401).json({ message: 'You are not authorized' });
+        break;
+      }
       await prisma.client.create({
         data: {
           ...req.body,

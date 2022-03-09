@@ -69,6 +69,8 @@ model Client {
   discordCategoryId String?
   tasks             Task[]
   users             User[]
+  notionDBId        String?
+  githubOrgName     String?
 }
 
 model JobPost {
