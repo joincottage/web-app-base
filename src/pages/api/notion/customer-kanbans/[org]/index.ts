@@ -23,7 +23,7 @@ const taskHandler: NextApiHandler = async (req, res) => {
         let createdOnRequest = false;
         let notionDBID = await getDBIdByOrg(org as string);
         if (!notionDBID) {
-          const notionDB = await createDB(org, 'https://media-exp1.licdn.com/dms/image/C4E0BAQHIhZgIZuwRyw/company-logo_100_100/0/1644210660850?e=1654732800&v=beta&t=wGZF2tSn5GDc3_OKqvFoCxOeU6Qjq_wu6CTuEIXjlks');
+          const notionDB = await createDB(org, req.query.logoUrl as string);
           createdOnRequest = true;
           notionDBID = notionDB?.id;
         }
