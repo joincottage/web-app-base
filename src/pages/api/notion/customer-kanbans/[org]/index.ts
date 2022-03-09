@@ -28,7 +28,7 @@ const taskHandler: NextApiHandler = async (req, res) => {
           notionDBID = notionDB?.id;
         }
 
-        res.json({ url: `https://notion.so/${notionDBID}`, createdOnRequest  });
+        res.json({ url: `https://notion.so/${notionDBID}`, notionDBID, createdOnRequest  });
       } catch (e: any) {
         console.error(
           `Failed to create DB in Notion for ${org}`,
