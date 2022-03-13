@@ -3,7 +3,7 @@ import { getClient } from './client';
 export interface Task {
   title: string;
   body: string;
-  priority: 'Low' | 'Medium' | 'High 🔥';
+  priority?: 'Low' | 'Medium' | 'High 🔥';
 }
 
 export default async function addTaskToDB(databaseId: string, task: Task) {
@@ -15,7 +15,6 @@ export default async function addTaskToDB(databaseId: string, task: Task) {
       properties: {
         'Name': [{ type: 'text', text: { content: task.title } }],
         'Status': { name: 'Backlog' },
-        'Priority': { name: task.priority }
       },
       children: [{
         "paragraph": {

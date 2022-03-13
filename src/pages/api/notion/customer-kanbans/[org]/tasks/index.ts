@@ -20,8 +20,8 @@ const taskHandler: NextApiHandler = async (req, res) => {
         return;
       }
 
-      const { title, body, priority } = req.body;
-      if (!title || !body || !priority) {
+      const { title, body } = req.body;
+      if (!title || !body ) {
         res.status(400).send('must provide task details');
 
         return;
@@ -36,7 +36,7 @@ const taskHandler: NextApiHandler = async (req, res) => {
           notionDBID = notionDB?.id;
         }
 
-        const notionTask = await addTaskToDB(notionDBID as string, { title, body, priority } as Task);
+        const notionTask = await addTaskToDB(notionDBID as string, { title, body } as Task);
 
         res.json({ url: `https://notion.so/${notionTask.id}`, dbCreatedOnRequest });
       } catch (e: any) {
@@ -55,7 +55,7 @@ const taskHandler: NextApiHandler = async (req, res) => {
     }
     default: {
       console.error(
-        `/api/notion/customer-kanbans/[:id] called with invalid http method ${req.method}`
+        `/api/notion/customer-kanbans/[:id]/tasks called with invalid http method ${req.method}`
       );
       res.status(404).end();
     }
