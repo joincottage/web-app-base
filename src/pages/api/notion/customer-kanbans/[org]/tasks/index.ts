@@ -20,8 +20,8 @@ const taskHandler: NextApiHandler = async (req, res) => {
         return;
       }
 
-      const { title, body } = req.body;
-      if (!title || !body ) {
+      const { title, body, issueUrl, requester } = req.body;
+      if (!title || !body || !issueUrl || !requester ) {
         res.status(400).send('must provide task details');
 
         return;
@@ -36,7 +36,7 @@ const taskHandler: NextApiHandler = async (req, res) => {
           notionDBID = notionDB?.id;
         }
 
-        const notionTask = await addTaskToDB(notionDBID as string, { title, body } as Task);
+        const notionTask = await addTaskToDB(notionDBID as string, { title, body, issueUrl, requester } as Task);
 
         res.json({ url: `https://notion.so/${notionTask.id}`, dbCreatedOnRequest });
       } catch (e: any) {

@@ -3,6 +3,8 @@ import { getClient } from './client';
 export interface Task {
   title: string;
   body: string;
+  issueUrl: string;
+  requester: string;
   priority?: 'Low' | 'Medium' | 'High 🔥';
 }
 
@@ -21,7 +23,7 @@ export default async function addTaskToDB(databaseId: string, task: Task) {
           "rich_text": [{
             "type": "text",
             "text": {
-              "content": task.body,
+              "content": `Issue URL: ${task.issueUrl}\nRequester: ${task.requester}\n\n${task.body}`,
               "link": null
             }
           }],
