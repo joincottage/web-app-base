@@ -2,7 +2,6 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { Container } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
-import KanbanBoard from 'src/components/KanbanBoard';
 
 export const getServerSideProps = withPageAuthRequired();
 
@@ -34,7 +33,6 @@ export default function ManageTasks() {
       }}
     >
       <div className={classes.root}>
-        <KanbanBoard />
       </div>
     </Container>
   );

@@ -1,16 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Copyright from '../Copyright';
 import { useUser as useAuth0User } from '@auth0/nextjs-auth0';
 import { Fade, Typography } from '@mui/material';
-import ClientTabs from 'src/components/ClientTabs';
-import UserTasksColumn from 'src/components/UserTasksColumn';
 import { AppDataContext } from '../contexts/AppContext';
 import useClients from 'src/hooks/useClients';
 import setSelectedClient from 'src/actions/setSelectedClient';
-import TaskList from 'src/components/TaskList';
-import IconAttribution from 'src/components/IconAttribution';
 import { createStyles, makeStyles } from '@mui/styles';
 import { COTTAGE_ANONID } from 'src/constants/cookies';
 import useCottageUser from 'src/hooks/useUser';
@@ -81,31 +76,10 @@ export default function Index() {
                 gutterBottom
                 className={`${classes.title} flex justify-center`}
               >
-                Clients
+                Your app here
               </Typography>
-              <ClientTabs clients={clients} />
             </div>
-            <TaskList />
-            {auth0User && (
-              <div className="w-64">
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginLeft: '25px',
-                    position: 'sticky',
-                    top: '20px',
-                  }}
-                >
-                  <UserTasksColumn user={auth0User} />
-                </div>
-              </div>
-            )}
           </div>
-          <Copyright />
-          <IconAttribution />
         </Box>
       </Container>
     </Fade>

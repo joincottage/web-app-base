@@ -14,7 +14,6 @@ import { SET_PREVIOUS_TASKS } from 'src/actions/setPreviousTasks';
 import { SET_SELECTED_CLIENT } from 'src/actions/setSelectedClient';
 import { SET_TASKS_IN_QUEUE } from 'src/actions/setTasksInQueue';
 import { SET_TASKS_IN_REVIEW } from 'src/actions/setTasksInReview';
-import { Navbar } from '../components/Navbar';
 import {
   AppAction,
   AppContext,
@@ -23,7 +22,6 @@ import {
   initialState,
 } from '../contexts/AppContext';
 import theme from '../theme';
-import './../styles/RichTextEditor.css';
 import './../styles/theme.css';
 import { v4 as uuidv4 } from 'uuid';
 import { COTTAGE_ANONID } from 'src/constants/cookies';
@@ -153,7 +151,6 @@ export default function MyApp(props: AppProps) {
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <Navbar />
             <Component {...pageProps} />
           </ThemeProvider>
         </AppDataContext.Provider>

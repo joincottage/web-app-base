@@ -132,3 +132,6 @@ fabric.properties
 
 # Sentry
 .sentryclirc
+
+# Sentry
+.sentryclirc

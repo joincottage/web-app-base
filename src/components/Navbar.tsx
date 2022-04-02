@@ -11,7 +11,6 @@ import HelpIcon from '@mui/icons-material/Help';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import useClient from 'src/hooks/useClients';
-import { AccountIconMenu } from './menus/AccountIconMenu';
 
 const Div = styled(MuiLink)(({ theme }) => ({
   ...theme.typography.h6,
@@ -124,25 +123,6 @@ export const Navbar = (): JSX.Element => {
                 style={{ cursor: 'pointer' }}
               />
             </IconButton> */}
-            {!isLoading && user ? (
-              <>
-                <AccountIconMenu
-                  user={user}
-                  style={{
-                    transform: 'scale(1.3)',
-                    width: '24px',
-                    height: '24px',
-                    marginLeft: '15px',
-                  }}
-                />
-              </>
-            ) : (
-              !isLoading && (
-                <NextLink href="/api/auth/login" passHref={true}>
-                  <Button color="inherit">Login</Button>
-                </NextLink>
-              )
-            )}
           </Toolbar>
         </Container>
       </AppBar>
